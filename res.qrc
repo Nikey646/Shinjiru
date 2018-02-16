@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/style.qss</file>
+        <file>queries/MediaList.gql</file>
+        <file>queries/Viewer.gql</file>
+    </qresource>
+</RCC>

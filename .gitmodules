@@ -1,0 +1,6 @@
+[submodule "lib/better-enums"]
+	path = lib/better-enums
+	url = https://github.com/aantron/better-enums.git
+[submodule "lib/robot"]
+	path = lib/robot
+  url = https://github.com/Robot/robot.git

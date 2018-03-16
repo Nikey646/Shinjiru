@@ -26,7 +26,7 @@ MediaList::MediaList() {
         QTimer *updateTimer = new QTimer;
         this->m_updateCancelled = false;
         connect(updateTimer, &QTimer::timeout,
-                [this, updateTimer, media, &episodePlaying, &mediaStore]() {
+                [this, updateTimer, media, episodePlaying, &mediaStore]() {
                   if (!this->m_updateCancelled &&
                       episodePlaying == mediaStore.episodePlaying() &&
                       media == mediaStore.mediaPlaying()) {

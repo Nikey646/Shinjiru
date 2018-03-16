@@ -6,8 +6,8 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 include(lib/robot.pri)
-
 include(lib/anitomy.pri)
+include(lib/discord-rpc.pri)
 
 SOURCES += \
   src/main.cpp \
@@ -31,7 +31,8 @@ SOURCES += \
     ui/main_window/views/now_playing.cpp \
     ui/main_window/views/torrents.cpp \
     ui/main_window/views/airing.cpp \
-    src/clients/masato.cpp
+    src/clients/masato.cpp \
+    src/clients/discord.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -55,7 +56,8 @@ HEADERS += \
     ui/main_window/views/now_playing.h \
     ui/main_window/views/torrents.h \
     ui/main_window/views/airing.h \
-    src/clients/masato.h
+    src/clients/masato.h \
+    src/clients/discord.h
 
 FORMS += \
   ui/main_window.ui \
@@ -69,7 +71,3 @@ INCLUDEPATH += \
 
 RESOURCES += \
   res.qrc
-
-DISTFILES += \
-    queries/SaveMediaListEntry.gql
-

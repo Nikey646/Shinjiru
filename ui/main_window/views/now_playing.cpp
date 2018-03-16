@@ -1,6 +1,7 @@
 #include "now_playing.h"
 #include "ui_now_playing.h"
 
+#include "../../../src/clients/discord.h"
 #include "../../../src/detection/media_store.h"
 #include "../../../src/models/media_list.h"
 #include "../../../src/utilities/file_downloader.h"
@@ -23,11 +24,20 @@ NowPlaying::NowPlaying(QWidget *parent)
   ui->tabWidget->setCurrentWidget(ui->tabNotPlaying);
 
   connect(&mediaStore, &MediaStore::mediaPlayingChanged, [&mediaStore, this]() {
+    int currentEpisode = mediaStore.episodePlaying();
+
     this->media = mediaStore.mediaPlaying();
-    this->episode = QString::number(mediaStore.episodePlaying());
+    this->episode = QString::number(currentEpisode);
+
     updateMedia();
 
-    if (media != nullptr && mediaStore.episodePlaying() > media->progress()) {
+    if (media != nullptr) {
+      Discord::instance().updatePresence(media->title(), currentEpisode);
+    } else {
+      Discord::instance().clearPresence();
+    }
+
+    if (media != nullptr && currentEpisode > media->progress()) {
       timer->start();
       ui->pushButton->setEnabled(true);
       timerTime = 120;

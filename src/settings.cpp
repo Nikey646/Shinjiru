@@ -21,6 +21,8 @@ QVariant Settings::getDefault(const Setting &s) {
       return false;
     case Setting::MinimizeToTray:
       return false;
+    case Setting::UseMasato:
+      return true;
   }
 
   return QVariant();

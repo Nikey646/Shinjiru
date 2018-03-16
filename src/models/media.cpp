@@ -1,6 +1,7 @@
 #include "media.h"
 
 #include <QJsonArray>
+#include <QSet>
 
 Media::Media(QObject *parent) : QObject(parent) {}
 
@@ -11,6 +12,12 @@ void Media::setId(int id) { m_id = id; }
 QString Media::title() const { return m_title; }
 
 void Media::setTitle(const QString &title) { m_title = title; }
+
+QString Media::description() const { return m_description; }
+
+void Media::setDescription(const QString &description) {
+  m_description = description;
+}
 
 QString Media::format() const { return m_format; }
 
@@ -113,6 +120,7 @@ void Media::load(const QJsonObject &mediaObject) {
 
   this->setId(innerMedia.value("id").toInt());
   this->setTitle(titleObject.value("userPreferred").toString());
+  this->setDescription(innerMedia.value("description").toString());
   this->setFormat(innerMedia.value("format").toString());
   this->setAiringStatus(innerMedia.value("status").toString());
   this->setEpisodes(innerMedia.value("episodes").toInt());
@@ -121,13 +129,17 @@ void Media::load(const QJsonObject &mediaObject) {
 
   QStringList synonyms;
   auto synonymArray = innerMedia.value("synonyms").toArray();
+
   synonyms.append(titleObject.value("romaji").toString());
-  synonyms.append(titleObject.value("japanese").toString());
+  synonyms.append(titleObject.value("english").toString());
   synonyms.append(titleObject.value("native").toString());
 
   for (auto &&synonym : synonymArray) {
     synonyms.append(synonym.toString());
   }
+
+  synonyms.removeAll(this->title());
+  synonyms = synonyms.toSet().toList();
 
   this->setSynonyms(synonyms);
 

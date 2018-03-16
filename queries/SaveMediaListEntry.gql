@@ -1,0 +1,38 @@
+mutation ($mediaId: Int, $status: MediaListStatus, $score: Int, $progress: Int, $repeat: Int, $priority: Int, $private: Boolean, $notes: String, $hiddenFromStatusLists: Boolean, $customLists: [String], $advancedScores: [Float]) {
+  SaveMediaListEntry(mediaId: $mediaId, status: $status, scoreRaw: $score, progress: $progress, repeat: $repeat, priority: $priority, private: $private, notes: $notes, hiddenFromStatusLists: $hiddenFromStatusLists, customLists: $customLists, advancedScores: $advancedScores) {
+    status
+    score(format: POINT_100)
+    progress
+    repeat
+    priority
+    private
+    notes
+    hiddenFromStatusLists
+    customLists
+    media {
+      id
+      title {
+        english
+        romaji
+        native
+        userPreferred
+      }
+      format
+      status
+      episodes
+      duration
+      coverImage {
+        large
+      }
+      synonyms
+      genres
+      tags {
+        name
+      }
+      nextAiringEpisode {
+        airingAt
+        episode
+      }
+    }
+  }
+}

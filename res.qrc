@@ -3,5 +3,9 @@
         <file>res/style.qss</file>
         <file>queries/MediaList.gql</file>
         <file>queries/Viewer.gql</file>
+        <file>res/mediaPlayers.json</file>
+        <file>queries/SaveMediaListEntry.gql</file>
+        <file>res/icon.ico</file>
+        <file>res/icon.svg</file>
     </qresource>
 </RCC>

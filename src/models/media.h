@@ -17,6 +17,9 @@ class Media : public QObject {
   QString title() const;
   void setTitle(const QString &title);
 
+  QString description() const;
+  void setDescription(const QString &description);
+
   QString format() const;
   void setFormat(const QString &format);
 
@@ -85,6 +88,7 @@ class Media : public QObject {
  private:
   int m_id{0};
   QString m_title{""};
+  QString m_description{""};
   QString m_format{""};
   QString m_airingStatus{""};
   int m_episodes{0};

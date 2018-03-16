@@ -31,21 +31,26 @@ int main(int argc, char *argv[]) {
 
   QApplication a(argc, argv);
   a.setStyleSheet(style);
+
+  {
+    QPixmap window_icon;
+    QFile iconFile(":/res/icon.svg");
+    iconFile.open(QFile::ReadOnly);
+    QByteArray icon_data = iconFile.readAll();
+    window_icon.loadFromData(icon_data);
+    qApp->setWindowIcon(QIcon(window_icon));
+  }
+
   MainWindow w;
   w.show();
 
   AniList *anilist = &AniList::instance();
 
-  // TODO: this should probably be moved somewhere else
-  QTimer *windowTimer = new QTimer(&a);
+  WindowEnumerator::instance();
 
-  a.connect(windowTimer, &QTimer::timeout,
-            []() { WindowEnumerator::instance().enumerateWindows(); });
-
-  QCoreApplication::connect(anilist, &AniList::authenticated, [&windowTimer]() {
+  QCoreApplication::connect(anilist, &AniList::authenticated, []() {
     User::instance().load();
     MediaList::instance().load();
-    windowTimer->start(5000);
   });
 
   anilist->grant();

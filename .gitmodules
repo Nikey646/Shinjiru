@@ -4,3 +4,6 @@
 [submodule "lib/robot"]
 	path = lib/robot
   url = https://github.com/Robot/robot.git
+[submodule "lib/anitomy"]
+	path = lib/anitomy
+	url = https://github.com/erengy/anitomy.git

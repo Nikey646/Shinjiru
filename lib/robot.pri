@@ -1,6 +1,6 @@
-INCLUDEPATH ''= "$$PWD/robot/Source"
+INCLUDEPATH += "$$PWD/robot/Source"
 
-SOURCES ''= \
+SOURCES += \
   "$$PWD/robot/Source/Bounds.cc" \
   "$$PWD/robot/Source/Clipboard.cc" \
   "$$PWD/robot/Source/Color.cc" \
@@ -19,7 +19,7 @@ SOURCES ''= \
   "$$PWD/robot/Source/Timer.cc" \
   "$$PWD/robot/Source/Window.cc"
 
-HEADERS ''= \
+HEADERS += \
   "$$PWD/robot/Source/Bounds.h" \
   "$$PWD/robot/Source/Clipboard.h" \
   "$$PWD/robot/Source/Color.h" \

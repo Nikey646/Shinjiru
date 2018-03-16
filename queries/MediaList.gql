@@ -16,6 +16,7 @@ fragment MediaListFields on MediaList {
       native
       userPreferred
     }
+    description
     format
     status
     episodes

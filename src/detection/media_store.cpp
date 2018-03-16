@@ -8,11 +8,17 @@ QList<Robot::Process> MediaStore::processes() const {
   return this->m_processes.values();
 }
 
-bool MediaStore::hasMediaPlayer(int pid) {
+Media *MediaStore::mediaPlaying() const { return m_mediaPlaying; }
+
+int MediaStore::episodePlaying() const { return m_episode; }
+
+bool MediaStore::hasMediaPlayer(int pid) const {
   return this->m_mediaPlayers.contains(pid);
 }
 
-bool MediaStore::hasProcess(int pid) { return this->m_processes.contains(pid); }
+bool MediaStore::hasProcess(int pid) const {
+  return this->m_processes.contains(pid);
+}
 
 void MediaStore::addMediaPlayer(const Robot::Process &player) {
   if (this->m_mediaPlayers.contains(player.GetPID())) {
@@ -30,6 +36,14 @@ void MediaStore::addProcess(const Robot::Process &process) {
 
   m_processes.insert(process.GetPID(), process);
   emit processesChanged();
+}
+
+void MediaStore::setMediaPlaying(Media *media, int episode) {
+  if (m_mediaPlaying != media) {
+    m_mediaPlaying = media;
+    m_episode = episode;
+    emit mediaPlayingChanged();
+  }
 }
 
 void MediaStore::removeInvalid() {

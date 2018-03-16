@@ -1,0 +1,19 @@
+{
+  "MPV": {
+    "exeNames": [
+      "mpv.exe"
+    ],
+    "method": "TITLE",
+    "titleRegex": "(.*?) - mpv"
+  },
+  "MPC-HC": {
+    "exeNames": [
+      "mpc-hc.exe",
+      "mpc-hc64.exe",
+      "mpc-hc_nvo.exe",
+      "mpc-hc64_nvo.exe"
+    ],
+    "method": "TITLE",
+    "titleRegex": "(.*)"
+  }
+}

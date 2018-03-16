@@ -7,6 +7,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(lib/robot.pri)
 
+include(lib/anitomy.pri)
+
 SOURCES += \
   src/main.cpp \
   src/clients/anilist.cpp \
@@ -28,7 +30,8 @@ SOURCES += \
     src/settings.cpp \
     ui/main_window/views/now_playing.cpp \
     ui/main_window/views/torrents.cpp \
-    ui/main_window/views/airing.cpp
+    ui/main_window/views/airing.cpp \
+    src/clients/masato.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -51,7 +54,8 @@ HEADERS += \
     src/settings.h \
     ui/main_window/views/now_playing.h \
     ui/main_window/views/torrents.h \
-    ui/main_window/views/airing.h
+    ui/main_window/views/airing.h \
+    src/clients/masato.h
 
 FORMS += \
   ui/main_window.ui \
@@ -65,3 +69,7 @@ INCLUDEPATH += \
 
 RESOURCES += \
   res.qrc
+
+DISTFILES += \
+    queries/SaveMediaListEntry.gql
+

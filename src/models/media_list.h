@@ -13,7 +13,9 @@ class MediaList : public Singleton<MediaList> {
   Q_OBJECT
 
  public:
+  MediaList();
   void load();
+  void updateMedia(Media *media, const QJsonObject &data);
 
   Media *getMediaById(const int id) const;
   QSet<Media *> getMediaByTitle(const QString &title);
@@ -22,6 +24,8 @@ class MediaList : public Singleton<MediaList> {
   void addMediaToList(const QString &list, Media *media);
 
   bool loading() const;
+
+  void cancelUpdate();
 
  public slots:
 
@@ -35,6 +39,7 @@ class MediaList : public Singleton<MediaList> {
   QHash<int, Media *> m_mediaHash;
   QHash<QString, QSet<int>> m_lists;
   bool m_listLoading{false};
+  bool m_updateCancelled{false};
 };
 
 #endif  // SRC_MODELS_MEDIA_LIST_H__

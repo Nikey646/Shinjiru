@@ -13,7 +13,8 @@ BETTER_ENUM(
   int,
   StartOnBoot,
   StartMinimized,
-  MinimizeToTray
+  MinimizeToTray,
+  UseMasato
 )
 // clang-format on
 

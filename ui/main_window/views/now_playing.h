@@ -1,6 +1,7 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_NOW_PLAYING_H__
 #define UI_MAIN_WINDOW_VIEWS_NOW_PLAYING_H__
 
+#include <QStringListModel>
 #include <QTimer>
 #include <QWidget>
 
@@ -26,6 +27,7 @@ class NowPlaying : public QWidget {
   QString episode;
   QTimer *timer{nullptr};
   int timerTime{0};
+  QStringListModel *model;
 };
 }  // namespace Views
 

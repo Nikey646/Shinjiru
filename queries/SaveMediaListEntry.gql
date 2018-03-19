@@ -33,6 +33,14 @@ mutation ($mediaId: Int, $status: MediaListStatus, $score: Int, $progress: Int, 
         airingAt
         episode
       }
+      relations {
+        edges {
+          relationType
+          node {
+            id
+          }
+        }
+      }
     }
   }
 }

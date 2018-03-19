@@ -33,6 +33,14 @@ fragment MediaListFields on MediaList {
       airingAt
       episode
     }
+    relations {
+      edges {
+        relationType
+        node {
+          id
+        }
+      }
+    }
   }
 }
 

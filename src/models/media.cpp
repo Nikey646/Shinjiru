@@ -71,6 +71,10 @@ void Media::setNextAiringEpisode(int nextAiringEpisode) {
   m_nextAiringEpisode = nextAiringEpisode;
 }
 
+int Media::sequel() const { return m_sequel; }
+
+void Media::setSequel(int sequel) { m_sequel = sequel; }
+
 QString Media::listStatus() const { return m_listStatus; }
 
 void Media::setListStatus(const QString &listStatus) {
@@ -171,6 +175,20 @@ void Media::load(const QJsonObject &mediaObject) {
         nextAiringEpisodeObject.value("airingAt").toInt()));
     this->setNextAiringEpisode(
         nextAiringEpisodeObject.value("episode").toInt());
+  }
+
+  auto relationsObject = innerMedia.value("relations").toObject();
+  auto edgesArray = relationsObject.value("edges").toArray();
+
+  for (auto &&edge : edgesArray) {
+    auto edgeObject = edge.toObject();
+    auto relationType = edgeObject.value("relationType").toString();
+
+    if (relationType == "SEQUEL") {
+      auto node = edgeObject.value("node").toObject();
+      auto id = node.value("id").toInt();
+      this->setSequel(id);
+    }
   }
 
   this->setListStatus(mediaObject.value("status").toString());

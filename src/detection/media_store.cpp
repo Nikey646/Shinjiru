@@ -1,5 +1,7 @@
 #include "media_store.h"
 
+#include "../models/media_list.h"
+
 QList<Robot::Process> MediaStore::mediaPlayers() const {
   return this->m_mediaPlayers.values();
 }
@@ -39,6 +41,19 @@ void MediaStore::addProcess(const Robot::Process &process) {
 }
 
 void MediaStore::setMediaPlaying(Media *media, int episode) {
+  if (media != nullptr) {
+    const auto episodes = media->episodes();
+
+    if (episodes != 0 && episodes < episode) {
+      if (media->sequel() != 0) {
+        auto sequel = MediaList::instance().getMediaById(media->sequel());
+        this->setMediaPlaying(sequel, episode - episodes);
+
+        return;
+      }
+    }
+  }
+
   if (m_mediaPlaying != media) {
     m_mediaPlaying = media;
     m_episode = episode;

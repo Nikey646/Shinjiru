@@ -53,6 +53,9 @@ class Media : public QObject {
   int nextAiringEpisode() const;
   void setNextAiringEpisode(int nextAiringEpisode);
 
+  int sequel() const;
+  void setSequel(int sequel);
+
   QString listStatus() const;
   void setListStatus(const QString &listStatus);
 
@@ -100,6 +103,7 @@ class Media : public QObject {
   bool m_hasNextAiringEpisode{false};
   QDateTime m_airingAt{};
   int m_nextAiringEpisode{0};
+  int m_sequel{0};
 
   QString m_listStatus{""};
   int m_score{0};

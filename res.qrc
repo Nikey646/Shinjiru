@@ -7,5 +7,6 @@
         <file>queries/SaveMediaListEntry.gql</file>
         <file>res/icon.ico</file>
         <file>res/icon.svg</file>
+        <file>res/no_cover.jpg</file>
     </qresource>
 </RCC>

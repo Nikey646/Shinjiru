@@ -13,13 +13,22 @@
 namespace Views {
 
 NowPlaying::NowPlaying(QWidget *parent)
-    : QWidget(parent), ui(new Ui::NowPlaying), timer(new QTimer()) {
+    : QWidget(parent),
+      ui(new Ui::NowPlaying),
+      timer(new QTimer()),
+      model(new QStringListModel()) {
   ui->setupUi(this);
   ui->tabWidget->tabBar()->setVisible(false);
 
   timer->setInterval(1000);
 
   MediaStore &mediaStore = MediaStore::instance();
+
+  QPixmap defaultCover(":/res/no_cover.jpg");
+  defaultCover = defaultCover.scaledToWidth(ui->defaultImage->width(),
+                                            Qt::SmoothTransformation);
+  ui->defaultImage->setPixmap(defaultCover);
+  ui->openProcesses->setModel(model);
 
   ui->tabWidget->setCurrentWidget(ui->tabNotPlaying);
 
@@ -64,9 +73,24 @@ NowPlaying::NowPlaying(QWidget *parent)
       ui->updating->setText(tr("Updating in %1 seconds").arg(timeRemaining));
     }
   });
+
+  connect(&mediaStore, &MediaStore::processesChanged, [&mediaStore, this]() {
+    auto processes = mediaStore.processes();
+
+    QStringList processInformation;
+
+    for (auto &&process : processes) {
+      processInformation.append(QString::fromStdString(process.GetName()));
+    }
+
+    model->setStringList(processInformation);
+  });
 }
 
-NowPlaying::~NowPlaying() { delete ui; }
+NowPlaying::~NowPlaying() {
+  delete ui;
+  delete timer;
+}
 
 void NowPlaying::updateMedia() {
   if (media == nullptr) {

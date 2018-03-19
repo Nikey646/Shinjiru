@@ -51,6 +51,8 @@ int AniList::userId() {
   return object["sub"].toString().toInt();
 }
 
+void AniList::requestReload() { emit reload(); }
+
 void AniList::grant() {
   if (replyHandler == nullptr) {
     replyHandler = new QOAuthHttpServerReplyHandler(42069, this);

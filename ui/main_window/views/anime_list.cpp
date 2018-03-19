@@ -1,13 +1,24 @@
 #include "anime_list.h"
-#include <QDebug>
 #include "ui_animelist.h"
+
+#include <chrono>
+
+#include "../../../src/clients/anilist.h"
 
 namespace Views {
 
-AnimeList::AnimeList(QWidget *parent) : QWidget(parent), ui(new Ui::AnimeList) {
+AnimeList::AnimeList(QWidget *parent)
+    : QWidget(parent), ui(new Ui::AnimeList), refreshTimer(new QTimer) {
   ui->setupUi(this);
 
   mediaList = &MediaList::instance();
+
+  connect(refreshTimer, &QTimer::timeout,
+          []() { AniList::instance().requestReload(); });
+
+  using namespace std::chrono_literals;
+  refreshTimer->setInterval(15min);
+  refreshTimer->start();
 
   connect(ui->lineEdit, &QLineEdit::textChanged, [this](const QString &text) {
     for (auto &&list : listTabs.values()) {

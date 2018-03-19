@@ -53,6 +53,11 @@ int main(int argc, char *argv[]) {
     MediaList::instance().load();
   });
 
+  QCoreApplication::connect(anilist, &AniList::reload, []() {
+    User::instance().load();
+    MediaList::instance().load();
+  });
+
   anilist->grant();
 
   return a.exec();

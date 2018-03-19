@@ -21,11 +21,14 @@ class AniList : public Singleton<AniList> {
 
   int userId();
 
+  void requestReload();
+
  public slots:
   void grant();
 
  signals:
   void authenticated();
+  void reload();
 
  private:
   QOAuth2AuthorizationCodeFlow oauth2;

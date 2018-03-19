@@ -1,6 +1,7 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_ANIME_LIST_H__
 #define UI_MAIN_WINDOW_VIEWS_ANIME_LIST_H__
 
+#include <QTimer>
 #include <QWidget>
 
 #include "../../../src/models/media_list.h"
@@ -22,6 +23,7 @@ class AnimeList : public QWidget {
   Ui::AnimeList *ui;
   MediaList *mediaList;
   QMap<QString, AnimeTable *> listTabs;
+  QTimer *refreshTimer;
 };
 }  // namespace Views
 

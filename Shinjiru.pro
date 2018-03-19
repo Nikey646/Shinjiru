@@ -32,7 +32,10 @@ SOURCES += \
     ui/main_window/views/torrents.cpp \
     ui/main_window/views/airing.cpp \
     src/clients/masato.cpp \
-    src/clients/discord.cpp
+    src/clients/discord.cpp \
+    src/clients/nekomimi.cpp \
+    src/models/rss_item.cpp \
+    ui/main_window/components/rss_table_model.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -57,7 +60,10 @@ HEADERS += \
     ui/main_window/views/torrents.h \
     ui/main_window/views/airing.h \
     src/clients/masato.h \
-    src/clients/discord.h
+    src/clients/discord.h \
+    src/clients/nekomimi.h \
+    src/models/rss_item.h \
+    ui/main_window/components/rss_table_model.h
 
 FORMS += \
   ui/main_window.ui \

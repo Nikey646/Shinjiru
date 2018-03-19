@@ -1,7 +1,12 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 #define UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 
+#include <QSet>
+#include <QTimer>
 #include <QWidget>
+
+#include "../../../src/models/rss_item.h"
+#include "../components/rss_table_model.h"
 
 namespace Ui {
 class Torrents;
@@ -15,8 +20,17 @@ class Torrents : public QWidget {
   explicit Torrents(QWidget *parent = 0);
   ~Torrents();
 
+  void fetchTorrents();
+
+ public slots:
+  void timerTick();
+
  private:
   Ui::Torrents *ui;
+  QSet<RSSItem *> items;
+  RSSTableModel *model;
+  QTimer *timer;
+  int refresh{1};
 };
 }  // namespace Views
 

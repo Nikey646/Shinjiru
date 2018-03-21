@@ -29,6 +29,29 @@ QMainWindow {
   color: #ffffff;
 }
 
+QMenu {
+  background-color: #fff;
+  color: #000;
+}
+
+QMenu::item:selected {
+  background-color: #353842;
+  color: #fff;
+}
+
+QMenu::item:pressed {
+  background-color: #353842;
+  color: #fff;
+}
+
+QMenu::separator {
+  height: 1px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
 QMenuBar {
   font-size: 10pt;
 }

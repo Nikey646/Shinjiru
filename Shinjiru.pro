@@ -35,7 +35,11 @@ SOURCES += \
     src/clients/discord.cpp \
     src/clients/nekomimi.cpp \
     src/models/rss_item.cpp \
-    ui/main_window/components/rss_table_model.cpp
+    ui/main_window/components/rss_table_model.cpp \
+    ui/settings_dialog.cpp \
+    ui/settings_dialog/views/application.cpp \
+    ui/settings_dialog/views/recognition.cpp \
+    ui/settings_dialog/views/torrent_settings.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -63,14 +67,22 @@ HEADERS += \
     src/clients/discord.h \
     src/clients/nekomimi.h \
     src/models/rss_item.h \
-    ui/main_window/components/rss_table_model.h
+    ui/main_window/components/rss_table_model.h \
+    ui/settings_dialog.h \
+    ui/settings_dialog/views/application.h \
+    ui/settings_dialog/views/recognition.h \
+    ui/settings_dialog/views/torrent_settings.h
 
 FORMS += \
   ui/main_window.ui \
   ui/main_window/views/animelist.ui \
     ui/main_window/views/now_playing.ui \
     ui/main_window/views/torrents.ui \
-    ui/main_window/views/airing.ui
+    ui/main_window/views/airing.ui \
+    ui/settings_dialog.ui \
+    ui/settings_dialog/views/application.ui \
+    ui/settings_dialog/views/recognition.ui \
+    ui/settings_dialog/views/torrent_settings.ui
 
 INCLUDEPATH += \
   lib

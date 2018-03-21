@@ -1,8 +1,13 @@
 #include "./main_window.h"
 #include "./ui_main_window.h"
 
+#include <QApplication>
+#include <QDesktopServices>
+
+#include "../src/clients/anilist.h"
 #include "../src/models/user.h"
 #include "../src/utilities/file_downloader.h"
+#include "./settings_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -47,9 +52,54 @@ MainWindow::MainWindow(QWidget *parent)
 
   connect(ui->buttonTorrents, &QPushButton::clicked,
           [this]() { ui->mainPanel->setCurrentWidget(viewTorrents); });
+
+  connect(ui->actionExit, &QAction::triggered, []() { qApp->exit(); });
+
+  connect(ui->actionRefreshList, &QAction::triggered,
+          []() { AniList::instance().requestReload(); });
+
+  connect(ui->actionOpenAnimeList, &QAction::triggered, []() {
+    const auto id = QString::number(AniList::instance().userId());
+    const QUrl url = "https://anilist.co/user/" + id + "/animelist";
+    QDesktopServices::openUrl(url);
+  });
+
+  connect(ui->actionOpenUserPage, &QAction::triggered, []() {
+    const auto id = QString::number(AniList::instance().userId());
+    const QUrl url = "https://anilist.co/user/" + id;
+    QDesktopServices::openUrl(url);
+  });
+
+  connect(ui->actionOpenHomePage, &QAction::triggered, []() {
+    const QUrl url = "https://anilist.co";
+    QDesktopServices::openUrl(url);
+  });
+
+  connect(ui->actionSettings, &QAction::triggered, [this]() {
+    SettingsDialog *dialog = new SettingsDialog;
+
+    connect(dialog, &SettingsDialog::finished,
+            [dialog]() { dialog->deleteLater(); });
+
+    dialog->show();
+  });
+
+  connect(ui->actionAbout, &QAction::triggered, []() {
+    // TODO
+  });
+
+  connect(ui->actionCheckForUpdates, &QAction::triggered, []() {
+    // TODO
+  });
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  delete ui;
+  delete viewAnimeList;
+  delete viewAiring;
+  delete viewNowPlaying;
+  delete viewTorrents;
+}
 
 void MainWindow::downloadAvatar(const QString &url) {
   FileDownloader *f = new FileDownloader(url);

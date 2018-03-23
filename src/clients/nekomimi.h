@@ -1,6 +1,7 @@
 #ifndef SRC_CLIENTS_NEKOMIMI_H__
 #define SRC_CLIENTS_NEKOMIMI_H__
 
+#include <QList>
 #include <QtCore>
 #include <QtNetwork>
 
@@ -16,12 +17,12 @@ class Nekomimi : public Singleton<Nekomimi> {
   Nekomimi();
   ~Nekomimi();
 
-  QSet<RSSItem *> fetch();
+  QList<RSSItem *> fetch();
 
  private:
   QNetworkAccessManager *nam;
 
-  QSet<RSSItem *> readReply(QNetworkReply *reply);
+  QList<RSSItem *> readReply(QNetworkReply *reply);
 };
 
 #endif  // SRC_CLIENTS_NEKOMIMI_H__

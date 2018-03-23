@@ -2,9 +2,12 @@
 
 RSSTableModel::RSSTableModel(QObject *parent) : QAbstractTableModel(parent) {}
 
-void RSSTableModel::setList(const QSet<RSSItem *> &list) { m_list = list; }
+void RSSTableModel::setList(const QList<RSSItem *> &list) { m_list = list; }
 
-void RSSTableModel::refresh() { emit layoutChanged(); }
+void RSSTableModel::refresh() {
+  emit layoutAboutToBeChanged();
+  emit layoutChanged();
+}
 
 int RSSTableModel::rowCount(const QModelIndex &p) const {
   Q_UNUSED(p);

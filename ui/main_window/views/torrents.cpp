@@ -46,7 +46,13 @@ void Torrents::timerTick() {
   ui->refreshButton->setText(tr("Refresh (%1)").arg(refresh));
 }
 void Torrents::fetchTorrents() {
-  for (auto &&item : items.values()) {
+  if (!refreshLock.tryLock()) {
+    return;
+  }
+
+  ui->refreshButton->setEnabled(false);
+
+  for (auto &&item : items) {
     delete item;
   }
 
@@ -54,6 +60,9 @@ void Torrents::fetchTorrents() {
 
   model->setList(items);
   ui->torrentTable->resizeColumnsToContents();
+
+  ui->refreshButton->setEnabled(true);
+  refreshLock.unlock();
 }
 
 }  // namespace Views

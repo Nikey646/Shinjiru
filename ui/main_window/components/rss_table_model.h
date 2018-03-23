@@ -28,7 +28,7 @@ class RSSTableModel : public QAbstractTableModel {
  public:
   explicit RSSTableModel(QObject *parent = 0);
 
-  void setList(const QSet<RSSItem *> &list);
+  void setList(const QList<RSSItem *> &list);
   void refresh();
 
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -37,7 +37,7 @@ class RSSTableModel : public QAbstractTableModel {
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
  private:
-  QSet<RSSItem *> m_list;
+  QList<RSSItem *> m_list;
 };
 
 #endif  // UI_MAIN_WINDOW_COMPONENTS_RSS_TABLE_MODEL_H__

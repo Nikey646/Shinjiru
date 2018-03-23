@@ -1,7 +1,8 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 #define UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 
-#include <QSet>
+#include <QList>
+#include <QMutex>
 #include <QTimer>
 #include <QWidget>
 
@@ -27,10 +28,11 @@ class Torrents : public QWidget {
 
  private:
   Ui::Torrents *ui;
-  QSet<RSSItem *> items;
+  QList<RSSItem *> items;
   RSSTableModel *model;
   QTimer *timer;
   int refresh{1};
+  QMutex refreshLock;
 };
 }  // namespace Views
 

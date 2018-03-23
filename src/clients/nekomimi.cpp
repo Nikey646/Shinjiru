@@ -9,7 +9,7 @@ Nekomimi::Nekomimi() { this->nam = new QNetworkAccessManager(nullptr); }
 
 Nekomimi::~Nekomimi() { delete nam; }
 
-QSet<RSSItem *> Nekomimi::fetch() {
+QList<RSSItem *> Nekomimi::fetch() {
   QUrl url("https://rss.urus.ai/");
   QNetworkRequest request(url);
   QNetworkReply *reply = nam->get(request);
@@ -20,8 +20,8 @@ QSet<RSSItem *> Nekomimi::fetch() {
   return readReply(reply);
 }
 
-QSet<RSSItem *> Nekomimi::readReply(QNetworkReply *reply) {
-  QSet<RSSItem *> results;
+QList<RSSItem *> Nekomimi::readReply(QNetworkReply *reply) {
+  QList<RSSItem *> results;
   reply->deleteLater();
 
   if (reply->error() != QNetworkReply::NoError) {
@@ -50,7 +50,7 @@ QSet<RSSItem *> Nekomimi::readReply(QNetworkReply *reply) {
       tag = item.qualifiedName();
     } else if (item.isEndElement()) {
       if (item.name() == "item") {
-        results.insert(currentItem);
+        results.push_back(currentItem);
         currentItem = nullptr;
       }
 

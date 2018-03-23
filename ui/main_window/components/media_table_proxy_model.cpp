@@ -23,7 +23,7 @@ bool MediaTableProxyModel::filterAcceptsRow(int row,
   auto source = static_cast<MediaTableModel *>(sourceModel());
   QModelIndex index = createIndex(row, 0);
 
-  auto media = source->media(index);
+  auto media = source->media(this->mapToSource(index));
 
   if (media == nullptr) {
     return false;

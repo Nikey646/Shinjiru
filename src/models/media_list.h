@@ -16,12 +16,14 @@ class MediaList : public Singleton<MediaList> {
   MediaList();
   void load();
   void updateMedia(Media *media, const QJsonObject &data);
+  void removeMedia(Media *media);
 
   Media *getMediaById(const int id) const;
   QSet<Media *> getMediaByTitle(const QString &title);
   QSet<int> getMediaList(const QString &key) const;
   QList<QString> getMediaLists() const;
   void addMediaToList(const QString &list, Media *media);
+  void removeMediaFromList(const QString &list, Media *media);
 
   bool loading() const;
 

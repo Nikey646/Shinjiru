@@ -1,4 +1,5 @@
 fragment MediaListFields on MediaList {
+  id
   status
   score(format: POINT_100)
   progress

@@ -6,6 +6,9 @@ query {
     }
     mediaListOptions {
       scoreFormat
+      animeList {
+        customLists
+      }
     }
   }
 }

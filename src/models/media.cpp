@@ -3,7 +3,13 @@
 #include <QJsonArray>
 #include <QSet>
 
+#include "./media_list.h"
+
 Media::Media(QObject *parent) : QObject(parent) {}
+
+int Media::entryId() const { return m_entryId; }
+
+void Media::setEntryId(int entryId) { m_entryId = entryId; }
 
 int Media::id() const { return m_id; }
 
@@ -107,9 +113,9 @@ void Media::setHiddenFromStatusLists(bool hiddenFromStatusLists) {
   m_hiddenFromStatusLists = hiddenFromStatusLists;
 }
 
-QList<bool> Media::customLists() const { return m_customLists; }
+QMap<QString, bool> Media::customLists() const { return m_customLists; }
 
-void Media::setCustomLists(const QList<bool> &customLists) {
+void Media::setCustomLists(const QMap<QString, bool> &customLists) {
   m_customLists = customLists;
 }
 
@@ -118,7 +124,52 @@ bool Media::isPrivate() const { return m_private; }
 void Media::setIsPrivate(bool isPrivate) { m_private = isPrivate; }
 
 void Media::load(const QJsonObject &mediaObject) {
-  auto innerMedia = mediaObject.value("media").toObject();
+  if (mediaObject.contains("media")) {
+    loadInnerMedia(mediaObject.value("media").toObject());
+  }
+
+  auto &mediaList = MediaList::instance();
+
+  this->setEntryId(mediaObject.value("id").toInt());
+  this->setListStatus(mediaObject.value("status").toString());
+  this->setScore(mediaObject.value("score").toInt());
+  this->setProgress(mediaObject.value("progress").toInt());
+  this->setRepeat(mediaObject.value("repeat").toInt());
+  this->setPriority(mediaObject.value("priority").toInt());
+  this->setIsPrivate(mediaObject.value("private").toBool());
+  this->setNotes(mediaObject.value("notes").toString());
+  this->setHiddenFromStatusLists(
+      mediaObject.value("hiddenFromStatusLists").toBool());
+
+  QMap<QString, bool> customLists;
+  auto customListArray = mediaObject.value("customLists").toObject();
+
+  for (auto &&customList : customListArray.keys()) {
+    const auto isOnList = customListArray.value(customList).toBool();
+    customLists[customList] = isOnList;
+
+    if (isOnList) {
+      mediaList.addMediaToList(customList, this);
+    } else {
+      mediaList.removeMediaFromList(customList, this);
+    }
+  }
+
+  this->setCustomLists(customLists);
+
+  mediaList.removeMediaFromList("CURRENT", this);
+  mediaList.removeMediaFromList("PLANNING", this);
+  mediaList.removeMediaFromList("COMPLETED", this);
+  mediaList.removeMediaFromList("DROPPED", this);
+  mediaList.removeMediaFromList("PAUSED", this);
+  mediaList.removeMediaFromList("REPEATING", this);
+
+  if (!this->hiddenFromStatusLists()) {
+    mediaList.addMediaToList(this->listStatus(), this);
+  }
+}
+
+void Media::loadInnerMedia(const QJsonObject &innerMedia) {
   auto titleObject = innerMedia.value("title").toObject();
   auto coverImageObject = innerMedia.value("coverImage").toObject();
 
@@ -189,22 +240,5 @@ void Media::load(const QJsonObject &mediaObject) {
       auto id = node.value("id").toInt();
       this->setSequel(id);
     }
-  }
-
-  this->setListStatus(mediaObject.value("status").toString());
-  this->setScore(mediaObject.value("score").toInt());
-  this->setProgress(mediaObject.value("progress").toInt());
-  this->setRepeat(mediaObject.value("repeat").toInt());
-  this->setPriority(mediaObject.value("priority").toInt());
-  this->setIsPrivate(mediaObject.value("private").toBool());
-  this->setNotes(mediaObject.value("notes").toString());
-  this->setHiddenFromStatusLists(
-      mediaObject.value("hiddenFromStatusLists").toBool());
-
-  QList<bool> customLists;
-  auto customListArray = innerMedia.value("customLists").toObject();
-
-  for (auto &&customList : customListArray.keys()) {
-    customLists.append(customListArray.value(customList).toBool());
   }
 }

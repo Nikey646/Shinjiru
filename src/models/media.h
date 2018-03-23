@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QJsonObject>
+#include <QMap>
 #include <QObject>
 #include <QString>
 
@@ -10,6 +11,9 @@ class Media : public QObject {
   Q_OBJECT
  public:
   explicit Media(QObject *parent = nullptr);
+
+  int entryId() const;
+  void setEntryId(int entryId);
 
   int id() const;
   void setId(int id);
@@ -77,18 +81,20 @@ class Media : public QObject {
   bool hiddenFromStatusLists() const;
   void setHiddenFromStatusLists(bool hiddenFromStatusLists);
 
-  QList<bool> customLists() const;
-  void setCustomLists(const QList<bool> &customLists);
+  QMap<QString, bool> customLists() const;
+  void setCustomLists(const QMap<QString, bool> &customLists);
 
   bool isPrivate() const;
   void setIsPrivate(bool isPrivate);
 
   void load(const QJsonObject &mediaObject);
+  void loadInnerMedia(const QJsonObject &innerMedia);
  signals:
 
  public slots:
 
  private:
+  int m_entryId{0};
   int m_id{0};
   QString m_title{""};
   QString m_description{""};
@@ -113,7 +119,7 @@ class Media : public QObject {
   bool m_private{false};
   QString m_notes{""};
   bool m_hiddenFromStatusLists{false};
-  QList<bool> m_customLists{};
+  QMap<QString, bool> m_customLists{};
 };
 
 #endif  // SRC_MODELS_MEDIA_H__

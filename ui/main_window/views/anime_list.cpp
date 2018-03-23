@@ -34,7 +34,21 @@ AnimeList::AnimeList(QWidget *parent)
 
       if (table == nullptr) {
         auto mediaSet = mediaList->getMediaList(list);
-        auto title = tr(qPrintable(list));
+        auto title = list;
+
+        if (list == "PLANNING") {
+          title = tr("PLANNING");
+        } else if (list == "COMPLETED") {
+          title = tr("COMPLETED");
+        } else if (list == "CURRENT") {
+          title = tr("CURRENT");
+        } else if (list == "DROPPED") {
+          title = tr("DROPPED");
+        } else if (list == "PAUSED") {
+          title = tr("PAUSED");
+        } else if (list == "REPEATING") {
+          title = tr("REPEATING");
+        }
 
         table = new AnimeTable(this, mediaSet);
         this->listTabs.insert(list, table);

@@ -5,6 +5,7 @@
 #include "../clients/masato.h"
 #include "../detection/media_store.h"
 #include "../settings.h"
+#include "./user.h"
 
 #include <chrono>
 #include <string>
@@ -84,8 +85,6 @@ void MediaList::load() {
           }
 
           media->load(mediaObject);
-
-          addMediaToList(list_key, media);
           QApplication::processEvents();
         }
       }
@@ -121,6 +120,38 @@ void MediaList::updateMedia(Media *media, const QJsonObject &data) {
     const auto mediaObject = rootObject.value("SaveMediaListEntry").toObject();
 
     media->load(mediaObject);
+    emit loadFinished();
+  });
+}
+
+void MediaList::removeMedia(Media *media) {
+  GraphQLQuery request(":/queries/DeleteMediaListEntry.gql");
+  request.set("id", media->entryId());
+
+  auto reply = request.query();
+
+  connect(reply, &QNetworkReply::finished, [=]() {
+    reply->deleteLater();
+
+    if (reply->error() != QNetworkReply::NoError) {
+      qDebug() << reply->errorString();
+      return;
+    }
+
+    const auto json = reply->readAll();
+    const auto document = QJsonDocument::fromJson(json);
+    Q_ASSERT(document.isObject());
+    const auto rootObject = document.object().value("data").toObject();
+    const auto object = rootObject.value("DeleteMediaListEntry").toObject();
+
+    if (object.value("delete").toBool()) {
+      for (auto &&list : m_lists.keys()) {
+        this->removeMediaFromList(list, media);
+      }
+
+      delete media;
+      emit loadFinished();
+    }
   });
 }
 
@@ -165,8 +196,20 @@ void MediaList::addMediaToList(const QString &list, Media *media) {
     emit mediaListsChanged();
   }
 
-  m_lists[list].insert(id);
-  emit mediaListChanged(list);
+  if (!m_lists[list].contains(id)) {
+    m_lists[list].insert(id);
+    emit mediaListChanged(list);
+  }
+}
+
+void MediaList::removeMediaFromList(const QString &list, Media *media) {
+  auto id = media->id();
+
+  if (m_lists.contains(list)) {
+    if (m_lists[list].remove(id)) {
+      emit mediaListChanged(list);
+    }
+  }
 }
 
 bool MediaList::loading() const { return m_listLoading; }

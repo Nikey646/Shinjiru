@@ -421,9 +421,97 @@
 <context>
     <name>Views::AnimeList</name>
     <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="40"/>
+        <source>PLANNING</source>
+        <translation>Plan to Watch</translation>
+    </message>
+    <message>
         <location filename="../ui/main_window/views/anime_list.cpp" line="42"/>
-        <location filename="../ui/main_window/views/anime_list.cpp" line="61"/>
+        <source>COMPLETED</source>
+        <translation>Completed</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="44"/>
+        <source>CURRENT</source>
+        <translation>Watching</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="46"/>
+        <source>DROPPED</source>
+        <translation>Dropped</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="48"/>
+        <source>PAUSED</source>
+        <translation>On hold</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="50"/>
+        <source>REPEATING</source>
+        <translation>Repeating</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="56"/>
+        <location filename="../ui/main_window/views/anime_list.cpp" line="75"/>
         <source>%1 (%2)</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>Views::AnimeTable</name>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="72"/>
+        <source>Open Anime Panel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="73"/>
+        <source>Increment Progress by 1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="74"/>
+        <source>Status</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="75"/>
+        <source>Custom Lists</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="76"/>
+        <source>Delete Entry</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="88"/>
+        <source>CURRENT</source>
+        <translation>Watching</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="89"/>
+        <source>PAUSED</source>
+        <translation>On hold</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="90"/>
+        <source>PLANNING</source>
+        <translation>Plan to Watch</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="91"/>
+        <source>COMPLETED</source>
+        <translation>Completed</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="92"/>
+        <source>DROPPED</source>
+        <translation>Dropped</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window/views/anime_table.cpp" line="124"/>
+        <source>Hide Default</source>
         <translation></translation>
     </message>
 </context>

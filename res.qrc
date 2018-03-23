@@ -9,5 +9,6 @@
         <file>res/icon.svg</file>
         <file>res/no_cover.jpg</file>
         <file>lang/shinjiru_en.qm</file>
+        <file>queries/DeleteMediaListEntry.gql</file>
     </qresource>
 </RCC>

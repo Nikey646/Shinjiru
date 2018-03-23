@@ -5,7 +5,10 @@ MediaTableModel::MediaTableModel(QObject *parent)
 
 void MediaTableModel::setList(const QSet<int> &list) { m_list = list; }
 
-void MediaTableModel::refresh() { emit layoutChanged(); }
+void MediaTableModel::refresh() {
+  emit layoutAboutToBeChanged();
+  emit layoutChanged();
+}
 
 int MediaTableModel::rowCount(const QModelIndex &p) const {
   Q_UNUSED(p);

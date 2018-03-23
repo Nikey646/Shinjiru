@@ -112,3 +112,11 @@ QTabBar::tab:selected {
   border-right: 1px solid #dcdfe6;
   color: #29b6f6;
 }
+
+#AnimeList QHeaderView {
+  font-weight: 500;
+}
+
+QTableView {
+  alternate-background-color: #FAFAFA;
+}

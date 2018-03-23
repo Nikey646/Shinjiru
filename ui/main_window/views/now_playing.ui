@@ -10,9 +10,6 @@
     <height>318</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -312,8 +309,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>175</width>
-                 <height>70</height>
+                 <width>98</width>
+                 <height>28</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">

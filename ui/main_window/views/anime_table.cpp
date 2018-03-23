@@ -30,6 +30,7 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QWidget(parent) {
   proxy_model->setSourceModel(model);
 
   table->setModel(proxy_model);
+  table->setAlternatingRowColors(true);
   table->horizontalHeader()->setStretchLastSection(true);
   table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
   table->verticalHeader()->setDefaultSectionSize(table->fontMetrics().height() +

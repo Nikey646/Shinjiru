@@ -41,6 +41,15 @@ int main(int argc, char *argv[]) {
     qApp->setWindowIcon(QIcon(window_icon));
   }
 
+  QTranslator qtTranslator;
+  qtTranslator.load("qt_en",
+                    QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+  a.installTranslator(&qtTranslator);
+
+  QTranslator shinjiruTranslator;
+  shinjiruTranslator.load(":/lang/shinjiru_en");
+  a.installTranslator(&shinjiruTranslator);
+
   MainWindow w;
   w.show();
 

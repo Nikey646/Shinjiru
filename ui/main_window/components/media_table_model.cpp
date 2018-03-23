@@ -23,6 +23,16 @@ QVariant MediaTableModel::headerData(int s, Qt::Orientation o, int r) const {
     return tr(role._to_string());
   }
 
+  {  // Translations for all possible roles to load them into linguist
+    QT_TR_NOOP("ID");
+    QT_TR_NOOP("Title");
+    QT_TR_NOOP("Progress");
+    QT_TR_NOOP("Episodes");
+    QT_TR_NOOP("Score");
+    QT_TR_NOOP("Status");
+    QT_TR_NOOP("AiringStatus");
+  }
+
   return QVariant();
 }
 
@@ -105,12 +115,36 @@ QVariant MediaTableModel::data(const QModelIndex &index, int role) const {
       }
       break;
     }
-    case ListRoles::Status:
-      return tr(qPrintable(media->listStatus()));
+    case ListRoles::Status: {
+      auto status = media->listStatus();
+
+      if (status == "CURRENT")
+        return tr("CURRENT");
+      else if (status == "PLANNING")
+        return tr("PLANNING");
+      else if (status == "COMPLETED")
+        return tr("COMPLETED");
+      else if (status == "DROPPED")
+        return tr("DROPPED");
+      else if (status == "PAUSED")
+        return tr("PAUSED");
+      else if (status == "REPEATING")
+        return tr("REPEATING");
       break;
-    case ListRoles::AiringStatus:
-      return tr(qPrintable(media->airingStatus()));
+    }
+    case ListRoles::AiringStatus: {
+      auto status = media->airingStatus();
+
+      if (status == "FINISHED")
+        return tr("FINISHED");
+      else if (status == "RELEASING")
+        return tr("RELEASING");
+      else if (status == "NOT_YET_RELEASED")
+        return tr("NOT_YET_RELEASED");
+      else if (status == "CANCELLED")
+        return tr("CANCELLED");
       break;
+    }
   }
 
   return "";

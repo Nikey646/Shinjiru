@@ -1,7 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Recognition</class>
  <widget class="QWidget" name="Recognition">
   <property name="geometry">
@@ -12,10 +10,7 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

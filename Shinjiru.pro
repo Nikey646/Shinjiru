@@ -89,3 +89,6 @@ INCLUDEPATH += \
 
 RESOURCES += \
   res.qrc
+
+TRANSLATIONS = \
+  lang/shinjiru_en.ts

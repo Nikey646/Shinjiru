@@ -33,6 +33,11 @@ MediaList::MediaList() {
                       media == mediaStore.mediaPlaying()) {
                     QJsonObject data;
                     data["progress"] = episodePlaying;
+                    data["status"] = "CURRENT";
+
+                    if (episodePlaying == media->episodes()) {
+                      data["status"] = "COMPLETED";
+                    }
 
                     this->updateMedia(media, data);
                   }

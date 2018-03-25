@@ -1,57 +1,52 @@
-fragment MediaListFields on MediaList {
-  id
-  status
-  score(format: POINT_100)
-  progress
-  repeat
-  priority
-  private
-  notes
-  hiddenFromStatusLists
-  customLists
-  media {
-    id
-    title {
-      english
-      romaji
-      native
-      userPreferred
-    }
-    description
-    format
-    status
-    episodes
-    duration
-    coverImage {
-      large
-    }
-    synonyms
-    genres
-    tags {
-      name
-    }
-    nextAiringEpisode {
-      airingAt
-      episode
-    }
-    relations {
-      edges {
-        relationType
-        node {
-          id
-        }
-      }
-    }
-  }
-}
-
 query ($userId: Int) {
   MediaListCollection(userId: $userId, type: ANIME) {
-    statusLists {
-      ...MediaListFields
-    }
-    customLists {
-      ...MediaListFields
+    lists {
+      entries {
+        id
+        status
+        score(format: POINT_100)
+        progress
+        repeat
+        priority
+        private
+        notes
+        hiddenFromStatusLists
+        customLists
+        media {
+          id
+          title {
+            english
+            romaji
+            native
+            userPreferred
+          }
+          description
+          format
+          status
+          episodes
+          duration
+          coverImage {
+            large
+          }
+          synonyms
+          genres
+          tags {
+            name
+          }
+          nextAiringEpisode {
+            airingAt
+            episode
+          }
+          relations {
+            edges {
+              relationType
+              node {
+                id
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -71,27 +71,24 @@ void MediaList::load() {
     const auto document = QJsonDocument::fromJson(json);
     Q_ASSERT(document.isObject());
     const auto rootObject = document.object().value("data").toObject();
-    const auto mediaListCollection =
-        rootObject.value("MediaListCollection").toObject();
+    const auto collection = rootObject.value("MediaListCollection").toObject();
+    const auto lists = collection.value("lists").toArray();
 
-    for (auto &&type : mediaListCollection.keys()) {
-      auto lists = mediaListCollection.value(type).toObject();
-      for (auto &&list_key : lists.keys()) {
-        auto list = lists.value(list_key).toArray();
+    for (auto &&list : lists) {
+      auto entries = list.toObject().value("entries").toArray();
 
-        for (auto &&entry : list) {
-          auto mediaObject = entry.toObject();
-          auto id = mediaObject.value("media").toObject().value("id").toInt();
+      for (auto &&entry : entries) {
+        auto mediaObject = entry.toObject();
+        auto id = mediaObject.value("media").toObject().value("id").toInt();
 
-          auto media = getMediaById(id);
+        auto media = getMediaById(id);
 
-          if (media == nullptr) {
-            media = new Media(this);
-          }
-
-          media->load(mediaObject);
-          QApplication::processEvents();
+        if (media == nullptr) {
+          media = new Media(this);
         }
+
+        media->load(mediaObject);
+        QApplication::processEvents();
       }
     }
 

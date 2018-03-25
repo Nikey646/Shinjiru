@@ -50,12 +50,15 @@ AnimeList::AnimeList(QWidget *parent)
           title = tr("REPEATING");
         }
 
+        auto tabTitle = tr("%1 (%2)").arg(title).arg(mediaSet.size());
+
         table = new AnimeTable(this, mediaSet);
         this->listTabs.insert(list, table);
-        ui->tabWidget->addTab(table,
-                              tr("%1 (%2)").arg(title).arg(mediaSet.size()));
+        ui->tabWidget->addTab(table, tabTitle);
       }
     }
+
+    this->sortTabs();
   });
 
   connect(mediaList, &MediaList::mediaListChanged, [this](const QString &list) {
@@ -75,6 +78,8 @@ AnimeList::AnimeList(QWidget *parent)
           index, tr("%1 (%2)").arg(trtitle).arg(mediaSet.size()));
     }
 
+    this->sortTabs();
+
     for (auto &&list : listTabs.values()) {
       list->refresh();
     }
@@ -82,5 +87,48 @@ AnimeList::AnimeList(QWidget *parent)
 }
 
 AnimeList::~AnimeList() { delete ui; }
+
+void AnimeList::sortTabs() {
+  auto tabBar = ui->tabWidget->tabBar();
+  auto selectedTab = tabBar->currentIndex();
+
+  // Yes, I know this is bubble sort
+  // No, I don't care
+  for (int i = 0; i < tabBar->count(); ++i) {
+    for (int j = 0; j <= tabBar->count() - i; ++j) {
+      auto current = tabBar->tabText(j);
+      auto next = tabBar->tabText(j + 1);
+      auto comparison = QString::compare(current, next, Qt::CaseInsensitive);
+      auto currentValue = getTabValue(current);
+      auto nextValue = getTabValue(next);
+      auto valueEqual = currentValue == nextValue;
+      auto valueGreater = currentValue > nextValue;
+
+      if (valueGreater || (valueEqual && comparison > 0)) {
+        tabBar->moveTab(j, j + 1);
+      }
+    }
+  }
+
+  tabBar->setCurrentIndex(selectedTab);
+}
+
+int AnimeList::getTabValue(const QString &text) {
+  if (text.startsWith(tr("PLANNING"))) {
+    return 4;
+  } else if (text.startsWith(tr("COMPLETED"))) {
+    return 5;
+  } else if (text.startsWith(tr("CURRENT"))) {
+    return 1;
+  } else if (text.startsWith(tr("DROPPED"))) {
+    return 6;
+  } else if (text.startsWith(tr("PAUSED"))) {
+    return 3;
+  } else if (text.startsWith(tr("REPEATING"))) {
+    return 2;
+  }
+
+  return 0;
+}
 
 }  // namespace Views

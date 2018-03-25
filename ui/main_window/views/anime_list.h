@@ -20,6 +20,10 @@ class AnimeList : public QWidget {
   ~AnimeList();
 
  private:
+  void sortTabs();
+  int getTabValue(const QString &text);
+
+ private:
   Ui::AnimeList *ui;
   MediaList *mediaList;
   QMap<QString, AnimeTable *> listTabs;

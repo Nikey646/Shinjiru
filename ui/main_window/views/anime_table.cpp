@@ -7,6 +7,7 @@
 #include <QJsonObject>
 
 #include "../../../src/models/user.h"
+#include "../../anime_panel.h"
 #include "../components/progress_item_delegate.h"
 #include "../components/score_item_delegate.h"
 #include "../components/status_item_delegate.h"
@@ -43,6 +44,17 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
   for (int i = 0; i < model->columnCount(); ++i) {
     this->setColumnHidden(i, model->defaultHidden(i));
   }
+
+  connect(this, &AnimeTable::doubleClicked, [this](const QModelIndex &idx) {
+    auto row = idx.row();
+    auto index = proxy_model->index(row, ListRoles::ID);
+
+    auto &mediaList = MediaList::instance();
+    int media_id = proxy_model->data(index, Qt::DisplayRole).toInt();
+    selectedMedia = mediaList.getMediaById(media_id);
+
+    this->openAnimePanel();
+  });
 }
 
 void AnimeTable::setList(const QSet<int> &list) { model->setList(list); }
@@ -151,7 +163,13 @@ void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
   contextMenu->deleteLater();
 }
 
-void AnimeTable::openAnimePanel() {}
+void AnimeTable::openAnimePanel() {
+  auto table = new AnimePanel(selectedMedia);
+
+  connect(table, &AnimePanel::finished, [table]() { table->deleteLater(); });
+
+  table->show();
+}
 
 void AnimeTable::incrementProgress() {
   auto episodes = selectedMedia->episodes();

@@ -80,15 +80,15 @@ void ScoreItemDelegate::setEditorData(QWidget *editor,
 
   if (scoreFormat == "POINT_10" || scoreFormat == "POINT_100") {
     QSpinBox *score_container = static_cast<QSpinBox *>(editor);
-    score_container->setValue(scoreFormat == "POINT_10" ? score / 10 : score);
+    score_container->setValue((int)score);
   } else if (scoreFormat == "POINT_5") {
     QComboBox *score_container = static_cast<QComboBox *>(editor);
 
-    score_container->setCurrentText(score + " ★");
+    score_container->setCurrentText(QString::number((int)score) + " ★");
   } else if (scoreFormat == "POINT_3") {
     QComboBox *score_container = static_cast<QComboBox *>(editor);
 
-    switch (score) {
+    switch ((int)score) {
       case 1:
         score_container->setCurrentText(":(");
         break;
@@ -104,7 +104,7 @@ void ScoreItemDelegate::setEditorData(QWidget *editor,
   } else if (scoreFormat == "POINT_10_DECIMAL") {
     QDoubleSpinBox *score_container = static_cast<QDoubleSpinBox *>(editor);
 
-    score_container->setValue(score / 10.0);
+    score_container->setValue(score);
   }
 }
 
@@ -136,7 +136,7 @@ void ScoreItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
   } else if (scoreFormat == "POINT_10_DECIMAL") {
     QDoubleSpinBox *score_container = static_cast<QDoubleSpinBox *>(editor);
 
-    int value = score_container->value() * 10;
+    auto value = score_container->value();
     model->setData(index, value, Qt::EditRole);
   }
 }

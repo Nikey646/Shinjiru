@@ -4,7 +4,7 @@ query ($userId: Int) {
       entries {
         id
         status
-        score(format: POINT_100)
+        score
         progress
         repeat
         priority

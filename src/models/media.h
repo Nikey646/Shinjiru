@@ -63,8 +63,8 @@ class Media : public QObject {
   QString listStatus() const;
   void setListStatus(const QString &listStatus);
 
-  int score() const;
-  void setScore(int score);
+  double score() const;
+  void setScore(double score);
 
   int progress() const;
   void setProgress(int progress);
@@ -112,7 +112,7 @@ class Media : public QObject {
   int m_sequel{0};
 
   QString m_listStatus{""};
-  int m_score{0};
+  double m_score{0.0};
   int m_progress{0};
   int m_repeat{0};
   int m_priority{0};

@@ -87,9 +87,9 @@ void Media::setListStatus(const QString &listStatus) {
   m_listStatus = listStatus;
 }
 
-int Media::score() const { return m_score; }
+double Media::score() const { return m_score; }
 
-void Media::setScore(int score) { m_score = score; }
+void Media::setScore(double score) { m_score = score; }
 
 int Media::progress() const { return m_progress; }
 
@@ -132,7 +132,7 @@ void Media::load(const QJsonObject &mediaObject) {
 
   this->setEntryId(mediaObject.value("id").toInt());
   this->setListStatus(mediaObject.value("status").toString());
-  this->setScore(mediaObject.value("score").toInt());
+  this->setScore(mediaObject.value("score").toDouble());
   this->setProgress(mediaObject.value("progress").toInt());
   this->setRepeat(mediaObject.value("repeat").toInt());
   this->setPriority(mediaObject.value("priority").toInt());
@@ -190,7 +190,11 @@ void Media::loadInnerMedia(const QJsonObject &innerMedia) {
   synonyms.append(titleObject.value("native").toString());
 
   for (auto &&synonym : synonymArray) {
-    synonyms.append(synonym.toString());
+    auto strSynonym = synonym.toString();
+
+    if (strSynonym.length() > 0) {
+      synonyms.append(strSynonym);
+    }
   }
 
   synonyms.removeAll(this->title());

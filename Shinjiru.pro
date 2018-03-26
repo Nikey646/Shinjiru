@@ -39,7 +39,8 @@ SOURCES += \
     ui/settings_dialog.cpp \
     ui/settings_dialog/views/application.cpp \
     ui/settings_dialog/views/recognition.cpp \
-    ui/settings_dialog/views/torrent_settings.cpp
+    ui/settings_dialog/views/torrent_settings.cpp \
+    ui/anime_panel.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -71,7 +72,8 @@ HEADERS += \
     ui/settings_dialog.h \
     ui/settings_dialog/views/application.h \
     ui/settings_dialog/views/recognition.h \
-    ui/settings_dialog/views/torrent_settings.h
+    ui/settings_dialog/views/torrent_settings.h \
+    ui/anime_panel.h
 
 FORMS += \
   ui/main_window.ui \
@@ -82,7 +84,8 @@ FORMS += \
     ui/settings_dialog.ui \
     ui/settings_dialog/views/application.ui \
     ui/settings_dialog/views/recognition.ui \
-    ui/settings_dialog/views/torrent_settings.ui
+    ui/settings_dialog/views/torrent_settings.ui \
+    ui/anime_panel.ui
 
 INCLUDEPATH += \
   lib

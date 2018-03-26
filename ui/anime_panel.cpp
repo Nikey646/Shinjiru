@@ -76,9 +76,9 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
           [this](bool v) { changes["private"] = v; });
 
   connect(ui->notes, &QTextEdit::textChanged,
-          [this]() { changes["notes"] = ui->notes->toPlainText(); })
+          [this]() { changes["notes"] = ui->notes->toPlainText(); });
 
-      createScoreEditor();
+  createScoreEditor();
 }
 
 AnimePanel::~AnimePanel() { delete ui; }

@@ -15,7 +15,6 @@ SOURCES += \
   "$$PWD/robot/Source/Range.cc" \
   "$$PWD/robot/Source/Screen.cc" \
   "$$PWD/robot/Source/Size.cc" \
-  "$$PWD/robot/Source/System.cc" \
   "$$PWD/robot/Source/Timer.cc" \
   "$$PWD/robot/Source/Window.cc"
 
@@ -37,7 +36,6 @@ HEADERS += \
   "$$PWD/robot/Source/Robot.h" \
   "$$PWD/robot/Source/Screen.h" \
   "$$PWD/robot/Source/Size.h" \
-  "$$PWD/robot/Source/System.h" \
   "$$PWD/robot/Source/Timer.h" \
   "$$PWD/robot/Source/Types.h" \
   "$$PWD/robot/Source/Window.h"

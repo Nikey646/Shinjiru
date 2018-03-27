@@ -60,18 +60,18 @@ MainWindow::MainWindow(QWidget *parent)
 
   connect(ui->actionOpenAnimeList, &QAction::triggered, []() {
     const auto id = QString::number(AniList::instance().userId());
-    const QUrl url = "https://anilist.co/user/" + id + "/animelist";
+    const auto url = QUrl("https://anilist.co/user/" + id + "/animelist");
     QDesktopServices::openUrl(url);
   });
 
   connect(ui->actionOpenUserPage, &QAction::triggered, []() {
     const auto id = QString::number(AniList::instance().userId());
-    const QUrl url = "https://anilist.co/user/" + id;
+    const auto url = QUrl("https://anilist.co/user/" + id);
     QDesktopServices::openUrl(url);
   });
 
   connect(ui->actionOpenHomePage, &QAction::triggered, []() {
-    const QUrl url = "https://anilist.co";
+    const auto url = QUrl("https://anilist.co");
     QDesktopServices::openUrl(url);
   });
 

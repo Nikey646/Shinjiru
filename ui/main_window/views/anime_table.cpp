@@ -232,6 +232,15 @@ void AnimeTable::toggleHiddenDefault(const bool checked) {
   QJsonObject data;
   data["hiddenFromStatusLists"] = checked;
 
+  auto customLists = selectedMedia->customLists();
+
+  auto empty = std::all_of(customLists.begin(), customLists.end(),
+                           [](auto v) { return !v; });
+
+  if (empty) {
+    return;
+  }
+
   auto &mediaList = MediaList::instance();
   mediaList.updateMedia(selectedMedia, data);
 }
@@ -255,6 +264,10 @@ void AnimeTable::setCustomList(const int list, const bool checked) {
 
   QJsonObject data;
   data["customLists"] = QJsonArray::fromStringList(newCustomLists);
+
+  if (newCustomLists.empty()) {
+    data["hiddenFromStatusLists"] = false;
+  }
 
   auto &mediaList = MediaList::instance();
   mediaList.updateMedia(selectedMedia, data);

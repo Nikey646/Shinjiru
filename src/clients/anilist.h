@@ -25,6 +25,7 @@ class AniList : public Singleton<AniList> {
 
  public slots:
   void grant();
+  void statusChanged(QAbstractOAuth::Status status);
 
  signals:
   void authenticated();

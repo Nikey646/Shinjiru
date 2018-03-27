@@ -10,15 +10,8 @@ AniList::AniList() {
   oauth2.setAccessTokenUrl(QUrl("https://auth.shinjiru.me/v2.php"));
   oauth2.setClientIdentifier("16");
 
-  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::statusChanged,
-          [this](auto status) {
-            if (status == QAbstractOAuth::Status::Granted) {
-              QSettings settings;
-              settings.setValue("accessToken", oauth2.token());
-
-              emit authenticated();
-            }
-          });
+  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::statusChanged, this,
+          &AniList::statusChanged);
 
   connect(&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
           &QDesktopServices::openUrl);
@@ -69,5 +62,14 @@ void AniList::grant() {
     emit authenticated();
   } else {
     oauth2.grant();
+  }
+}
+
+void AniList::statusChanged(QAbstractOAuth::Status status) {
+  if (status == QAbstractOAuth::Status::Granted) {
+    QSettings settings;
+    settings.setValue("accessToken", oauth2.token());
+
+    emit authenticated();
   }
 }

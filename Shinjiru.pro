@@ -3,6 +3,8 @@ QT += core gui widgets network networkauth
 TARGET = Shinjiru
 TEMPLATE = app
 
+CONFIG += c++14
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
 include(lib/robot.pri)

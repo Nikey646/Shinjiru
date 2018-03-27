@@ -3,6 +3,8 @@
 
 #include <QSpinBox>
 
+#include <algorithm>
+
 #include "../src/models/user.h"
 #include "../src/utilities/file_downloader.h"
 
@@ -17,7 +19,7 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
     combinedGenreTags.append(tag);
   }
 
-  qSort(combinedGenreTags);
+  std::sort(combinedGenreTags.begin(), combinedGenreTags.end());
 
   ui->title->setText(media->title());
   ui->description->setText(media->description());

@@ -19,4 +19,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
           [this](int row) { ui->settingsPanel->setCurrentIndex(row); });
 }
 
-SettingsDialog::~SettingsDialog() { delete ui; }
+SettingsDialog::~SettingsDialog() {
+  delete ui;
+}

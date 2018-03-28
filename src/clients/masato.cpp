@@ -2,9 +2,13 @@
 
 #include <QNetworkReply>
 
-Masato::Masato() { this->nam = new QNetworkAccessManager(nullptr); }
+Masato::Masato() {
+  this->nam = new QNetworkAccessManager(nullptr);
+}
 
-Masato::~Masato() { delete nam; }
+Masato::~Masato() {
+  delete nam;
+}
 
 QSet<Media *> Masato::lookup(const QString &title) {
   QUrl url("https://masato.urus.ai/search/" + title);

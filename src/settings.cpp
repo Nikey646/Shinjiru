@@ -28,4 +28,6 @@ QVariant Settings::getDefault(const Setting &s) {
   return QVariant();
 }
 
-QString Settings::toString(const Setting &s) const { return s._to_string(); }
+QString Settings::toString(const Setting &s) const {
+  return s._to_string();
+}

@@ -13,10 +13,7 @@
 namespace Views {
 
 NowPlaying::NowPlaying(QWidget *parent)
-    : QWidget(parent),
-      ui(new Ui::NowPlaying),
-      timer(new QTimer()),
-      model(new QStringListModel()) {
+    : QWidget(parent), ui(new Ui::NowPlaying), timer(new QTimer()), model(new QStringListModel()) {
   ui->setupUi(this);
   ui->tabWidget->tabBar()->setVisible(false);
 
@@ -25,8 +22,7 @@ NowPlaying::NowPlaying(QWidget *parent)
   MediaStore &store = MediaStore::instance();
 
   QPixmap defaultCover(":/res/no_cover.jpg");
-  defaultCover = defaultCover.scaledToWidth(ui->defaultImage->width(),
-                                            Qt::SmoothTransformation);
+  defaultCover = defaultCover.scaledToWidth(ui->defaultImage->width(), Qt::SmoothTransformation);
   ui->defaultImage->setPixmap(defaultCover);
   ui->openProcesses->setModel(model);
 
@@ -117,8 +113,7 @@ void NowPlaying::updateMedia() {
     connect(f, &FileDownloader::downloaded, [this, f]() {
       QPixmap image;
       image.loadFromData(f->downloadedData());
-      image = image.scaledToWidth(ui->coverImage->width(),
-                                  Qt::SmoothTransformation);
+      image = image.scaledToWidth(ui->coverImage->width(), Qt::SmoothTransformation);
       ui->coverImage->setPixmap(image);
       f->deleteLater();
     });

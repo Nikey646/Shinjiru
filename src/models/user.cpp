@@ -6,13 +6,21 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-QString User::displayName() const { return this->m_displayName; }
+QString User::displayName() const {
+  return this->m_displayName;
+}
 
-QString User::avatar() const { return this->m_avatar; }
+QString User::avatar() const {
+  return this->m_avatar;
+}
 
-QString User::scoreFormat() const { return this->m_scoreFormat; }
+QString User::scoreFormat() const {
+  return this->m_scoreFormat;
+}
 
-QStringList User::customListNames() const { return this->m_customListNames; }
+QStringList User::customListNames() const {
+  return this->m_customListNames;
+}
 
 void User::setDisplayName(const QString &displayName) {
   if (this->m_displayName != displayName) {
@@ -61,8 +69,7 @@ void User::load() {
     const auto viewer = rootObject.value("Viewer").toObject();
 
     this->setDisplayName(viewer.value("name").toString());
-    this->setAvatar(
-        viewer.value("avatar").toObject().value("large").toString());
+    this->setAvatar(viewer.value("avatar").toObject().value("large").toString());
 
     const auto mediaListOptions = viewer.value("mediaListOptions").toObject();
     this->setScoreFormat(mediaListOptions.value("scoreFormat").toString());

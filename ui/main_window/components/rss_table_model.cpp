@@ -2,7 +2,9 @@
 
 RSSTableModel::RSSTableModel(QObject *parent) : QAbstractTableModel(parent) {}
 
-void RSSTableModel::setList(const QList<RSSItem *> &list) { m_list = list; }
+void RSSTableModel::setList(const QList<RSSItem *> &list) {
+  m_list = list;
+}
 
 void RSSTableModel::refresh() {
   emit layoutAboutToBeChanged();
@@ -29,8 +31,7 @@ QVariant RSSTableModel::headerData(int s, Qt::Orientation o, int r) const {
 }
 
 QVariant RSSTableModel::data(const QModelIndex &index, int role) const {
-  if (index.row() < 0 || index.row() >= m_list.count() ||
-      role != Qt::DisplayRole) {
+  if (index.row() < 0 || index.row() >= m_list.count() || role != Qt::DisplayRole) {
     return QVariant();
   }
 

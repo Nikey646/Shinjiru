@@ -31,9 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     downloadAvatar(user.avatar());
   }
 
-  connect(&user, &User::displayNameChanged, this, [this, &user]() {
-    ui->labelDisplayName->setText(user.displayName());
-  });
+  connect(&user, &User::displayNameChanged, this,
+          [this, &user]() { ui->labelDisplayName->setText(user.displayName()); });
 
   connect(&user, &User::avatarChanged, this, [this, &user]() {
     if (user.avatar().size() != 0) {
@@ -78,8 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui->actionSettings, &QAction::triggered, this, [this]() {
     SettingsDialog *dialog = new SettingsDialog;
 
-    connect(dialog, &SettingsDialog::finished, this,
-            [dialog]() { dialog->deleteLater(); });
+    connect(dialog, &SettingsDialog::finished, this, [dialog]() { dialog->deleteLater(); });
 
     dialog->show();
   });

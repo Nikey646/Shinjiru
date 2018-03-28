@@ -10,11 +10,9 @@
 #include "../../../src/models/user.h"
 #include "./media_table_model.h"
 
-ScoreItemDelegate::ScoreItemDelegate(QObject *parent)
-    : QStyledItemDelegate(parent) {}
+ScoreItemDelegate::ScoreItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
 
-QWidget *ScoreItemDelegate::createEditor(QWidget *t_parent,
-                                         const QStyleOptionViewItem &t_option,
+QWidget *ScoreItemDelegate::createEditor(QWidget *t_parent, const QStyleOptionViewItem &t_option,
                                          const QModelIndex &t_index) const {
   Q_UNUSED(t_option);
   Q_UNUSED(t_index)
@@ -63,16 +61,13 @@ QWidget *ScoreItemDelegate::createEditor(QWidget *t_parent,
   return new QWidget(t_parent);
 }
 
-void ScoreItemDelegate::setEditorData(QWidget *editor,
-                                      const QModelIndex &index) const {
+void ScoreItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
   auto model = index.model();
 
   auto &user = User::instance();
   auto &mediaList = MediaList::instance();
 
-  int media_id =
-      model->data(model->index(index.row(), ListRoles::ID), Qt::DisplayRole)
-          .toInt();
+  int media_id = model->data(model->index(index.row(), ListRoles::ID), Qt::DisplayRole).toInt();
   Media *media = mediaList.getMediaById(media_id);
 
   auto score = media->score();
@@ -129,9 +124,7 @@ void ScoreItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     QComboBox *score_container = static_cast<QComboBox *>(editor);
 
     auto score_str = score_container->currentText();
-    auto value = score_str == ":)"
-                     ? 3
-                     : score_str == ":|" ? 2 : score_str == ":(" ? 1 : 0;
+    auto value = score_str == ":)" ? 3 : score_str == ":|" ? 2 : score_str == ":(" ? 1 : 0;
     model->setData(index, value, Qt::EditRole);
   } else if (scoreFormat == "POINT_10_DECIMAL") {
     QDoubleSpinBox *score_container = static_cast<QDoubleSpinBox *>(editor);
@@ -141,8 +134,7 @@ void ScoreItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
   }
 }
 
-void ScoreItemDelegate::updateEditorGeometry(QWidget *t_editor,
-                                             const QStyleOptionViewItem &t_opt,
+void ScoreItemDelegate::updateEditorGeometry(QWidget *t_editor, const QStyleOptionViewItem &t_opt,
                                              const QModelIndex &t_index) const {
   Q_UNUSED(t_index);
   t_editor->setGeometry(t_opt.rect);

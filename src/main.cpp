@@ -42,8 +42,7 @@ int main(int argc, char *argv[]) {
   }
 
   QTranslator qtTranslator;
-  qtTranslator.load("qt_en",
-                    QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+  qtTranslator.load("qt_en", QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   a.installTranslator(&qtTranslator);
 
   QTranslator shinjiruTranslator;

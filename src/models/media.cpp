@@ -7,121 +7,205 @@
 
 Media::Media(QObject *parent) : QObject(parent) {}
 
-int Media::entryId() const { return m_entryId; }
+int Media::entryId() const {
+  return m_entryId;
+}
 
-void Media::setEntryId(int entryId) { m_entryId = entryId; }
+void Media::setEntryId(int entryId) {
+  m_entryId = entryId;
+}
 
-int Media::id() const { return m_id; }
+int Media::id() const {
+  return m_id;
+}
 
-void Media::setId(int id) { m_id = id; }
+void Media::setId(int id) {
+  m_id = id;
+}
 
-QString Media::title() const { return m_title; }
+QString Media::title() const {
+  return m_title;
+}
 
-void Media::setTitle(const QString &title) { m_title = title; }
+void Media::setTitle(const QString &title) {
+  m_title = title;
+}
 
-QString Media::description() const { return m_description; }
+QString Media::description() const {
+  return m_description;
+}
 
 void Media::setDescription(const QString &description) {
   m_description = description;
 }
 
-QString Media::format() const { return m_format; }
+QString Media::format() const {
+  return m_format;
+}
 
-void Media::setFormat(const QString &format) { m_format = format; }
+void Media::setFormat(const QString &format) {
+  m_format = format;
+}
 
-QString Media::airingStatus() const { return m_airingStatus; }
+QString Media::airingStatus() const {
+  return m_airingStatus;
+}
 
 void Media::setAiringStatus(const QString &airingStatus) {
   m_airingStatus = airingStatus;
 }
 
-int Media::episodes() const { return m_episodes; }
+int Media::episodes() const {
+  return m_episodes;
+}
 
-void Media::setEpisodes(int episodes) { m_episodes = episodes; }
+void Media::setEpisodes(int episodes) {
+  m_episodes = episodes;
+}
 
-int Media::duration() const { return m_duration; }
+int Media::duration() const {
+  return m_duration;
+}
 
-void Media::setDuration(int duration) { m_duration = duration; }
+void Media::setDuration(int duration) {
+  m_duration = duration;
+}
 
-QString Media::coverImage() const { return m_coverImage; }
+QString Media::coverImage() const {
+  return m_coverImage;
+}
 
 void Media::setCoverImage(const QString &coverImage) {
   m_coverImage = coverImage;
 }
 
-QStringList Media::synonyms() const { return m_synonyms; }
+QStringList Media::synonyms() const {
+  return m_synonyms;
+}
 
-void Media::setSynonyms(const QStringList &synonyms) { m_synonyms = synonyms; }
+void Media::setSynonyms(const QStringList &synonyms) {
+  m_synonyms = synonyms;
+}
 
-QStringList Media::genres() const { return m_genres; }
+QStringList Media::genres() const {
+  return m_genres;
+}
 
-void Media::setGenres(const QStringList &genres) { m_genres = genres; }
+void Media::setGenres(const QStringList &genres) {
+  m_genres = genres;
+}
 
-QStringList Media::tags() const { return m_tags; }
+QStringList Media::tags() const {
+  return m_tags;
+}
 
-void Media::setTags(const QStringList &tags) { m_tags = tags; }
+void Media::setTags(const QStringList &tags) {
+  m_tags = tags;
+}
 
-bool Media::hasNextAiringEpisode() const { return m_hasNextAiringEpisode; }
+bool Media::hasNextAiringEpisode() const {
+  return m_hasNextAiringEpisode;
+}
 
 void Media::setHasNextAiringEpisode(bool hasNextAiringEpisode) {
   m_hasNextAiringEpisode = hasNextAiringEpisode;
 }
 
-QDateTime Media::airingAt() const { return m_airingAt; }
+QDateTime Media::airingAt() const {
+  return m_airingAt;
+}
 
-void Media::setAiringAt(const QDateTime &airingAt) { m_airingAt = airingAt; }
+void Media::setAiringAt(const QDateTime &airingAt) {
+  m_airingAt = airingAt;
+}
 
-int Media::nextAiringEpisode() const { return m_nextAiringEpisode; }
+int Media::nextAiringEpisode() const {
+  return m_nextAiringEpisode;
+}
 
 void Media::setNextAiringEpisode(int nextAiringEpisode) {
   m_nextAiringEpisode = nextAiringEpisode;
 }
 
-int Media::sequel() const { return m_sequel; }
+int Media::sequel() const {
+  return m_sequel;
+}
 
-void Media::setSequel(int sequel) { m_sequel = sequel; }
+void Media::setSequel(int sequel) {
+  m_sequel = sequel;
+}
 
-QString Media::listStatus() const { return m_listStatus; }
+QString Media::listStatus() const {
+  return m_listStatus;
+}
 
 void Media::setListStatus(const QString &listStatus) {
   m_listStatus = listStatus;
 }
 
-double Media::score() const { return m_score; }
+double Media::score() const {
+  return m_score;
+}
 
-void Media::setScore(double score) { m_score = score; }
+void Media::setScore(double score) {
+  m_score = score;
+}
 
-int Media::progress() const { return m_progress; }
+int Media::progress() const {
+  return m_progress;
+}
 
-void Media::setProgress(int progress) { m_progress = progress; }
+void Media::setProgress(int progress) {
+  m_progress = progress;
+}
 
-int Media::repeat() const { return m_repeat; }
+int Media::repeat() const {
+  return m_repeat;
+}
 
-void Media::setRepeat(int repeat) { m_repeat = repeat; }
+void Media::setRepeat(int repeat) {
+  m_repeat = repeat;
+}
 
-int Media::priority() const { return m_priority; }
+int Media::priority() const {
+  return m_priority;
+}
 
-void Media::setPriority(int priority) { m_priority = priority; }
+void Media::setPriority(int priority) {
+  m_priority = priority;
+}
 
-QString Media::notes() const { return m_notes; }
+QString Media::notes() const {
+  return m_notes;
+}
 
-void Media::setNotes(const QString &notes) { m_notes = notes; }
+void Media::setNotes(const QString &notes) {
+  m_notes = notes;
+}
 
-bool Media::hiddenFromStatusLists() const { return m_hiddenFromStatusLists; }
+bool Media::hiddenFromStatusLists() const {
+  return m_hiddenFromStatusLists;
+}
 
 void Media::setHiddenFromStatusLists(bool hiddenFromStatusLists) {
   m_hiddenFromStatusLists = hiddenFromStatusLists;
 }
 
-QMap<QString, bool> Media::customLists() const { return m_customLists; }
+QMap<QString, bool> Media::customLists() const {
+  return m_customLists;
+}
 
 void Media::setCustomLists(const QMap<QString, bool> &customLists) {
   m_customLists = customLists;
 }
 
-bool Media::isPrivate() const { return m_private; }
+bool Media::isPrivate() const {
+  return m_private;
+}
 
-void Media::setIsPrivate(bool isPrivate) { m_private = isPrivate; }
+void Media::setIsPrivate(bool isPrivate) {
+  m_private = isPrivate;
+}
 
 void Media::load(const QJsonObject &mediaObject) {
   if (mediaObject.contains("media")) {
@@ -138,8 +222,7 @@ void Media::load(const QJsonObject &mediaObject) {
   this->setPriority(mediaObject.value("priority").toInt());
   this->setIsPrivate(mediaObject.value("private").toBool());
   this->setNotes(mediaObject.value("notes").toString());
-  this->setHiddenFromStatusLists(
-      mediaObject.value("hiddenFromStatusLists").toBool());
+  this->setHiddenFromStatusLists(mediaObject.value("hiddenFromStatusLists").toBool());
 
   QMap<QString, bool> customLists;
   auto customListArray = mediaObject.value("customLists").toObject();
@@ -220,16 +303,12 @@ void Media::loadInnerMedia(const QJsonObject &innerMedia) {
 
   this->setTags(tags);
 
-  this->setHasNextAiringEpisode(
-      !innerMedia.value("nextAiringEpisode").isNull());
+  this->setHasNextAiringEpisode(!innerMedia.value("nextAiringEpisode").isNull());
 
   if (this->hasNextAiringEpisode()) {
-    auto nextAiringEpisodeObject =
-        innerMedia.value("nextAiringEpisode").toObject();
-    this->setAiringAt(QDateTime::fromTime_t(
-        nextAiringEpisodeObject.value("airingAt").toInt()));
-    this->setNextAiringEpisode(
-        nextAiringEpisodeObject.value("episode").toInt());
+    auto nextAiringEpisodeObject = innerMedia.value("nextAiringEpisode").toObject();
+    this->setAiringAt(QDateTime::fromTime_t(nextAiringEpisodeObject.value("airingAt").toInt()));
+    this->setNextAiringEpisode(nextAiringEpisodeObject.value("episode").toInt());
   }
 
   auto relationsObject = innerMedia.value("relations").toObject();

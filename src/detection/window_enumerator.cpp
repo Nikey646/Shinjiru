@@ -31,8 +31,7 @@ WindowEnumerator::WindowEnumerator() : Singleton() {
   AniList &anilist = AniList::instance();
 
   QTimer *windowTimer = new QTimer(this);
-  connect(windowTimer, &QTimer::timeout,
-          [this]() { this->enumerateWindows(); });
+  connect(windowTimer, &QTimer::timeout, [this]() { this->enumerateWindows(); });
 
   QCoreApplication::connect(&anilist, &AniList::authenticated,
                             [windowTimer]() { windowTimer->start(5000); });

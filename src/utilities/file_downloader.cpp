@@ -17,4 +17,6 @@ void FileDownloader::fileDownloaded(QNetworkReply *reply) {
   emit downloaded();
 }
 
-QByteArray FileDownloader::downloadedData() const { return m_DownloadedData; }
+QByteArray FileDownloader::downloadedData() const {
+  return m_DownloadedData;
+}

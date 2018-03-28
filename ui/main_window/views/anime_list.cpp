@@ -13,8 +13,7 @@ AnimeList::AnimeList(QWidget *parent)
 
   mediaList = &MediaList::instance();
 
-  connect(refreshTimer, &QTimer::timeout,
-          []() { AniList::instance().requestReload(); });
+  connect(refreshTimer, &QTimer::timeout, []() { AniList::instance().requestReload(); });
 
   using namespace std::chrono_literals;
   refreshTimer->setInterval(15min);
@@ -73,18 +72,18 @@ AnimeList::AnimeList(QWidget *parent)
       auto index = ui->tabWidget->indexOf(list);
       auto mediaSet = mediaList->getMediaList(title);
 
-      ui->tabWidget->setTabText(
-          index, tr("%1 (%2)").arg(trtitle).arg(mediaSet.size()));
+      ui->tabWidget->setTabText(index, tr("%1 (%2)").arg(trtitle).arg(mediaSet.size()));
     });
 
     this->sortTabs();
 
-    std::for_each(listTabs.begin(), listTabs.end(),
-                  [](auto table) { table->refresh(); });
+    std::for_each(listTabs.begin(), listTabs.end(), [](auto table) { table->refresh(); });
   });
 }
 
-AnimeList::~AnimeList() { delete ui; }
+AnimeList::~AnimeList() {
+  delete ui;
+}
 
 void AnimeList::sortTabs() {
   auto tabBar = ui->tabWidget->tabBar();

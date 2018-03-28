@@ -68,17 +68,13 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
 
   auto overload = QOverload<int>::of(&QSpinBox::valueChanged);
 
-  connect(ui->progress, overload, this,
-          [this](int v) { changes["progress"] = v; });
+  connect(ui->progress, overload, this, [this](int v) { changes["progress"] = v; });
 
-  connect(ui->rewatched, overload, this,
-          [this](int v) { changes["repeat"] = v; });
+  connect(ui->rewatched, overload, this, [this](int v) { changes["repeat"] = v; });
 
-  connect(ui->priority, overload, this,
-          [this](int v) { changes["priority"] = v; });
+  connect(ui->priority, overload, this, [this](int v) { changes["priority"] = v; });
 
-  connect(ui->isPrivate, &QCheckBox::clicked, this,
-          [this](bool v) { changes["private"] = v; });
+  connect(ui->isPrivate, &QCheckBox::clicked, this, [this](bool v) { changes["private"] = v; });
 
   connect(ui->notes, &QTextEdit::textChanged, this,
           [this]() { changes["notes"] = ui->notes->toPlainText(); });
@@ -86,7 +82,9 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
   createScoreEditor();
 }
 
-AnimePanel::~AnimePanel() { delete ui; }
+AnimePanel::~AnimePanel() {
+  delete ui;
+}
 
 void AnimePanel::createScoreEditor() {
   auto &user = User::instance();
@@ -108,8 +106,7 @@ void AnimePanel::createScoreEditor() {
 
     layout->addWidget(score_container);
 
-    connect(score_container, overload, this,
-            [this, scoreFormat](int v) { changes["score"] = v; });
+    connect(score_container, overload, this, [this, scoreFormat](int v) { changes["score"] = v; });
   } else if (scoreFormat == "POINT_5") {
     QComboBox *score_container = new QComboBox(this);
 
@@ -125,9 +122,8 @@ void AnimePanel::createScoreEditor() {
 
     layout->addWidget(score_container);
 
-    connect(
-        score_container, &QComboBox::currentTextChanged, this,
-        [this](auto v) { changes["score"] = v.left(v.length() - 2).toInt(); });
+    connect(score_container, &QComboBox::currentTextChanged, this,
+            [this](auto v) { changes["score"] = v.left(v.length() - 2).toInt(); });
 
   } else if (scoreFormat == "POINT_3") {
     QComboBox *score_container = new QComboBox(this);
@@ -154,10 +150,9 @@ void AnimePanel::createScoreEditor() {
 
     layout->addWidget(score_container);
 
-    connect(
-        score_container, &QComboBox::currentTextChanged, this, [this](auto v) {
-          changes["score"] = v == ":)" ? 3 : v == ":|" ? 2 : v == ":(" ? 1 : 0;
-        });
+    connect(score_container, &QComboBox::currentTextChanged, this, [this](auto v) {
+      changes["score"] = v == ":)" ? 3 : v == ":|" ? 2 : v == ":(" ? 1 : 0;
+    });
   } else if (scoreFormat == "POINT_10_DECIMAL") {
     QDoubleSpinBox *score_container = new QDoubleSpinBox(this);
 
@@ -172,8 +167,7 @@ void AnimePanel::createScoreEditor() {
 
     auto doverload = QOverload<double>::of(&QDoubleSpinBox::valueChanged);
 
-    connect(score_container, doverload, this,
-            [this](double v) { changes["score"] = v; });
+    connect(score_container, doverload, this, [this](double v) { changes["score"] = v; });
   }
 
   ui->score->setLayout(layout);

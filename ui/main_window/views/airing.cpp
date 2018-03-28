@@ -7,6 +7,8 @@ Airing::Airing(QWidget *parent) : QWidget(parent), ui(new Ui::Airing) {
   ui->setupUi(this);
 }
 
-Airing::~Airing() { delete ui; }
+Airing::~Airing() {
+  delete ui;
+}
 
 }  // namespace Views

@@ -37,8 +37,7 @@ class MediaTableModel : public QAbstractTableModel {
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;
   int rowCount(const QModelIndex &parent = QModelIndex()) const;
   int columnCount(const QModelIndex &parent = QModelIndex()) const;
-  bool setData(const QModelIndex &index, const QVariant &value,
-               int role = Qt::EditRole);
+  bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
   Media *media(const QModelIndex &index) const;
   Qt::ItemFlags flags(const QModelIndex &index) const;

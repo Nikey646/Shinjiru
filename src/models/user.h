@@ -8,13 +8,11 @@
 class User : public Singleton<User> {
   Q_OBJECT
 
-  Q_PROPERTY(QString displayName READ displayName WRITE setDisplayName NOTIFY
-                 displayNameChanged)
+  Q_PROPERTY(QString displayName READ displayName WRITE setDisplayName NOTIFY displayNameChanged)
   Q_PROPERTY(QString avatar READ avatar WRITE setAvatar NOTIFY avatarChanged)
-  Q_PROPERTY(QString scoreFormat READ scoreFormat WRITE setScoreFormat NOTIFY
-                 scoreFormatChanged)
-  Q_PROPERTY(QStringList customListNames READ customListNames WRITE
-                 setCustomListNames NOTIFY customListNamesChanged)
+  Q_PROPERTY(QString scoreFormat READ scoreFormat WRITE setScoreFormat NOTIFY scoreFormatChanged)
+  Q_PROPERTY(QStringList customListNames READ customListNames WRITE setCustomListNames NOTIFY
+                 customListNamesChanged)
 
  public:
   void load();

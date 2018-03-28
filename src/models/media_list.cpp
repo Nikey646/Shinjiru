@@ -27,24 +27,22 @@ MediaList::MediaList() {
       if (episodePlaying > media->progress()) {
         QTimer *updateTimer = new QTimer;
         this->m_updateCancelled = false;
-        connect(updateTimer, &QTimer::timeout, this,
-                [this, updateTimer, media, episodePlaying]() {
-                  auto &store = MediaStore::instance();
-                  if (!this->m_updateCancelled &&
-                      episodePlaying == store.episodePlaying() &&
-                      media == store.mediaPlaying()) {
-                    QJsonObject data;
-                    data["progress"] = episodePlaying;
-                    data["status"] = "CURRENT";
+        connect(updateTimer, &QTimer::timeout, this, [this, updateTimer, media, episodePlaying]() {
+          auto &store = MediaStore::instance();
+          if (!this->m_updateCancelled && episodePlaying == store.episodePlaying() &&
+              media == store.mediaPlaying()) {
+            QJsonObject data;
+            data["progress"] = episodePlaying;
+            data["status"] = "CURRENT";
 
-                    if (episodePlaying == media->episodes()) {
-                      data["status"] = "COMPLETED";
-                    }
+            if (episodePlaying == media->episodes()) {
+              data["status"] = "COMPLETED";
+            }
 
-                    this->updateMedia(media, data);
-                  }
-                  updateTimer->deleteLater();
-                });
+            this->updateMedia(media, data);
+          }
+          updateTimer->deleteLater();
+        });
         updateTimer->setSingleShot(true);
         using namespace std::literals::chrono_literals;
         updateTimer->start(std::chrono::milliseconds(2min));
@@ -149,9 +147,8 @@ void MediaList::removeMedia(Media *media) {
     const auto object = rootObject.value("DeleteMediaListEntry").toObject();
 
     if (object.value("delete").toBool()) {
-      std::for_each(
-          m_lists.keyBegin(), m_lists.keyEnd(),
-          [media, this](auto list) { this->removeMediaFromList(list, media); });
+      std::for_each(m_lists.keyBegin(), m_lists.keyEnd(),
+                    [media, this](auto list) { this->removeMediaFromList(list, media); });
 
       delete media;
       emit loadFinished();
@@ -186,7 +183,9 @@ QSet<int> MediaList::getMediaList(const QString &key) const {
   return m_lists[key];
 }
 
-QList<QString> MediaList::getMediaLists() const { return m_lists.keys(); }
+QList<QString> MediaList::getMediaLists() const {
+  return m_lists.keys();
+}
 
 void MediaList::addMediaToList(const QString &list, Media *media) {
   auto id = media->id();
@@ -216,6 +215,10 @@ void MediaList::removeMediaFromList(const QString &list, Media *media) {
   }
 }
 
-bool MediaList::loading() const { return m_listLoading; }
+bool MediaList::loading() const {
+  return m_listLoading;
+}
 
-void MediaList::cancelUpdate() { this->m_updateCancelled = true; }
+void MediaList::cancelUpdate() {
+  this->m_updateCancelled = true;
+}

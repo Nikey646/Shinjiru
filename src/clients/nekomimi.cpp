@@ -5,9 +5,13 @@
 
 #include <anitomy/anitomy.h>
 
-Nekomimi::Nekomimi() { this->nam = new QNetworkAccessManager(nullptr); }
+Nekomimi::Nekomimi() {
+  this->nam = new QNetworkAccessManager(nullptr);
+}
 
-Nekomimi::~Nekomimi() { delete nam; }
+Nekomimi::~Nekomimi() {
+  delete nam;
+}
 
 QList<RSSItem *> Nekomimi::fetch() {
   QUrl url("https://rss.urus.ai/");
@@ -59,8 +63,7 @@ QList<RSSItem *> Nekomimi::readReply(QNetworkReply *reply) {
       auto text = item.text().toString();
 
       if (tag == "title") {
-        std::wstring ws =
-            text.replace("<!CDATA[", "").replace("]]>", "").toStdWString();
+        std::wstring ws = text.replace("<!CDATA[", "").replace("]]>", "").toStdWString();
         titleParser.Parse(ws);
 
         const auto &elements = titleParser.elements();

@@ -10,11 +10,9 @@ AniList::AniList() {
   oauth2.setAccessTokenUrl(QUrl("https://auth.shinjiru.me/v2.php"));
   oauth2.setClientIdentifier("16");
 
-  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::statusChanged, this,
-          &AniList::statusChanged);
+  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::statusChanged, this, &AniList::statusChanged);
 
-  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
-          &QDesktopServices::openUrl);
+  connect(&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, &QDesktopServices::openUrl);
 }
 
 AniList::~AniList() {
@@ -24,11 +22,9 @@ AniList::~AniList() {
   }
 }
 
-QNetworkReply *AniList::graphql(const QString &query,
-                                const QJsonObject &variables) {
-  return oauth2.post(
-      graphqlUrl,
-      {{"query", query}, {"variables", QJsonDocument(variables).toJson()}});
+QNetworkReply *AniList::graphql(const QString &query, const QJsonObject &variables) {
+  return oauth2.post(graphqlUrl,
+                     {{"query", query}, {"variables", QJsonDocument(variables).toJson()}});
 }
 
 QNetworkReply *AniList::graphql(const QString &query) {
@@ -44,7 +40,9 @@ int AniList::userId() {
   return object["sub"].toString().toInt();
 }
 
-void AniList::requestReload() { emit reload(); }
+void AniList::requestReload() {
+  emit reload();
+}
 
 void AniList::grant() {
   if (replyHandler == nullptr) {

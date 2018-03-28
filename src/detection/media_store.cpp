@@ -10,9 +10,13 @@ QList<Robot::Process> MediaStore::processes() const {
   return this->m_processes.values();
 }
 
-Media *MediaStore::mediaPlaying() const { return m_mediaPlaying; }
+Media *MediaStore::mediaPlaying() const {
+  return m_mediaPlaying;
+}
 
-int MediaStore::episodePlaying() const { return m_episode; }
+int MediaStore::episodePlaying() const {
+  return m_episode;
+}
 
 bool MediaStore::hasMediaPlayer(int pid) const {
   return this->m_mediaPlayers.contains(pid);

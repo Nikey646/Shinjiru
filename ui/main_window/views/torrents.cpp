@@ -33,7 +33,9 @@ Torrents::Torrents(QWidget *parent)
   timer->start();
 }
 
-Torrents::~Torrents() { delete ui; }
+Torrents::~Torrents() {
+  delete ui;
+}
 
 void Torrents::timerTick() {
   --refresh;

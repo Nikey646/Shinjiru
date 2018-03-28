@@ -1,9 +1,10 @@
 #include "./media_table_model.h"
 
-MediaTableModel::MediaTableModel(QObject *parent)
-    : QAbstractTableModel(parent) {}
+MediaTableModel::MediaTableModel(QObject *parent) : QAbstractTableModel(parent) {}
 
-void MediaTableModel::setList(const QSet<int> &list) { m_list = list; }
+void MediaTableModel::setList(const QSet<int> &list) {
+  m_list = list;
+}
 
 void MediaTableModel::refresh() {
   emit layoutAboutToBeChanged();
@@ -27,13 +28,13 @@ QVariant MediaTableModel::headerData(int s, Qt::Orientation o, int r) const {
   }
 
   {  // Translations for all possible roles to load them into linguist
-    QT_TR_NOOP("ID");
-    QT_TR_NOOP("Title");
-    QT_TR_NOOP("Progress");
-    QT_TR_NOOP("Episodes");
-    QT_TR_NOOP("Score");
-    QT_TR_NOOP("Status");
-    QT_TR_NOOP("AiringStatus");
+    tr("ID");
+    tr("Title");
+    tr("Progress");
+    tr("Episodes");
+    tr("Score");
+    tr("Status");
+    tr("AiringStatus");
   }
 
   return QVariant();
@@ -49,8 +50,7 @@ bool MediaTableModel::defaultHidden(int section) const {
   return false;
 }
 
-bool MediaTableModel::setData(const QModelIndex &index, const QVariant &value,
-                              int role) {
+bool MediaTableModel::setData(const QModelIndex &index, const QVariant &value, int role) {
   if (role != Qt::EditRole) {
     return false;
   }
@@ -79,8 +79,7 @@ bool MediaTableModel::setData(const QModelIndex &index, const QVariant &value,
 }
 
 QVariant MediaTableModel::data(const QModelIndex &index, int role) const {
-  if (index.row() < 0 || index.row() >= m_list.count() ||
-      role != Qt::DisplayRole) {
+  if (index.row() < 0 || index.row() >= m_list.count() || role != Qt::DisplayRole) {
     return QVariant();
   }
 

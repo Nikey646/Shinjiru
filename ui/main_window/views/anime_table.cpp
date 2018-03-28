@@ -62,7 +62,9 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
   });
 }
 
-void AnimeTable::setList(const QSet<int> &list) { model->setList(list); }
+void AnimeTable::setList(const QSet<int> &list) {
+  model->setList(list);
+}
 
 void AnimeTable::refresh() {
   model->refresh();
@@ -156,15 +158,13 @@ void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
 
     customLists->addAction(action);
 
-    connect(action, &QAction::triggered,
-            [i, this](bool checked) { setCustomList(i, checked); });
+    connect(action, &QAction::triggered, [i, this](bool checked) { setCustomList(i, checked); });
   }
 
   customLists->addSeparator();
   customLists->addAction(hideDefault);
 
-  connect(hideDefault, SIGNAL(triggered(bool)),
-          SLOT(toggleHiddenDefault(bool)));
+  connect(hideDefault, SIGNAL(triggered(bool)), SLOT(toggleHiddenDefault(bool)));
 
   contextMenu->exec(event->globalPos());
   contextMenu->deleteLater();
@@ -246,8 +246,7 @@ void AnimeTable::toggleHiddenDefault(const bool checked) {
 
   auto customLists = selectedMedia->customLists();
 
-  auto empty = std::all_of(customLists.begin(), customLists.end(),
-                           [](auto v) { return !v; });
+  auto empty = std::all_of(customLists.begin(), customLists.end(), [](auto v) { return !v; });
 
   if (empty) {
     return;

@@ -4,16 +4,14 @@
 
 #include "./media_table_model.h"
 
-MediaTableProxyModel::MediaTableProxyModel(QObject *p)
-    : QSortFilterProxyModel(p) {}
+MediaTableProxyModel::MediaTableProxyModel(QObject *p) : QSortFilterProxyModel(p) {}
 
 void MediaTableProxyModel::setFilter(const QString &filter) {
   m_filter = filter;
   this->invalidateFilter();
 }
 
-bool MediaTableProxyModel::filterAcceptsRow(int row,
-                                            const QModelIndex &parent) const {
+bool MediaTableProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) const {
   if (m_filter.isEmpty()) {
     return true;
   }
@@ -32,8 +30,7 @@ bool MediaTableProxyModel::filterAcceptsRow(int row,
   return media->title().contains(m_filter, Qt::CaseInsensitive);
 }
 
-bool MediaTableProxyModel::lessThan(const QModelIndex &l,
-                                    const QModelIndex &r) const {
+bool MediaTableProxyModel::lessThan(const QModelIndex &l, const QModelIndex &r) const {
   auto source = static_cast<MediaTableModel *>(sourceModel());
   auto column = l.column();
 

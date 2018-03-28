@@ -20,13 +20,12 @@ AnimeList::AnimeList(QWidget *parent)
   refreshTimer->setInterval(15min);
   refreshTimer->start();
 
-  connect(ui->lineEdit, &QLineEdit::textChanged, [this](const QString &text) {
-    for (auto &&list : listTabs.values()) {
-      list->setFilter(text);
-    }
+  connect(ui->lineEdit, &QLineEdit::textChanged, this, [this](auto text) {
+    std::for_each(listTabs.begin(), listTabs.end(),
+                  [&text](auto table) { table->setFilter(text); });
   });
 
-  connect(mediaList, &MediaList::mediaListsChanged, [this]() {
+  connect(mediaList, &MediaList::mediaListsChanged, this, [this]() {
     auto lists = mediaList->getMediaLists();
 
     for (auto &&list : lists) {
@@ -61,14 +60,14 @@ AnimeList::AnimeList(QWidget *parent)
     this->sortTabs();
   });
 
-  connect(mediaList, &MediaList::mediaListChanged, [this](const QString &list) {
+  connect(mediaList, &MediaList::mediaListChanged, this, [this](auto list) {
     auto mediaSet = mediaList->getMediaList(list);
 
     this->listTabs[list]->setList(mediaSet);
   });
 
-  connect(mediaList, &MediaList::loadFinished, [this]() {
-    for (auto &&title : listTabs.keys()) {
+  connect(mediaList, &MediaList::loadFinished, this, [this]() {
+    std::for_each(listTabs.keyBegin(), listTabs.keyEnd(), [this](auto title) {
       auto list = listTabs.value(title);
       auto trtitle = tr(qPrintable(title));
       auto index = ui->tabWidget->indexOf(list);
@@ -76,13 +75,12 @@ AnimeList::AnimeList(QWidget *parent)
 
       ui->tabWidget->setTabText(
           index, tr("%1 (%2)").arg(trtitle).arg(mediaSet.size()));
-    }
+    });
 
     this->sortTabs();
 
-    for (auto &&list : listTabs.values()) {
-      list->refresh();
-    }
+    std::for_each(listTabs.begin(), listTabs.end(),
+                  [](auto table) { table->refresh(); });
   });
 }
 

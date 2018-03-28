@@ -31,64 +31,64 @@ MainWindow::MainWindow(QWidget *parent)
     downloadAvatar(user.avatar());
   }
 
-  connect(&user, &User::displayNameChanged, [this, &user]() {
+  connect(&user, &User::displayNameChanged, this, [this, &user]() {
     ui->labelDisplayName->setText(user.displayName());
   });
 
-  connect(&user, &User::avatarChanged, [this, &user]() {
+  connect(&user, &User::avatarChanged, this, [this, &user]() {
     if (user.avatar().size() != 0) {
       downloadAvatar(user.avatar());
     }
   });
 
-  connect(ui->buttonAnimeList, &QPushButton::clicked,
+  connect(ui->buttonAnimeList, &QPushButton::clicked, this,
           [this]() { ui->mainPanel->setCurrentWidget(viewAnimeList); });
 
-  connect(ui->buttonAiring, &QPushButton::clicked,
+  connect(ui->buttonAiring, &QPushButton::clicked, this,
           [this]() { ui->mainPanel->setCurrentWidget(viewAiring); });
 
-  connect(ui->buttonNowPlaying, &QPushButton::clicked,
+  connect(ui->buttonNowPlaying, &QPushButton::clicked, this,
           [this]() { ui->mainPanel->setCurrentWidget(viewNowPlaying); });
 
-  connect(ui->buttonTorrents, &QPushButton::clicked,
+  connect(ui->buttonTorrents, &QPushButton::clicked, this,
           [this]() { ui->mainPanel->setCurrentWidget(viewTorrents); });
 
-  connect(ui->actionExit, &QAction::triggered, []() { qApp->exit(); });
+  connect(ui->actionExit, &QAction::triggered, this, []() { qApp->exit(); });
 
-  connect(ui->actionRefreshList, &QAction::triggered,
+  connect(ui->actionRefreshList, &QAction::triggered, this,
           []() { AniList::instance().requestReload(); });
 
-  connect(ui->actionOpenAnimeList, &QAction::triggered, []() {
+  connect(ui->actionOpenAnimeList, &QAction::triggered, this, []() {
     const auto id = QString::number(AniList::instance().userId());
     const auto url = QUrl("https://anilist.co/user/" + id + "/animelist");
     QDesktopServices::openUrl(url);
   });
 
-  connect(ui->actionOpenUserPage, &QAction::triggered, []() {
+  connect(ui->actionOpenUserPage, &QAction::triggered, this, []() {
     const auto id = QString::number(AniList::instance().userId());
     const auto url = QUrl("https://anilist.co/user/" + id);
     QDesktopServices::openUrl(url);
   });
 
-  connect(ui->actionOpenHomePage, &QAction::triggered, []() {
+  connect(ui->actionOpenHomePage, &QAction::triggered, this, []() {
     const auto url = QUrl("https://anilist.co");
     QDesktopServices::openUrl(url);
   });
 
-  connect(ui->actionSettings, &QAction::triggered, [this]() {
+  connect(ui->actionSettings, &QAction::triggered, this, [this]() {
     SettingsDialog *dialog = new SettingsDialog;
 
-    connect(dialog, &SettingsDialog::finished,
+    connect(dialog, &SettingsDialog::finished, this,
             [dialog]() { dialog->deleteLater(); });
 
     dialog->show();
   });
 
-  connect(ui->actionAbout, &QAction::triggered, []() {
+  connect(ui->actionAbout, &QAction::triggered, this, []() {
     // TODO
   });
 
-  connect(ui->actionCheckForUpdates, &QAction::triggered, []() {
+  connect(ui->actionCheckForUpdates, &QAction::triggered, this, []() {
     // TODO
   });
 }
@@ -104,7 +104,7 @@ MainWindow::~MainWindow() {
 void MainWindow::downloadAvatar(const QString &url) {
   FileDownloader *f = new FileDownloader(url);
 
-  connect(f, &FileDownloader::downloaded, [this, f]() {
+  connect(f, &FileDownloader::downloaded, this, [this, f]() {
     QPixmap image;
     image.loadFromData(f->downloadedData());
     ui->labelAvatar->setPixmap(image);

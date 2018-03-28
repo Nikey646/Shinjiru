@@ -22,7 +22,7 @@ NowPlaying::NowPlaying(QWidget *parent)
 
   timer->setInterval(1000);
 
-  MediaStore &mediaStore = MediaStore::instance();
+  MediaStore &store = MediaStore::instance();
 
   QPixmap defaultCover(":/res/no_cover.jpg");
   defaultCover = defaultCover.scaledToWidth(ui->defaultImage->width(),
@@ -32,10 +32,10 @@ NowPlaying::NowPlaying(QWidget *parent)
 
   ui->tabWidget->setCurrentWidget(ui->tabNotPlaying);
 
-  connect(&mediaStore, &MediaStore::mediaPlayingChanged, [&mediaStore, this]() {
-    int currentEpisode = mediaStore.episodePlaying();
+  connect(&store, &MediaStore::mediaPlayingChanged, this, [&store, this]() {
+    int currentEpisode = store.episodePlaying();
 
-    this->media = mediaStore.mediaPlaying();
+    this->media = store.mediaPlaying();
     this->episode = QString::number(currentEpisode);
 
     updateMedia();
@@ -54,14 +54,14 @@ NowPlaying::NowPlaying(QWidget *parent)
     }
   });
 
-  connect(ui->pushButton, &QPushButton::clicked, [this]() {
+  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
     MediaList::instance().cancelUpdate();
     timer->stop();
     ui->pushButton->setEnabled(false);
     ui->updating->setText("");
   });
 
-  connect(timer, &QTimer::timeout, [this]() {
+  connect(timer, &QTimer::timeout, this, [this]() {
     --timerTime;
 
     if (timerTime == 0) {
@@ -74,8 +74,8 @@ NowPlaying::NowPlaying(QWidget *parent)
     }
   });
 
-  connect(&mediaStore, &MediaStore::processesChanged, [&mediaStore, this]() {
-    auto processes = mediaStore.processes();
+  connect(&store, &MediaStore::processesChanged, this, [&store, this]() {
+    auto processes = store.processes();
 
     QStringList processInformation;
 

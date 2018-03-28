@@ -16,21 +16,23 @@
 #include <QJsonObject>
 
 MediaList::MediaList() {
-  auto &mediaStore = MediaStore::instance();
-  connect(&mediaStore, &MediaStore::mediaPlayingChanged, [this, &mediaStore]() {
-    auto media = mediaStore.mediaPlaying();
+  auto &store = MediaStore::instance();
+  connect(&store, &MediaStore::mediaPlayingChanged, this, [this]() {
+    auto &store = MediaStore::instance();
+    auto media = store.mediaPlaying();
 
     if (media != nullptr) {
-      auto episodePlaying = mediaStore.episodePlaying();
+      auto episodePlaying = store.episodePlaying();
 
       if (episodePlaying > media->progress()) {
         QTimer *updateTimer = new QTimer;
         this->m_updateCancelled = false;
-        connect(updateTimer, &QTimer::timeout,
-                [this, updateTimer, media, episodePlaying, &mediaStore]() {
+        connect(updateTimer, &QTimer::timeout, this,
+                [this, updateTimer, media, episodePlaying]() {
+                  auto &store = MediaStore::instance();
                   if (!this->m_updateCancelled &&
-                      episodePlaying == mediaStore.episodePlaying() &&
-                      media == mediaStore.mediaPlaying()) {
+                      episodePlaying == store.episodePlaying() &&
+                      media == store.mediaPlaying()) {
                     QJsonObject data;
                     data["progress"] = episodePlaying;
                     data["status"] = "CURRENT";
@@ -59,7 +61,7 @@ void MediaList::load() {
 
   m_listLoading = true;
 
-  connect(reply, &QNetworkReply::finished, [=]() {
+  connect(reply, &QNetworkReply::finished, this, [reply, this]() {
     reply->deleteLater();
 
     if (reply->error() != QNetworkReply::NoError) {
@@ -107,7 +109,7 @@ void MediaList::updateMedia(Media *media, const QJsonObject &data) {
 
   auto reply = request.query();
 
-  connect(reply, &QNetworkReply::finished, [=]() {
+  connect(reply, &QNetworkReply::finished, this, [media, reply, this]() {
     reply->deleteLater();
 
     if (reply->error() != QNetworkReply::NoError) {
@@ -132,7 +134,7 @@ void MediaList::removeMedia(Media *media) {
 
   auto reply = request.query();
 
-  connect(reply, &QNetworkReply::finished, [=]() {
+  connect(reply, &QNetworkReply::finished, this, [reply, this, media]() {
     reply->deleteLater();
 
     if (reply->error() != QNetworkReply::NoError) {
@@ -147,9 +149,9 @@ void MediaList::removeMedia(Media *media) {
     const auto object = rootObject.value("DeleteMediaListEntry").toObject();
 
     if (object.value("delete").toBool()) {
-      for (auto &&list : m_lists.keys()) {
-        this->removeMediaFromList(list, media);
-      }
+      std::for_each(
+          m_lists.keyBegin(), m_lists.keyEnd(),
+          [media, this](auto list) { this->removeMediaFromList(list, media); });
 
       delete media;
       emit loadFinished();

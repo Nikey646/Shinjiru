@@ -18,7 +18,6 @@ class MediaStore : public Singleton<MediaStore> {
   Media *mediaPlaying() const;
   int episodePlaying() const;
 
- public slots:
   bool hasMediaPlayer(int pid) const;
   void addMediaPlayer(const Robot::Process &player);
 

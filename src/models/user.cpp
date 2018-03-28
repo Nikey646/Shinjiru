@@ -46,7 +46,7 @@ void User::load() {
   GraphQLQuery request(":/queries/Viewer.gql");
   auto reply = request.query();
 
-  connect(reply, &QNetworkReply::finished, [=]() {
+  connect(reply, &QNetworkReply::finished, this, [=]() {
     reply->deleteLater();
 
     if (reply->error() != QNetworkReply::NoError) {

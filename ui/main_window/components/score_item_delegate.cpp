@@ -122,7 +122,7 @@ void ScoreItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     QComboBox *score_container = static_cast<QComboBox *>(editor);
 
     auto score_str = score_container->currentText();
-    auto value = score_str.left(score_str.length() - 2).toInt();
+    auto value = score_str.leftRef(score_str.length() - 2).toInt();
 
     model->setData(index, value, Qt::EditRole);
   } else if (scoreFormat == "POINT_3") {

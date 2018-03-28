@@ -23,12 +23,12 @@ Torrents::Torrents(QWidget *parent)
   ui->torrentTable->setSelectionBehavior(QAbstractItemView::SelectRows);
   ui->torrentTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-  connect(ui->refreshButton, &QPushButton::clicked, [this]() {
+  connect(ui->refreshButton, &QPushButton::clicked, this, [this]() {
     refresh = 1;
     timerTick();
   });
 
-  connect(timer, SIGNAL(timeout()), SLOT(timerTick()));
+  connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
   timer->start();
 }

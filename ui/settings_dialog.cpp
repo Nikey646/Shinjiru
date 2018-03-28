@@ -15,7 +15,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   ui->settingsPanel->setCurrentIndex(0);
   ui->listSettings->setCurrentRow(0);
 
-  connect(ui->listSettings, &QListWidget::currentRowChanged,
+  connect(ui->listSettings, &QListWidget::currentRowChanged, this,
           [this](int row) { ui->settingsPanel->setCurrentIndex(row); });
 }
 

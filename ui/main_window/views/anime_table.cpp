@@ -46,7 +46,7 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
     this->setColumnHidden(i, model->defaultHidden(i));
   }
 
-  connect(this, &AnimeTable::doubleClicked, [this](const QModelIndex &idx) {
+  connect(this, &AnimeTable::doubleClicked, this, [this](auto idx) {
     auto row = idx.row();
     auto index = proxy_model->index(row, ListRoles::ID);
 
@@ -77,7 +77,8 @@ void AnimeTable::setFilter(const QString &text) {
   proxy_model->setFilter(text);
 }
 void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
-  auto row = this->selectedIndexes()[0].row();
+  auto indexes = this->selectedIndexes();
+  auto row = indexes[0].row();
   auto index = proxy_model->index(row, ListRoles::ID);
 
   auto &mediaList = MediaList::instance();
@@ -144,13 +145,14 @@ void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
   hideDefault->setChecked(selectedMedia->hiddenFromStatusLists());
 
   auto customListNames = User::instance().customListNames();
+  auto mediaCustomLists = selectedMedia->customLists();
 
   for (int i = 0; i < customListNames.size(); ++i) {
     const auto list = customListNames[i];
 
     auto *action = new QAction(list, customLists);
     action->setCheckable(true);
-    action->setChecked(selectedMedia->customLists()[list]);
+    action->setChecked(mediaCustomLists[list]);
 
     customLists->addAction(action);
 

@@ -9,7 +9,7 @@ MediaTableProxyModel::MediaTableProxyModel(QObject *p)
 
 void MediaTableProxyModel::setFilter(const QString &filter) {
   m_filter = filter;
-  emit filterChanged();
+  this->invalidateFilter();
 }
 
 bool MediaTableProxyModel::filterAcceptsRow(int row,

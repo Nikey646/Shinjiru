@@ -27,6 +27,7 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
 
   setModel(proxy_model);
 
+  setSortingEnabled(true);
   setAlternatingRowColors(true);
 
   horizontalHeader()->setStretchLastSection(true);
@@ -48,6 +49,10 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
   connect(this, &AnimeTable::doubleClicked, [this](const QModelIndex &idx) {
     auto row = idx.row();
     auto index = proxy_model->index(row, ListRoles::ID);
+
+    if (idx.column() == ListRoles::Progress) return;
+    if (idx.column() == ListRoles::Score) return;
+    if (idx.column() == ListRoles::Status) return;
 
     auto &mediaList = MediaList::instance();
     int media_id = proxy_model->data(index, Qt::DisplayRole).toInt();
@@ -175,9 +180,14 @@ void AnimeTable::incrementProgress() {
   auto episodes = selectedMedia->episodes();
   auto progress = selectedMedia->progress();
 
-  if (episodes != 0 && episodes > progress) {
+  if (episodes == 0 || progress < episodes) {
     QJsonObject data;
     data["progress"] = progress + 1;
+    data["status"] = "CURRENT";
+
+    if (progress + 1 == episodes) {
+      data["status"] = "COMPLETED";
+    }
 
     MediaList::instance().updateMedia(selectedMedia, data);
   }

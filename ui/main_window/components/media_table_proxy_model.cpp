@@ -46,6 +46,12 @@ bool MediaTableProxyModel::lessThan(const QModelIndex &l,
     return leftMedia->id() < rightMedia->id();
   } else if (column == ListRoles::Progress) {
     return leftMedia->progress() < rightMedia->progress();
+  } else if (column == ListRoles::Episodes) {
+    return leftMedia->episodes() < rightMedia->episodes();
+  } else if (column == ListRoles::Status) {
+    return leftMedia->listStatus() < rightMedia->listStatus();
+  } else if (column == ListRoles::AiringStatus) {
+    return leftMedia->airingStatus() < rightMedia->airingStatus();
   }
 
   return leftMedia->title() < rightMedia->title();

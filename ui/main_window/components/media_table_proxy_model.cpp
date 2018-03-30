@@ -16,12 +16,10 @@ bool MediaTableProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) 
     return true;
   }
 
-  Q_UNUSED(parent)
-
   auto source = static_cast<MediaTableModel *>(sourceModel());
-  QModelIndex index = createIndex(row, 0);
+  QModelIndex index = source->index(row, 0, parent);
 
-  auto media = source->media(this->mapToSource(index));
+  auto media = source->media(index);
 
   if (media == nullptr) {
     return false;

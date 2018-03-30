@@ -28,6 +28,7 @@ AnimeTable::AnimeTable(QWidget *parent, QSet<int> list) : QTableView(parent) {
   setModel(proxy_model);
 
   setSortingEnabled(true);
+  sortByColumn(ListRoles::Title, Qt::AscendingOrder);
   setAlternatingRowColors(true);
 
   horizontalHeader()->setStretchLastSection(true);

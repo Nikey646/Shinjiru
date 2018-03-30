@@ -7,3 +7,6 @@
 [submodule "lib/anitomy"]
 	path = lib/anitomy
 	url = https://github.com/erengy/anitomy.git
+[submodule "lib/breakpad"]
+	path = lib/breakpad
+	url = https://chromium.googlesource.com/breakpad/breakpad

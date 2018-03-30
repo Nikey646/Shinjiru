@@ -6,14 +6,15 @@
 #include "./ui/main_window.h"
 
 #include "./clients/anilist.h"
+#include "./detection/window_enumerator.h"
 #include "./models/media_list.h"
 #include "./models/user.h"
-
-#include "./detection/window_enumerator.h"
+#include "./utilities/crash_handler.h"
 
 int main(int argc, char *argv[]) {
 #ifdef Q_OS_WIN
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
   QCoreApplication::setOrganizationName("Kazakuri");
@@ -31,6 +32,10 @@ int main(int argc, char *argv[]) {
 
   QApplication a(argc, argv);
   a.setStyleSheet(style);
+
+#ifndef QT_DEBUG
+  Breakpad::CrashHandler::instance()->Init(qApp->applicationDirPath());
+#endif
 
   {
     QPixmap window_icon;

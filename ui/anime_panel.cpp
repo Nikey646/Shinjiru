@@ -5,6 +5,7 @@
 
 #include <algorithm>
 
+#include "../src/models/media_list.h"
 #include "../src/models/user.h"
 #include "../src/utilities/file_downloader.h"
 
@@ -78,6 +79,14 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
 
   connect(ui->notes, &QTextEdit::textChanged, this,
           [this]() { changes["notes"] = ui->notes->toPlainText(); });
+
+  connect(ui->saveButton, &QPushButton::clicked, this, [this]() {
+    MediaList::instance().updateMedia(this->media, changes);
+
+    accept();
+  });
+
+  connect(ui->cancelButton, &QPushButton::clicked, this, &AnimePanel::reject);
 
   createScoreEditor();
 }

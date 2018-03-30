@@ -1,4 +1,4 @@
-QT += core gui widgets network networkauth
+QT += core gui widgets network networkauth qml quick
 
 TARGET = Shinjiru
 TEMPLATE = app
@@ -10,6 +10,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(lib/robot.pri)
 include(lib/anitomy.pri)
 include(lib/discord-rpc.pri)
+include(lib/breakpad.pri)
 
 SOURCES += \
   src/clients/anilist.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
   src/models/rss_item.cpp \
   src/models/user.cpp \
   src/settings.cpp \
+  src/utilities/crash_handler.cpp \
   src/utilities/file_downloader.cpp \
   ui/anime_panel.cpp \
   ui/main_window.cpp \
@@ -57,6 +59,7 @@ HEADERS += \
   src/models/rss_item.h \
   src/models/user.h \
   src/settings.h \
+  src/utilities/crash_handler.h \
   src/utilities/file_downloader.h \
   src/utilities/singleton.h \
   ui/anime_panel.h \

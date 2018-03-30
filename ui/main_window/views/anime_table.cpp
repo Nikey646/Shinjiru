@@ -158,7 +158,8 @@ void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
 
     customLists->addAction(action);
 
-    connect(action, &QAction::triggered, [i, this](bool checked) { setCustomList(i, checked); });
+    connect(action, &QAction::triggered, this,
+            [i, this](bool checked) { setCustomList(i, checked); });
   }
 
   customLists->addSeparator();

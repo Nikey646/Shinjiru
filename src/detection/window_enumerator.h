@@ -17,6 +17,8 @@ class WindowEnumerator : public Singleton<WindowEnumerator> {
 
  public:
   WindowEnumerator();
+
+ public slots:
   void enumerateWindows();
 
  private:

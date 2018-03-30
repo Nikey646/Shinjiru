@@ -10,5 +10,6 @@
         <file>res/no_cover.jpg</file>
         <file>lang/shinjiru_en.qm</file>
         <file>queries/DeleteMediaListEntry.gql</file>
+        <file>qml/AiringView.qml</file>
     </qresource>
 </RCC>

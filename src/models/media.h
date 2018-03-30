@@ -9,6 +9,11 @@
 
 class Media : public QObject {
   Q_OBJECT
+
+  Q_PROPERTY(QString coverImage READ coverImage WRITE setCoverImage NOTIFY coverImageChanged)
+  Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+  Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+
  public:
   explicit Media(QObject *parent = nullptr);
 
@@ -89,9 +94,11 @@ class Media : public QObject {
 
   void load(const QJsonObject &mediaObject);
   void loadInnerMedia(const QJsonObject &innerMedia);
- signals:
 
- public slots:
+ signals:
+  void coverImageChanged();
+  void titleChanged();
+  void idChanged();
 
  private:
   int m_entryId{0};

@@ -66,21 +66,21 @@ void MediaStore::setMediaPlaying(Media *media, int episode) {
 }
 
 void MediaStore::removeInvalid() {
-  for (auto &&key : this->m_processes.keys()) {
-    auto process = this->m_processes.value(key);
+  std::for_each(m_processes.keyBegin(), m_processes.keyEnd(), [this](auto key) {
+    auto process = m_processes.value(key);
 
     if (!process.IsValid()) {
-      this->m_processes.remove(key);
+      m_processes.remove(key);
       emit processesChanged();
     }
-  }
+  });
 
-  for (auto &&key : this->m_mediaPlayers.keys()) {
+  std::for_each(m_mediaPlayers.keyBegin(), m_mediaPlayers.keyEnd(), [this](auto key) {
     auto process = this->m_mediaPlayers.value(key);
 
     if (!process.IsValid()) {
       this->m_mediaPlayers.remove(key);
       emit mediaPlayersChanged();
     }
-  }
+  });
 }

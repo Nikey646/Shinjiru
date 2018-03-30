@@ -20,7 +20,10 @@ int Media::id() const {
 }
 
 void Media::setId(int id) {
-  m_id = id;
+  if (m_id != id) {
+    m_id = id;
+    emit idChanged();
+  }
 }
 
 QString Media::title() const {
@@ -28,7 +31,10 @@ QString Media::title() const {
 }
 
 void Media::setTitle(const QString &title) {
-  m_title = title;
+  if (m_title != title) {
+    m_title = title;
+    emit titleChanged();
+  }
 }
 
 QString Media::description() const {
@@ -76,7 +82,10 @@ QString Media::coverImage() const {
 }
 
 void Media::setCoverImage(const QString &coverImage) {
-  m_coverImage = coverImage;
+  if (m_coverImage != coverImage) {
+    m_coverImage = coverImage;
+    emit coverImageChanged();
+  }
 }
 
 QStringList Media::synonyms() const {

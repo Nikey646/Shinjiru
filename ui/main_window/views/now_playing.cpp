@@ -110,7 +110,7 @@ void NowPlaying::updateMedia() {
 
     FileDownloader *f = new FileDownloader(media->coverImage());
 
-    connect(f, &FileDownloader::downloaded, [this, f]() {
+    connect(f, &FileDownloader::downloaded, this, [this, f]() {
       QPixmap image;
       image.loadFromData(f->downloadedData());
       image = image.scaledToWidth(ui->coverImage->width(), Qt::SmoothTransformation);

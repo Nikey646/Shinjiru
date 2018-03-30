@@ -11,6 +11,14 @@ Masato::~Masato() {
 }
 
 QSet<Media *> Masato::lookup(const QString &title) {
+  if (cache.contains(title)) {
+    auto result = cache.value(title);
+
+    if (result.second > QDateTime::currentDateTime()) {
+      return result.first;
+    }
+  }
+
   QUrl url("https://masato.urus.ai/search/" + title);
   QNetworkRequest request(url);
   QNetworkReply *reply = nam->get(request);
@@ -18,7 +26,11 @@ QSet<Media *> Masato::lookup(const QString &title) {
   connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
   eventLoop.exec();
 
-  return readReply(reply);
+  auto result = readReply(reply);
+
+  cache.insert(title, std::make_pair(result, QDateTime::currentDateTime().addSecs(60 * 60)));
+
+  return result;
 }
 
 QSet<Media *> Masato::readReply(QNetworkReply *reply) {

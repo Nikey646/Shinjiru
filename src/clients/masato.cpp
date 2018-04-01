@@ -19,6 +19,8 @@ QSet<Media *> Masato::lookup(const QString &title) {
     }
   }
 
+  qDebug() << "Looking up" << title << "with Masato";
+
   QUrl url("https://masato.urus.ai/search/" + title);
   QNetworkRequest request(url);
   QNetworkReply *reply = nam->get(request);
@@ -35,10 +37,9 @@ QSet<Media *> Masato::lookup(const QString &title) {
 
 QSet<Media *> Masato::readReply(QNetworkReply *reply) {
   QSet<Media *> results;
-  reply->deleteLater();
 
   if (reply->error() != QNetworkReply::NoError) {
-    qDebug() << reply->errorString();
+    qDebug() << "Masato recieved error:" << reply->errorString();
     return results;
   }
 
@@ -56,9 +57,12 @@ QSet<Media *> Masato::readReply(QNetworkReply *reply) {
     const auto media = mediaList.getMediaById(id);
 
     if (media != nullptr) {
+      qDebug() << "Masato found \"" << media->title() << "\"";
       results.insert(media);
     }
   }
+
+  reply->deleteLater();
 
   return results;
 }

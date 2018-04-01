@@ -4,6 +4,7 @@ TARGET = Shinjiru
 TEMPLATE = app
 
 CONFIG += c++14
+CONFIG += force_debug_info
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -11,6 +12,13 @@ include(lib/robot.pri)
 include(lib/anitomy.pri)
 include(lib/discord-rpc.pri)
 include(lib/breakpad.pri)
+
+win32-msvc* {
+  QMAKE_CXXFLAGS_WARN_ON -= -W3
+  QMAKE_CXXFLAGS_WARN_ON += -W4 -w44640
+  QMAKE_CXXFLAGS_RELEASE += -O2 -MD
+  QMAKE_LFLAGS_RELEASE = /INCREMENTAL:NO /DEBUG /MAP /OPT:REF
+}
 
 SOURCES += \
   src/clients/anilist.cpp \

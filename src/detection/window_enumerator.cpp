@@ -30,16 +30,23 @@ WindowEnumerator::WindowEnumerator() : Singleton() {
 
   AniList &anilist = AniList::instance();
 
-  QTimer *windowTimer = new QTimer(this);
+  windowTimer = new QTimer(this);
   windowTimer->setInterval(5000);
+  windowTimer->setSingleShot(true);
 
   connect(windowTimer, &QTimer::timeout, this, &WindowEnumerator::enumerateWindows);
-  connect(&anilist, &AniList::authenticated, this, [windowTimer]() { windowTimer->start(); });
+  connect(&anilist, &AniList::authenticated, this, [this]() { windowTimer->start(); });
 }
 
 void WindowEnumerator::enumerateWindows() {
   MediaStore &store = MediaStore::instance();
   WindowList wList = Window::GetList();
+  MediaList &mediaList = MediaList::instance();
+
+  if (mediaList.loading()) {
+    windowTimer->start();
+    return;
+  }
 
   bool mediaFound = false;
 
@@ -68,6 +75,8 @@ void WindowEnumerator::enumerateWindows() {
   if (!mediaFound) {
     store.setMediaPlaying(nullptr, 0);
   }
+
+  windowTimer->start();
 }
 
 bool WindowEnumerator::isMediaPlayer(const Process &process) {

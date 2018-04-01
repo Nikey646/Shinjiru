@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QMap>
 #include <QString>
+#include <QTimer>
 
 #include <Robot.h>
 #include <anitomy/anitomy.h>
@@ -30,6 +31,7 @@ class WindowEnumerator : public Singleton<WindowEnumerator> {
   QJsonObject m_mediaPlayers;
   QMap<QString, QString> m_exeNames;
   anitomy::Anitomy m_anitomy;
+  QTimer *windowTimer;
 };
 
 #endif  // SRC_DETECTION_WINDOW_ENUMERATOR_H__

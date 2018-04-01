@@ -164,7 +164,8 @@ QSet<Media *> MediaList::getMediaByTitle(const QString &title) {
   QSet<Media *> results;
 
   for (auto &&media : m_mediaHash) {
-    if (media->title() == title || media->synonyms().contains(title)) {
+    if (media->title().compare(title, Qt::CaseInsensitive) == 0 ||
+        media->synonyms().contains(title, Qt::CaseInsensitive)) {
       results.insert(media);
     }
   }

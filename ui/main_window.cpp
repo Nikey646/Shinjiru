@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
       viewAiring(new Views::Airing),
       viewNowPlaying(new Views::NowPlaying),
       viewTorrents(new Views::Torrents),
-      tray(new TrayIcon) {
+      tray(new TrayIcon(this)) {
   ui->setupUi(this);
   ui->mainPanel->addWidget(viewAnimeList);
   ui->mainPanel->addWidget(viewAiring);
@@ -111,7 +111,6 @@ MainWindow::~MainWindow() {
   delete viewAiring;
   delete viewNowPlaying;
   delete viewTorrents;
-  delete tray;
 }
 
 void MainWindow::changeEvent(QEvent *evt) {

@@ -71,7 +71,7 @@ void MediaStore::removeInvalid() {
   while (iproc.hasNext()) {
     auto process = iproc.next().value();
 
-    if (!process.IsValid()) {
+    if (process.HasExited()) {
       iproc.remove();
       emit processesChanged();
     }
@@ -82,7 +82,7 @@ void MediaStore::removeInvalid() {
   while (imedia.hasNext()) {
     auto process = imedia.next().value();
 
-    if (!process.IsValid()) {
+    if (process.HasExited()) {
       imedia.remove();
       emit mediaPlayersChanged();
     }

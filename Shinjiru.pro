@@ -3,6 +3,16 @@ QT += core gui widgets network networkauth qml quick
 TARGET = Shinjiru
 TEMPLATE = app
 
+VERSION_MAJOR = 3
+VERSION_MINOR = 0
+VERSION_PATCH = 0
+
+DEFINES += "VERSION_MAJOR=$$VERSION_MAJOR"\
+       "VERSION_MINOR=$$VERSION_MINOR"\
+       "VERSION_PATCH=$$VERSION_PATCH"
+
+VERSION = $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_PATCH}
+
 CONFIG += c++14
 CONFIG += force_debug_info
 
@@ -12,6 +22,7 @@ include(lib/robot.pri)
 include(lib/anitomy.pri)
 include(lib/discord-rpc.pri)
 include(lib/breakpad.pri)
+include(lib/QSimpleUpdater/QSimpleUpdater.pri)
 
 win32-msvc* {
   QMAKE_CXXFLAGS_WARN_ON -= -W3
@@ -52,7 +63,9 @@ SOURCES += \
   ui/settings_dialog.cpp \
   ui/settings_dialog/views/application.cpp \
   ui/settings_dialog/views/recognition.cpp \
-  ui/settings_dialog/views/torrent_settings.cpp
+  ui/settings_dialog/views/torrent_settings.cpp \
+    ui/tray_icon.cpp \
+    ui/settings_dialog/components/committable_widget.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -86,7 +99,9 @@ HEADERS += \
   ui/settings_dialog.h \
   ui/settings_dialog/views/application.h \
   ui/settings_dialog/views/recognition.h \
-  ui/settings_dialog/views/torrent_settings.h
+  ui/settings_dialog/views/torrent_settings.h \
+    ui/tray_icon.h \
+    ui/settings_dialog/components/committable_widget.h
 
 FORMS += \
   ui/anime_panel.ui \

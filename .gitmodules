@@ -10,3 +10,6 @@
 [submodule "lib/breakpad"]
 	path = lib/breakpad
 	url = https://chromium.googlesource.com/breakpad/breakpad
+[submodule "lib/QSimpleUpdater"]
+	path = lib/QSimpleUpdater
+	url = https://github.com/alex-spataru/QSimpleUpdater.git

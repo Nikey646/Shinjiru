@@ -53,6 +53,10 @@ void WindowEnumerator::enumerateWindows() {
   store.removeInvalid();
 
   for (auto &&window : wList) {
+    if (!window.IsValid()) {
+      continue;
+    }
+
     Process process = window.GetProcess();
 
     if (store.hasMediaPlayer(process.GetPID())) {

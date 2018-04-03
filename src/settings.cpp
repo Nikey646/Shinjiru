@@ -15,12 +15,18 @@ QVariant Settings::get(const Setting &s) const {
 
 QVariant Settings::getDefault(const Setting &s) {
   switch (s) {
+    case Setting::Language:
+      return "English";
     case Setting::StartOnBoot:
+      return false;
+    case Setting::CheckForUpdates:
       return false;
     case Setting::StartMinimized:
       return false;
     case Setting::MinimizeToTray:
       return false;
+    case Setting::CloseToTray:
+      return true;
     case Setting::UseMasato:
       return true;
   }

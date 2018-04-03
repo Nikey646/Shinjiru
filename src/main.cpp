@@ -9,6 +9,7 @@
 #include "./detection/window_enumerator.h"
 #include "./models/media_list.h"
 #include "./models/user.h"
+#include "./settings.h"
 #include "./utilities/crash_handler.h"
 
 int main(int argc, char *argv[]) {
@@ -46,6 +47,9 @@ int main(int argc, char *argv[]) {
     qApp->setWindowIcon(QIcon(window_icon));
   }
 
+  Settings s;
+
+  // TODO: language
   QTranslator qtTranslator;
   qtTranslator.load("qt_en", QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   a.installTranslator(&qtTranslator);
@@ -55,7 +59,16 @@ int main(int argc, char *argv[]) {
   a.installTranslator(&shinjiruTranslator);
 
   MainWindow w;
-  w.show();
+
+  if (s.get(Setting::StartMinimized).toBool()) {
+    if (s.get(Setting::MinimizeToTray).toBool()) {
+      w.hide();
+    } else {
+      w.showMinimized();
+    }
+  } else {
+    w.show();
+  }
 
   AniList *anilist = &AniList::instance();
 

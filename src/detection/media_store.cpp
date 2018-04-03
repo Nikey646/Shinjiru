@@ -66,21 +66,25 @@ void MediaStore::setMediaPlaying(Media *media, int episode) {
 }
 
 void MediaStore::removeInvalid() {
-  std::for_each(m_processes.keyBegin(), m_processes.keyEnd(), [this](auto key) {
-    auto process = m_processes.value(key);
+  QMutableHashIterator<int, Robot::Process> iproc(m_processes);
+
+  while (iproc.hasNext()) {
+    auto process = iproc.next().value();
 
     if (!process.IsValid()) {
-      m_processes.remove(key);
+      iproc.remove();
       emit processesChanged();
     }
-  });
+  }
 
-  std::for_each(m_mediaPlayers.keyBegin(), m_mediaPlayers.keyEnd(), [this](auto key) {
-    auto process = this->m_mediaPlayers.value(key);
+  QMutableHashIterator<int, Robot::Process> imedia(m_mediaPlayers);
+
+  while (imedia.hasNext()) {
+    auto process = imedia.next().value();
 
     if (!process.IsValid()) {
-      this->m_mediaPlayers.remove(key);
+      imedia.remove();
       emit mediaPlayersChanged();
     }
-  });
+  }
 }

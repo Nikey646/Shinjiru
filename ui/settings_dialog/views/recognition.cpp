@@ -2,11 +2,13 @@
 #include "ui_recognition.h"
 
 namespace Views {
-Recognition::Recognition(QWidget *parent) : QWidget(parent), ui(new Ui::Recognition) {
+Recognition::Recognition(QWidget *parent) : CommittableWidget(parent), ui(new Ui::Recognition) {
   ui->setupUi(this);
 }
 
 Recognition::~Recognition() {
   delete ui;
 }
+
+void Recognition::resetToDefault() {}
 }  // namespace Views

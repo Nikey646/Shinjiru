@@ -11,9 +11,12 @@
 BETTER_ENUM(
   Setting,
   int,
+  Language,
   StartOnBoot,
+  CheckForUpdates,
   StartMinimized,
   MinimizeToTray,
+  CloseToTray,
   UseMasato
 )
 // clang-format on

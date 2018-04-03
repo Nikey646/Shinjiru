@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
       viewAnimeList(new Views::AnimeList),
       viewAiring(new Views::Airing),
       viewNowPlaying(new Views::NowPlaying),
-      viewTorrents(new Views::Torrents) {
+      viewTorrents(new Views::Torrents),
+      tray(new TrayIcon) {
   ui->setupUi(this);
   ui->mainPanel->addWidget(viewAnimeList);
   ui->mainPanel->addWidget(viewAiring);
@@ -86,9 +87,22 @@ MainWindow::MainWindow(QWidget *parent)
     // TODO
   });
 
-  connect(ui->actionCheckForUpdates, &QAction::triggered, this, []() {
-    // TODO
-  });
+  updater = QSimpleUpdater::getInstance();
+
+  const QString update_url = "https://shinjiru.me/updates.json";
+  const auto version = QString("%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH);
+
+  updater->setModuleVersion(update_url, version);
+  updater->setNotifyOnFinish(update_url, true);
+  updater->setNotifyOnUpdate(update_url, true);
+  updater->setDownloaderEnabled(update_url, true);
+
+  if (settings.get(Setting::CheckForUpdates).toBool()) {
+    updater->checkForUpdates(update_url);
+  }
+
+  connect(ui->actionCheckForUpdates, &QAction::triggered, this,
+          [&update_url, this]() { updater->checkForUpdates(update_url); });
 }
 
 MainWindow::~MainWindow() {
@@ -97,6 +111,31 @@ MainWindow::~MainWindow() {
   delete viewAiring;
   delete viewNowPlaying;
   delete viewTorrents;
+  delete tray;
+}
+
+void MainWindow::changeEvent(QEvent *evt) {
+  if (evt->type() == QEvent::WindowStateChange) {
+    if (this->isMinimized() && settings.get(Setting::MinimizeToTray).toBool()) {
+      this->hide();
+      evt->ignore();
+    }
+
+    if (this->isMaximized()) {
+      tray->setShowFunction(std::bind(&MainWindow::showMaximized, this));
+    } else {
+      tray->setShowFunction(std::bind(&MainWindow::showNormal, this));
+    }
+  }
+}
+
+void MainWindow::closeEvent(QCloseEvent *evt) {
+  if (this->tray->isVisible() && settings.get(Setting::CloseToTray).toBool()) {
+    this->hide();
+    evt->ignore();
+  } else {
+    evt->accept();
+  }
 }
 
 void MainWindow::downloadAvatar(const QString &url) {

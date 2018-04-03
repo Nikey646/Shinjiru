@@ -1,7 +1,7 @@
 #ifndef UI_SETTINGS_DIALOG_VIEWS_TORRENTS_H__
 #define UI_SETTINGS_DIALOG_VIEWS_TORRENTS_H__
 
-#include <QWidget>
+#include "../components/committable_widget.h"
 
 namespace Ui {
 class TorrentSettings;
@@ -9,12 +9,14 @@ class TorrentSettings;
 
 namespace Views {
 
-class TorrentSettings : public QWidget {
+class TorrentSettings : public CommittableWidget {
   Q_OBJECT
 
  public:
   explicit TorrentSettings(QWidget *parent = 0);
   ~TorrentSettings();
+
+  void resetToDefault() override;
 
  private:
   Ui::TorrentSettings *ui;

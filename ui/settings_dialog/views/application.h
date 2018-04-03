@@ -1,19 +1,21 @@
 #ifndef UI_SETTINGS_DIALOG_VIEWS_APPLICATION_H__
 #define UI_SETTINGS_DIALOG_VIEWS_APPLICATION_H__
 
-#include <QWidget>
+#include "../components/committable_widget.h"
 
 namespace Ui {
 class Application;
 }
 
 namespace Views {
-class Application : public QWidget {
+class Application : public CommittableWidget {
   Q_OBJECT
 
  public:
   explicit Application(QWidget *parent = 0);
   ~Application();
+
+  void resetToDefault() override;
 
  private:
   Ui::Application *ui;

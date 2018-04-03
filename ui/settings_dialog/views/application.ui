@@ -45,7 +45,7 @@
          <widget class="QComboBox" name="language">
           <item>
            <property name="text">
-            <string>English</string>
+            <string notr="true">English</string>
            </property>
           </item>
          </widget>

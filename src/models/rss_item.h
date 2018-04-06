@@ -17,6 +17,7 @@ class RSSItem : public QObject {
   QString quality;
   QString size;
   QString link;
+  QString fileName;
 };
 
 #endif  // SRC_MODELS_RSS_ITEM_H__

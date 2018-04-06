@@ -69,7 +69,8 @@ SOURCES += \
     ui/main_window/components/now_playing_list_model.cpp \
     ui/settings_dialog/components/torrent_rule_model.cpp \
     ui/settings_dialog/components/torrent_rule.cpp \
-    ui/settings_dialog/views/rule_import_dialog.cpp
+    ui/settings_dialog/views/rule_import_dialog.cpp \
+    src/paths.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -109,7 +110,8 @@ HEADERS += \
     ui/main_window/components/now_playing_list_model.h \
     ui/settings_dialog/components/torrent_rule_model.h \
     ui/settings_dialog/components/torrent_rule.h \
-    ui/settings_dialog/views/rule_import_dialog.h
+    ui/settings_dialog/views/rule_import_dialog.h \
+    src/paths.h
 
 FORMS += \
   ui/anime_panel.ui \

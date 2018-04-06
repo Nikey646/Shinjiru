@@ -1,6 +1,7 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 #define UI_MAIN_WINDOW_VIEWS_TORRENTS_H__
 
+#include <QJsonObject>
 #include <QList>
 #include <QMutex>
 #include <QTimer>
@@ -22,6 +23,10 @@ class Torrents : public QWidget {
   ~Torrents();
 
   void fetchTorrents();
+  void checkForMatches();
+  void checkRule(QJsonObject rule);
+  void downloadOnce(RSSItem *item);
+  void download(RSSItem *item);
 
  public slots:
   void timerTick();

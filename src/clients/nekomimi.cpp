@@ -73,6 +73,7 @@ QList<RSSItem *> Nekomimi::readReply(QNetworkReply *reply) {
         const auto &subGroup = elements.get(anitomy::kElementReleaseGroup);
         const auto &quality = elements.get(anitomy::kElementVideoResolution);
 
+        currentItem->fileName = QString::fromStdWString(ws);
         currentItem->title = QString::fromStdWString(mediaTitle);
         currentItem->episode = QString::fromStdWString(mediaEpisode);
         currentItem->subGroup = QString::fromStdWString(subGroup);

@@ -6,8 +6,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "../../../src/paths.h"
+
 TorrentRuleModel::TorrentRuleModel(QObject *parent) : QAbstractItemModel(parent) {
-  QFile rules(qApp->applicationDirPath() + "/torrent_rules.json");
+  QFile rules(Paths::configFile("torrent_rules.json"));
 
   if (!rules.exists()) {
     rules.open(QFile::WriteOnly);

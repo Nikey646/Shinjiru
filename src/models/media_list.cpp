@@ -3,11 +3,9 @@
 #include "../clients/anilist.h"
 #include "../clients/graphql_query.h"
 #include "../clients/masato.h"
-#include "../detection/media_store.h"
 #include "../settings.h"
 #include "./user.h"
 
-#include <chrono>
 #include <string>
 #include <vector>
 
@@ -15,41 +13,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-MediaList::MediaList() {
-  auto &store = MediaStore::instance();
-  connect(&store, &MediaStore::mediaPlayingChanged, this, [this]() {
-    auto &store = MediaStore::instance();
-    auto media = store.mediaPlaying();
-
-    if (media != nullptr) {
-      auto episodePlaying = store.episodePlaying();
-
-      if (episodePlaying > media->progress()) {
-        QTimer *updateTimer = new QTimer;
-        this->m_updateCancelled = false;
-        connect(updateTimer, &QTimer::timeout, this, [this, updateTimer, media, episodePlaying]() {
-          auto &store = MediaStore::instance();
-          if (!this->m_updateCancelled && episodePlaying == store.episodePlaying() &&
-              media == store.mediaPlaying()) {
-            QJsonObject data;
-            data["progress"] = episodePlaying;
-            data["status"] = "CURRENT";
-
-            if (episodePlaying == media->episodes()) {
-              data["status"] = "COMPLETED";
-            }
-
-            this->updateMedia(media, data);
-          }
-          updateTimer->deleteLater();
-        });
-        updateTimer->setSingleShot(true);
-        using namespace std::literals::chrono_literals;
-        updateTimer->start(std::chrono::milliseconds(2min));
-      }
-    }
-  });
-}
+MediaList::MediaList() {}
 
 void MediaList::load() {
   GraphQLQuery request(":/queries/MediaList.gql");
@@ -216,10 +180,22 @@ void MediaList::removeMediaFromList(const QString &list, Media *media) {
   }
 }
 
+QHash<int, Media *> MediaList::allMedia() const {
+  return m_mediaHash;
+}
+
 bool MediaList::loading() const {
   return m_listLoading;
 }
 
 void MediaList::cancelUpdate() {
   this->m_updateCancelled = true;
+}
+
+bool MediaList::updateCancelled() const {
+  return this->m_updateCancelled;
+}
+
+void MediaList::resetCancel() {
+  this->m_updateCancelled = false;
 }

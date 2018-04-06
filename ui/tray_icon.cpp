@@ -6,7 +6,10 @@
 #include <QMenu>
 #include <QObject>
 #include <QPixmap>
+#include <QTimer>
 
+#include "../src/detection/media_store.h"
+#include "../src/models/media_list.h"
 #include "./main_window.h"
 
 TrayIcon::TrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
@@ -27,6 +30,72 @@ TrayIcon::TrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
   connect(this, &TrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::DoubleClick) {
       this->restore();
+    }
+  });
+
+  auto &store = MediaStore::instance();
+
+  connect(&store, &MediaStore::mediaPlayingChanged, this, [this]() {
+    auto &store = MediaStore::instance();
+    auto &mediaList = MediaList::instance();
+
+    auto media = store.mediaPlaying();
+
+    if (media != nullptr) {
+      auto episodePlaying = store.episodePlaying();
+
+      if (episodePlaying > media->progress()) {
+        QTimer *updateTimer = new QTimer;
+        mediaList.resetCancel();
+        connect(updateTimer, &QTimer::timeout, this, [this, updateTimer, media, episodePlaying]() {
+          auto &store = MediaStore::instance();
+          auto &mediaList = MediaList::instance();
+
+          if (!mediaList.updateCancelled() && episodePlaying == store.episodePlaying() &&
+              media == store.mediaPlaying()) {
+            QJsonObject data;
+            data["progress"] = episodePlaying;
+            data["status"] = "CURRENT";
+
+            if (episodePlaying == media->episodes()) {
+              data["status"] = "COMPLETED";
+            }
+
+            mediaList.updateMedia(media, data);
+
+            if (s.get(Setting::NotifyUpdated).toBool()) {
+              QString message;
+
+              if (data["status"] == "COMPLETED") {
+                message = tr("%1 marked as completed").arg(media->title());
+              } else {
+                message = tr("%1 updated to episode %2").arg(media->title()).arg(episodePlaying);
+              }
+              this->showMessage("Shinjiru", message);
+            }
+          }
+          updateTimer->deleteLater();
+        });
+
+        auto delay = s.get(Setting::UpdateDelay).toInt();
+        updateTimer->setSingleShot(true);
+        updateTimer->start(delay * 1000);
+
+        if (s.get(Setting::NotifyDetected).toBool()) {
+          QString time;
+          if (delay < 60) {
+            time = tr("%n second(s)", "", delay);
+          } else {
+            time = tr("%n minute(s)", "", delay / 60);
+          }
+
+          auto message = tr("Updating %1 to episode %2 in %3")
+                             .arg(media->title())
+                             .arg(episodePlaying)
+                             .arg(time);
+          this->showMessage("Shinjiru", message);
+        }
+      }
     }
   });
 

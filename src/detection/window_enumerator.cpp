@@ -43,7 +43,7 @@ void WindowEnumerator::enumerateWindows() {
   WindowList wList = Window::GetList();
   MediaList &mediaList = MediaList::instance();
 
-  if (mediaList.loading()) {
+  if (!s.get(Setting::UseAnimeRecognition).toBool() || mediaList.loading()) {
     windowTimer->start();
     return;
   }

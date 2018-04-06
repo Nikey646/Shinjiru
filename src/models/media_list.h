@@ -24,10 +24,13 @@ class MediaList : public Singleton<MediaList> {
   QList<QString> getMediaLists() const;
   void addMediaToList(const QString &list, Media *media);
   void removeMediaFromList(const QString &list, Media *media);
+  QHash<int, Media *> allMedia() const;
 
   bool loading() const;
 
   void cancelUpdate();
+  bool updateCancelled() const;
+  void resetCancel();
 
  public slots:
 

@@ -13,7 +13,7 @@
 namespace Views {
 
 NowPlaying::NowPlaying(QWidget *parent)
-    : QWidget(parent), ui(new Ui::NowPlaying), timer(new QTimer()), model(new QStringListModel()) {
+    : QWidget(parent), ui(new Ui::NowPlaying), timer(new QTimer), model(new NowPlayingListModel) {
   ui->setupUi(this);
   ui->tabWidget->tabBar()->setVisible(false);
 
@@ -50,6 +50,11 @@ NowPlaying::NowPlaying(QWidget *parent)
     }
   });
 
+  connect(ui->openProcesses, &QListView::doubleClicked, this, [this](const QModelIndex &index) {
+    Robot::Process process = model->process(index);
+    //
+  });
+
   connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
     MediaList::instance().cancelUpdate();
     timer->stop();
@@ -73,19 +78,14 @@ NowPlaying::NowPlaying(QWidget *parent)
   connect(&store, &MediaStore::processesChanged, this, [&store, this]() {
     auto processes = store.processes();
 
-    QStringList processInformation;
-
-    for (auto &&process : processes) {
-      processInformation.append(QString::fromStdString(process.GetName()));
-    }
-
-    model->setStringList(processInformation);
+    model->setProcesses(processes);
   });
 }
 
 NowPlaying::~NowPlaying() {
   delete ui;
   delete timer;
+  delete model;
 }
 
 void NowPlaying::updateMedia() {

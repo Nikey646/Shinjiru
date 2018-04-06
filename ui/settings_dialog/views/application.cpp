@@ -1,7 +1,7 @@
 #include "application.h"
 #include "ui_application.h"
 
-#include <QSettings>
+#include "../../../src/settings.h"
 
 namespace Views {
 Application::Application(QWidget *parent) : CommittableWidget(parent), ui(new Ui::Application) {

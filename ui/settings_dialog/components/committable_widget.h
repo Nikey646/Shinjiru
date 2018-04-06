@@ -20,6 +20,7 @@ class CommittableWidget : public QWidget {
   bool needsRestart() const;
 
   virtual void resetToDefault() = 0;
+  virtual void commit() {}
 
  protected:
   SettingMap changed_settings;

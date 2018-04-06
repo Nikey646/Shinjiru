@@ -2,6 +2,8 @@
 #define UI_SETTINGS_DIALOG_VIEWS_TORRENTS_H__
 
 #include "../components/committable_widget.h"
+#include "../components/torrent_rule.h"
+#include "../components/torrent_rule_model.h"
 
 namespace Ui {
 class TorrentSettings;
@@ -17,9 +19,12 @@ class TorrentSettings : public CommittableWidget {
   ~TorrentSettings();
 
   void resetToDefault() override;
+  void commit() override;
 
  private:
   Ui::TorrentSettings *ui;
+  TorrentRuleModel *model;
+  TorrentRule *currentRule;
 };
 }  // namespace Views
 

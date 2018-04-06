@@ -65,7 +65,11 @@ SOURCES += \
   ui/settings_dialog/views/recognition.cpp \
   ui/settings_dialog/views/torrent_settings.cpp \
     ui/tray_icon.cpp \
-    ui/settings_dialog/components/committable_widget.cpp
+    ui/settings_dialog/components/committable_widget.cpp \
+    ui/main_window/components/now_playing_list_model.cpp \
+    ui/settings_dialog/components/torrent_rule_model.cpp \
+    ui/settings_dialog/components/torrent_rule.cpp \
+    ui/settings_dialog/views/rule_import_dialog.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -101,7 +105,11 @@ HEADERS += \
   ui/settings_dialog/views/recognition.h \
   ui/settings_dialog/views/torrent_settings.h \
     ui/tray_icon.h \
-    ui/settings_dialog/components/committable_widget.h
+    ui/settings_dialog/components/committable_widget.h \
+    ui/main_window/components/now_playing_list_model.h \
+    ui/settings_dialog/components/torrent_rule_model.h \
+    ui/settings_dialog/components/torrent_rule.h \
+    ui/settings_dialog/views/rule_import_dialog.h
 
 FORMS += \
   ui/anime_panel.ui \
@@ -114,6 +122,7 @@ FORMS += \
   ui/settings_dialog/views/application.ui \
   ui/settings_dialog/views/recognition.ui \
   ui/settings_dialog/views/torrent_settings.ui \
+    ui/settings_dialog/views/rule_import_dialog.ui
 
 INCLUDEPATH += \
   lib

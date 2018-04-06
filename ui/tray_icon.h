@@ -5,6 +5,8 @@
 
 #include <functional>
 
+#include "../src/settings.h"
+
 class TrayIcon : public QSystemTrayIcon {
   Q_OBJECT
  public:
@@ -21,6 +23,7 @@ class TrayIcon : public QSystemTrayIcon {
 
  private:
   std::function<void()> show_fn;
+  Settings s;
 };
 
 #endif  // TRAY_ICON_H

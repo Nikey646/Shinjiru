@@ -38,6 +38,9 @@
         <height>50</height>
        </size>
       </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <property name="lineWidth">
        <number>0</number>
       </property>
@@ -68,6 +71,9 @@
          <property name="text">
           <string>Anime List</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -80,6 +86,9 @@
          </property>
          <property name="text">
           <string>Airing</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -94,6 +103,9 @@
          <property name="text">
           <string>Now Playing</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -106,6 +118,9 @@
          </property>
          <property name="text">
           <string>Torrents</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

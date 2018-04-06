@@ -6,6 +6,8 @@
 #include <QWidget>
 
 #include "../../../src/models/media.h"
+#include "../../../src/settings.h"
+#include "../components/now_playing_list_model.h"
 
 namespace Ui {
 class NowPlaying;
@@ -27,7 +29,8 @@ class NowPlaying : public QWidget {
   QString episode;
   QTimer *timer{nullptr};
   int timerTime{0};
-  QStringListModel *model;
+  NowPlayingListModel *model;
+  Settings s;
 };
 }  // namespace Views
 

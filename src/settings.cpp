@@ -27,8 +27,22 @@ QVariant Settings::getDefault(const Setting &s) {
       return false;
     case Setting::CloseToTray:
       return true;
+    case Setting::UseAnimeRecognition:
+      return true;
     case Setting::UseMasato:
       return true;
+    case Setting::UseDiscord:
+      return true;
+    case Setting::UpdateDelay:
+      return 120;
+    case Setting::NotifyDetected:
+      return true;
+    case Setting::NotifyUpdated:
+      return false;
+    case Setting::DefaultSubgroup:
+      return "HorribleSubs";
+    case Setting::DefaultQuality:
+      return "720p";
   }
 
   return QVariant();

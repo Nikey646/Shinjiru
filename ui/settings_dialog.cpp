@@ -13,6 +13,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
       viewTorrents(new Views::TorrentSettings) {
   ui->setupUi(this);
 
+  this->setWindowFlags(this->windowFlags() & (~Qt::WindowContextHelpButtonHint));
+
   ui->settingsPanel->addWidget(viewApplication);
   ui->settingsPanel->addWidget(viewRecognition);
   ui->settingsPanel->addWidget(viewTorrents);
@@ -38,6 +40,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
         QVariant value = changes.value(key);
         settings.set(key, value);
       });
+
+      widget->commit();
     }
 
     this->accept();

@@ -5,6 +5,10 @@
 #include <sstream>
 
 Discord::Discord() {
+  if (!s.get(Setting::UseDiscord).toBool()) {
+    return;
+  }
+
 #ifndef QT_DEBUG
   DiscordEventHandlers handlers;
   memset(&handlers, 0, sizeof(handlers));
@@ -21,16 +25,24 @@ Discord::Discord() {
   };
 
   Discord_Initialize("378322625321107457", &handlers, 0, NULL);
+  initialized = true;
 #endif
 }
 
 Discord::~Discord() {
 #ifndef QT_DEBUG
-  Discord_Shutdown();
+  if (initialized) {
+    Discord_Shutdown();
+  }
 #endif
 }
 
 void Discord::updatePresence(const QString &title, const int episode) {
+  if (initialized && !s.get(Setting::UseDiscord).toBool()) {
+    this->clearPresence();
+    return;
+  }
+
 #ifndef QT_DEBUG
   DiscordRichPresence discordPresence;
   memset(&discordPresence, 0, sizeof(discordPresence));
@@ -51,6 +63,14 @@ void Discord::updatePresence(const QString &title, const int episode) {
 
 void Discord::clearPresence() {
 #ifndef QT_DEBUG
-  Discord_ClearPresence();
+
+  if (initialized) {
+    Discord_ClearPresence();
+
+    if (!s.get(Setting::UseDiscord).toBool()) {
+      initialized = false;
+      Discord_Shutdown();
+    }
+  }
 #endif
 }

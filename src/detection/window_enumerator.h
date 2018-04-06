@@ -11,6 +11,7 @@
 #include <Robot.h>
 #include <anitomy/anitomy.h>
 
+#include "../settings.h"
 #include "../utilities/singleton.h"
 
 class WindowEnumerator : public Singleton<WindowEnumerator> {
@@ -32,6 +33,7 @@ class WindowEnumerator : public Singleton<WindowEnumerator> {
   QMap<QString, QString> m_exeNames;
   anitomy::Anitomy m_anitomy;
   QTimer *windowTimer;
+  Settings s;
 };
 
 #endif  // SRC_DETECTION_WINDOW_ENUMERATOR_H__

@@ -120,3 +120,26 @@ QTabBar::tab:selected {
 QTableView {
   alternate-background-color: #FAFAFA;
 }
+
+QComboBox {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: black;
+  background-color: transparent;
+  outline: 0;
+  border: 1px solid grey;
+}
+
+QComboBox:!enabled {
+  border-color: darkgrey;
+}
+
+QComboBox::drop-down {
+  border-left: 1px solid darkgrey;
+}
+
+QComboBox::down-arrow {
+  image: url(:/res/arrow-down.png);
+  width: 14px;
+  height: 14px;
+}

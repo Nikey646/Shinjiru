@@ -17,7 +17,14 @@ BETTER_ENUM(
   StartMinimized,
   MinimizeToTray,
   CloseToTray,
-  UseMasato
+  UseAnimeRecognition,
+  UseMasato,
+  UseDiscord,
+  UpdateDelay,
+  NotifyDetected,
+  NotifyUpdated,
+  DefaultSubgroup,
+  DefaultQuality
 )
 // clang-format on
 

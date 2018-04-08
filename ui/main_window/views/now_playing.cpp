@@ -5,6 +5,7 @@
 #include "../../../src/detection/media_store.h"
 #include "../../../src/models/media_list.h"
 #include "../../../src/utilities/file_downloader.h"
+#include "../../process_details.h"
 
 #include <chrono>
 
@@ -52,7 +53,12 @@ NowPlaying::NowPlaying(QWidget *parent)
 
   connect(ui->openProcesses, &QListView::doubleClicked, this, [this](const QModelIndex &index) {
     Robot::Process process = model->process(index);
-    //
+
+    ProcessDetails *details = new ProcessDetails(process);
+
+    connect(details, &ProcessDetails::finished, this, [details]() { details->deleteLater(); });
+
+    details->show();
   });
 
   connect(ui->pushButton, &QPushButton::clicked, this, [this]() {

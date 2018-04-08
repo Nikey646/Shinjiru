@@ -73,7 +73,8 @@ SOURCES += \
     ui/settings_dialog/components/torrent_rule.cpp \
     ui/settings_dialog/views/rule_import_dialog.cpp \
     src/paths.cpp \
-    ui/about.cpp
+    ui/about.cpp \
+    ui/process_details.cpp
 
 HEADERS += \
   src/clients/anilist.h \
@@ -115,7 +116,8 @@ HEADERS += \
     ui/settings_dialog/components/torrent_rule.h \
     ui/settings_dialog/views/rule_import_dialog.h \
     src/paths.h \
-    ui/about.h
+    ui/about.h \
+    ui/process_details.h
 
 FORMS += \
   ui/anime_panel.ui \
@@ -129,7 +131,8 @@ FORMS += \
   ui/settings_dialog/views/recognition.ui \
   ui/settings_dialog/views/torrent_settings.ui \
     ui/settings_dialog/views/rule_import_dialog.ui \
-    ui/about.ui
+    ui/about.ui \
+    ui/process_details.ui
 
 INCLUDEPATH += \
   lib

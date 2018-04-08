@@ -16,6 +16,7 @@ class Application : public CommittableWidget {
   ~Application();
 
   void resetToDefault() override;
+  void commit() override;
 
  private:
   Ui::Application *ui;

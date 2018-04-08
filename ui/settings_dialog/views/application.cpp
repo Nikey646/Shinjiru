@@ -70,4 +70,22 @@ void Application::resetToDefault() {
   ui->minimizeToTray->setChecked(minimizeToTray);
   ui->closeToTray->setChecked(closeToTray);
 }
+
+#ifdef Q_OS_WIN
+const QString boot_key = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+#endif
+
+void Application::commit() {
+  if (ui->startOnBoot->isChecked()) {
+#ifdef Q_OS_WIN
+    QSettings reg(boot_key, QSettings::NativeFormat);
+    reg.setValue("Shinjiru", "\"" + qApp->applicationFilePath().replace("/", "\\") + "\"");
+#endif
+  } else {
+#ifdef Q_OS_WIN
+    QSettings reg(boot_key, QSettings::NativeFormat);
+    reg.remove("Shinjiru");
+#endif
+  }
+}
 }  // namespace Views

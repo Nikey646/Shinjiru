@@ -24,6 +24,8 @@ include(lib/discord-rpc.pri)
 include(lib/breakpad.pri)
 include(lib/QSimpleUpdater/QSimpleUpdater.pri)
 
+win32:RC_ICONS += res/icon.ico
+
 win32-msvc* {
   QMAKE_CXXFLAGS_WARN_ON -= -W3
   QMAKE_CXXFLAGS_WARN_ON += -W4 -w44640

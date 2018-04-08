@@ -7,6 +7,7 @@
 #include "../src/clients/anilist.h"
 #include "../src/models/user.h"
 #include "../src/utilities/file_downloader.h"
+#include "./about.h"
 #include "./settings_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -83,8 +84,12 @@ MainWindow::MainWindow(QWidget *parent)
     dialog->show();
   });
 
-  connect(ui->actionAbout, &QAction::triggered, this, []() {
-    // TODO
+  connect(ui->actionAbout, &QAction::triggered, this, [this]() {
+    About *dialog = new About;
+
+    connect(dialog, &About::finished, this, [dialog]() { dialog->deleteLater(); });
+
+    dialog->show();
   });
 
   updater = QSimpleUpdater::getInstance();

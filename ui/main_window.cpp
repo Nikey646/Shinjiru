@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   updater = QSimpleUpdater::getInstance();
 
-  const QString update_url = "https://shinjiru.me/updates.json";
+  const QString update_url = "https://shinjiru.me/static/changes.json";
   const auto version = QString("%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH);
 
   updater->setModuleVersion(update_url, version);

@@ -121,7 +121,7 @@ void TorrentRuleModel::addRule(const QString &key, TorrentRule *rule) {
 }
 
 void TorrentRuleModel::save() {
-  QFile rules(qApp->applicationDirPath() + "/torrent_rules.json");
+  QFile rules(Paths::configFile("torrent_rules.json"));
   QJsonObject obj;
 
   rules.open(QFile::WriteOnly);

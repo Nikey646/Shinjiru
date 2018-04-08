@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
   }
 
   connect(ui->actionCheckForUpdates, &QAction::triggered, this,
-          [&update_url, this]() { updater->checkForUpdates(update_url); });
+          [update_url, this]() { updater->checkForUpdates(update_url); });
 }
 
 MainWindow::~MainWindow() {

@@ -85,6 +85,16 @@ AnimeList::~AnimeList() {
   delete ui;
 }
 
+void AnimeList::keyPressEvent(QKeyEvent *event) {
+  if (event->key() == Qt::Key_Escape) {
+    QLineEdit *focus = qobject_cast<QLineEdit *>(focusWidget());
+
+    if (focus = ui->lineEdit) {
+      focus->clear();
+    }
+  }
+}
+
 void AnimeList::sortTabs() {
   auto tabBar = ui->tabWidget->tabBar();
   auto selectedTab = tabBar->currentIndex();

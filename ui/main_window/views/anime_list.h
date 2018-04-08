@@ -1,6 +1,7 @@
 #ifndef UI_MAIN_WINDOW_VIEWS_ANIME_LIST_H__
 #define UI_MAIN_WINDOW_VIEWS_ANIME_LIST_H__
 
+#include <QKeyEvent>
 #include <QTimer>
 #include <QWidget>
 
@@ -18,6 +19,8 @@ class AnimeList : public QWidget {
  public:
   explicit AnimeList(QWidget *parent = 0);
   ~AnimeList();
+
+  void keyPressEvent(QKeyEvent *event);
 
  private:
   void sortTabs();

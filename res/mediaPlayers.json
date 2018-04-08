@@ -15,5 +15,20 @@
     ],
     "method": "TITLE",
     "titleRegex": "(.*)"
+  },
+  "MPC-BE": {
+    "exeNames": [
+      "mpc-be.exe",
+      "mpc-be64.exe"
+    ],
+    "method": "TITLE",
+    "titleRegex": "(.*) - MPC-BE.*"
+  },
+  "VLC": {
+    "exeNames": [
+      "vlc.exe"
+    ],
+    "method": "TITLE",
+    "titleRegex": "(.*) - VLC media player.*"
   }
 }

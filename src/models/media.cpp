@@ -112,6 +112,14 @@ void Media::setTags(const QStringList &tags) {
   m_tags = tags;
 }
 
+QStringList Media::studios() const {
+  return m_studios;
+}
+
+void Media::setStudios(const QStringList &studios) {
+  m_studios = studios;
+}
+
 bool Media::hasNextAiringEpisode() const {
   return m_hasNextAiringEpisode;
 }
@@ -333,4 +341,21 @@ void Media::loadInnerMedia(const QJsonObject &innerMedia) {
       this->setSequel(id);
     }
   }
+
+  QStringList studios;
+  auto studiosObject = innerMedia.value("studios").toObject();
+  edgesArray = studiosObject.value("edges").toArray();
+
+  for (auto &&edge : edgesArray) {
+      auto edgeObject = edge.toObject();
+
+      if (!edgeObject.value("isMain").toBool()) {
+          continue;
+      }
+
+      auto studio = edgeObject.value("node").toObject();
+      studios.append(studio.value("name").toString());
+  }
+
+  this->setStudios(studios);
 }

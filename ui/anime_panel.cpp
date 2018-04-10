@@ -13,6 +13,7 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
     : QDialog(parent), ui(new Ui::AnimePanel), media(media) {
   ui->setupUi(this);
   ui->tabWidget->setCurrentIndex(0);
+  this->setWindowTitle(qApp->applicationName() + " - " + media->title());
 
   QStringList combinedGenreTags = media->genres();
 
@@ -28,6 +29,8 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
   ui->episodes->setText(QString::number(media->episodes()));
   ui->status->setText(tr(qPrintable(media->airingStatus())));
   ui->genres->setText(combinedGenreTags.join(", "));
+  ui->studios->setText(media->studios().join(", "));
+  ui->air_date->setText(media->airingAt().toString(Qt::TextDate));
 
   FileDownloader *f = new FileDownloader(media->coverImage());
 

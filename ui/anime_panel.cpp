@@ -13,6 +13,7 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
     : QDialog(parent), ui(new Ui::AnimePanel), media(media) {
   ui->setupUi(this);
   ui->tabWidget->setCurrentIndex(0);
+  this->setWindowTitle(qApp->applicationName() + " - " + media->title());
 
   QStringList combinedGenreTags = media->genres();
 

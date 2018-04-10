@@ -30,8 +30,7 @@ Torrents::Torrents(QWidget *parent)
   ui->torrentTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
   connect(ui->refreshButton, &QPushButton::clicked, this, [this]() {
-    refresh = 1;
-    timerTick();
+    fetchTorrents();
   });
 
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));

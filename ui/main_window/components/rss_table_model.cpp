@@ -4,6 +4,7 @@ RSSTableModel::RSSTableModel(QObject *parent) : QAbstractTableModel(parent) {}
 
 void RSSTableModel::setList(const QList<RSSItem *> &list) {
   m_list = list;
+  refresh();
 }
 
 void RSSTableModel::refresh() {

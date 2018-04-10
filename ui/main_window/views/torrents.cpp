@@ -30,7 +30,11 @@ Torrents::Torrents(QWidget *parent)
   ui->torrentTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
   connect(ui->refreshButton, &QPushButton::clicked, this, [this]() {
-    fetchTorrents();
+    this->fetchTorrents();
+  });
+
+  connect(ui->torrentTable, &QTableView::doubleClicked, this, [this](const QModelIndex index) {
+      this->download(model->item(index));
   });
 
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
@@ -128,6 +132,7 @@ void Torrents::downloadOnce(RSSItem *item) {
 }
 
 void Torrents::download(RSSItem *item) {
+  qDebug() << "Downloading " + item->fileName;
   FileDownloader f(item->link);
 
   QEventLoop evt;

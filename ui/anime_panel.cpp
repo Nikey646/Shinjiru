@@ -28,6 +28,8 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
   ui->episodes->setText(QString::number(media->episodes()));
   ui->status->setText(tr(qPrintable(media->airingStatus())));
   ui->genres->setText(combinedGenreTags.join(", "));
+  ui->studios->setText(media->studios().join(", "));
+  ui->air_date->setText(media->airingAt().toString("ddd MMMM d yyyy"));
 
   FileDownloader *f = new FileDownloader(media->coverImage());
 

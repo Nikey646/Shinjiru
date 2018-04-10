@@ -13,6 +13,14 @@ query ($userId: Int) {
         hiddenFromStatusLists
         customLists
         media {
+          studios {
+            edges {
+              isMain
+              node {
+                name
+              }            
+            }
+          }
           id
           title {
             english

@@ -53,6 +53,9 @@ class Media : public QObject {
   QStringList tags() const;
   void setTags(const QStringList &tags);
 
+  QStringList studios() const;
+  void setStudios(const QStringList &studios);
+
   bool hasNextAiringEpisode() const;
   void setHasNextAiringEpisode(bool hasNextAiringEpisode);
 
@@ -113,6 +116,7 @@ class Media : public QObject {
   QStringList m_synonyms{};
   QStringList m_genres{};
   QStringList m_tags{};
+  QStringList m_studios{};
   bool m_hasNextAiringEpisode{false};
   QDateTime m_airingAt{};
   int m_nextAiringEpisode{0};

@@ -30,7 +30,7 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
   ui->status->setText(tr(qPrintable(media->airingStatus())));
   ui->genres->setText(combinedGenreTags.join(", "));
   ui->studios->setText(media->studios().join(", "));
-  ui->air_date->setText(media->airingAt().toString("ddd MMMM d yyyy"));
+  ui->air_date->setText(media->airingAt().toString(Qt::TextDate));
 
   FileDownloader *f = new FileDownloader(media->coverImage());
 

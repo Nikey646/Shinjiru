@@ -96,11 +96,14 @@ int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
   a.setStyleSheet(style);
 
-  //QFile logFile(Paths::logFileName());
-  //if (logFile.exists()) logFile.remove();
+#ifdef QT_NO_DEBUG
+  QFile logFile(Paths::logFileName());
+  if (logFile.exists()) logFile.remove();
 
-  //qInstallMessageHandler(File);
+  qInstallMessageHandler(File);
+#else
   qInstallMessageHandler(Cerr);
+#endif
 
 #ifndef QT_DEBUG
   Breakpad::CrashHandler::instance()->Init(qApp->applicationDirPath());

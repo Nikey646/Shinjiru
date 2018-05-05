@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QList>
 #include <QMutex>
+#include <QSystemTrayIcon>
 #include <QTimer>
 #include <QWidget>
 
@@ -27,9 +28,11 @@ class Torrents : public QWidget {
   void checkRule(QJsonObject rule);
   void downloadOnce(RSSItem *item);
   void download(RSSItem *item);
+  void setTrayIcon(QSystemTrayIcon *icon);
 
  public slots:
   void timerTick();
+  void contextMenu();
 
  private:
   Ui::Torrents *ui;
@@ -38,6 +41,7 @@ class Torrents : public QWidget {
   QTimer *timer;
   int refresh{1};
   QMutex refreshLock;
+  QSystemTrayIcon *tray{nullptr};
 };
 }  // namespace Views
 

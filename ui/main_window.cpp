@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
   ui->mainPanel->addWidget(viewTorrents);
   ui->mainPanel->setCurrentWidget(viewAnimeList);
 
+  viewTorrents->setTrayIcon(tray);
+
   User &user = User::instance();
 
   ui->labelDisplayName->setText(user.displayName());

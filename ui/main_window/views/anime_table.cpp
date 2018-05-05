@@ -79,6 +79,7 @@ void AnimeTable::refresh() {
 void AnimeTable::setFilter(const QString &text) {
   proxy_model->setFilter(text);
 }
+
 void AnimeTable::contextMenuEvent(QContextMenuEvent *event) {
   auto indexes = this->selectedIndexes();
   auto row = indexes[0].row();

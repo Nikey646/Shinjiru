@@ -4,6 +4,7 @@
 #include <QDesktopServices>
 #include <QEventLoop>
 #include <QFile>
+#include <QMenu>
 
 #include "../../../src/clients/nekomimi.h"
 #include "../../../src/paths.h"
@@ -29,13 +30,12 @@ Torrents::Torrents(QWidget *parent)
   ui->torrentTable->setSelectionBehavior(QAbstractItemView::SelectRows);
   ui->torrentTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-  connect(ui->refreshButton, &QPushButton::clicked, this, [this]() {
-    this->fetchTorrents();
-  });
+  connect(ui->refreshButton, &QPushButton::clicked, this, [this]() { this->fetchTorrents(); });
 
-  connect(ui->torrentTable, &QTableView::doubleClicked, this, [this](const QModelIndex index) {
-      this->download(model->item(index));
-  });
+  connect(ui->torrentTable, &QTableView::doubleClicked, this,
+          [this](const QModelIndex index) { this->download(model->item(index)); });
+
+  connect(ui->torrentTable, &QTableView::customContextMenuRequested, this, &Torrents::contextMenu);
 
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
@@ -56,6 +56,29 @@ void Torrents::timerTick() {
 
   ui->refreshButton->setText(tr("Refresh (%1)").arg(refresh));
 }
+
+void Torrents::contextMenu() {
+  QPoint point = QCursor::pos();
+
+  auto selectionModel = ui->torrentTable->selectionModel();
+  auto indexes = selectionModel->selectedIndexes();
+  auto row = indexes[0].row();
+  auto index = model->index(row, RSSRoles::Title);
+
+  auto rssItem = model->item(index);
+
+  auto contextMenu = new QMenu;
+
+  auto downloadItem = new QAction(tr("Download"), contextMenu);
+
+  contextMenu->addAction(downloadItem);
+
+  connect(downloadItem, &QAction::triggered, this, [this, rssItem]() { download(rssItem); });
+
+  contextMenu->exec(point);
+  contextMenu->deleteLater();
+}
+
 void Torrents::fetchTorrents() {
   if (!refreshLock.tryLock()) {
     return;
@@ -123,6 +146,11 @@ void Torrents::downloadOnce(RSSItem *item) {
   if (!f.exists()) {
     qDebug() << "Downloading" << item->fileName << "from torrent rule";
 
+    if (this->tray) {
+      auto msg = tr("Downloading %1 from torrent rule").arg(qPrintable(item->fileName));
+      tray->showMessage("Shinjiru", msg);
+    }
+
     download(item);
 
     f.open(QFile::WriteOnly);
@@ -145,5 +173,9 @@ void Torrents::download(RSSItem *item) {
   temp.close();
 
   QDesktopServices::openUrl(QUrl::fromLocalFile(temp.fileName()));
+}
+
+void Torrents::setTrayIcon(QSystemTrayIcon *icon) {
+  this->tray = icon;
 }
 }  // namespace Views

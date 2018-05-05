@@ -43,7 +43,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="torrentTable"/>
+    <widget class="QTableView" name="torrentTable">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

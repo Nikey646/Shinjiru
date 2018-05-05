@@ -3,6 +3,11 @@
 
 #include "../components/committable_widget.h"
 
+#include <QMap>
+#include <QString>
+#include <QStringListModel>
+#include <QVariant>
+
 namespace Ui {
 class Recognition;
 }
@@ -19,6 +24,9 @@ class Recognition : public CommittableWidget {
 
  private:
   Ui::Recognition *ui;
+  QStringListModel *model;
+  QString currentText;
+  QMap<QString, QVariant> blackListedTitles;
 };
 }  // namespace Views
 

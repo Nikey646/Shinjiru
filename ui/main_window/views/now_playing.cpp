@@ -45,9 +45,9 @@ NowPlaying::NowPlaying(QWidget *parent)
 
     if (media != nullptr && currentEpisode > media->progress()) {
       timer->start();
-      ui->pushButton->setEnabled(true);
-      timerTime = 120;
-      ui->updating->setText(tr("Updating in %1 seconds").arg("120"));
+      ui->cancelButton->setEnabled(true);
+      timerTime = s.get(Setting::UpdateDelay).toInt();
+      ui->updating->setText(tr("Updating in %1 seconds").arg(QString::number(timerTime)));
     }
   });
 
@@ -61,11 +61,16 @@ NowPlaying::NowPlaying(QWidget *parent)
     details->show();
   });
 
-  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
+  connect(ui->cancelButton, &QPushButton::clicked, this, [this]() {
     MediaList::instance().cancelUpdate();
     timer->stop();
-    ui->pushButton->setEnabled(false);
+    ui->cancelButton->setEnabled(false);
     ui->updating->setText("");
+  });
+
+  connect(ui->falsePositiveButton, &QPushButton::clicked, this, [this]() {
+    ui->cancelButton->click();
+    MediaStore::instance().blackListCurrent();
   });
 
   connect(timer, &QTimer::timeout, this, [this]() {
@@ -73,7 +78,7 @@ NowPlaying::NowPlaying(QWidget *parent)
 
     if (timerTime == 0) {
       timer->stop();
-      ui->pushButton->setEnabled(false);
+      ui->cancelButton->setEnabled(false);
       ui->updating->setText("");
     } else {
       auto timeRemaining = QString::number(timerTime);

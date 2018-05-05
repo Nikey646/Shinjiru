@@ -133,7 +133,8 @@ void WindowEnumerator::processTitle(const std::string &title) {
   auto media = mediaList.getMediaByTitle(QString::fromStdWString(mediaTitle));
   auto episode = QString::fromStdWString(mediaEpisode).toInt();
 
-  if (!media.empty()) {
+  if (!media.empty() && !store.isBlackListed(mediaTitle, (*media.begin())->id())) {
     store.setMediaPlaying(*media.begin(), episode);
+    store.setCurrentTitle(mediaTitle);
   }
 }

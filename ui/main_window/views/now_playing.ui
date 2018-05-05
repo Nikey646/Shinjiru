@@ -120,20 +120,31 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Cancel Update</string>
-               </property>
-              </widget>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QPushButton" name="falsePositiveButton">
+                 <property name="text">
+                  <string>Mark False Positive</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="cancelButton">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Cancel Update</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -310,7 +321,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>175</width>
-                 <height>70</height>
+                 <height>68</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">

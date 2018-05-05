@@ -1,6 +1,13 @@
 #include "media_store.h"
 
+#include "../settings.h"
+
 #include "../models/media_list.h"
+
+MediaStore::MediaStore() {
+  Settings s;
+  this->m_blackList = s.get(Setting::BlackListedTitles).toMap();
+}
 
 QList<Robot::Process> MediaStore::mediaPlayers() const {
   return this->m_mediaPlayers.values();
@@ -65,6 +72,12 @@ void MediaStore::setMediaPlaying(Media *media, int episode) {
   }
 }
 
+void MediaStore::setCurrentTitle(const std::wstring &title) {
+  if (title != m_currentTitle) {
+    m_currentTitle = title;
+  }
+}
+
 void MediaStore::removeInvalid() {
   QMutableHashIterator<int, Robot::Process> iproc(m_processes);
 
@@ -87,4 +100,20 @@ void MediaStore::removeInvalid() {
       emit mediaPlayersChanged();
     }
   }
+}
+
+void MediaStore::blackListCurrent() {
+  auto title = QString::fromStdWString(this->m_currentTitle);
+  auto id = this->m_mediaPlaying->id();
+
+  this->m_blackList.insert(title, id);
+  this->setMediaPlaying(nullptr, 0);
+
+  Settings s;
+  s.set(Setting::BlackListedTitles, this->m_blackList);
+}
+
+bool MediaStore::isBlackListed(std::wstring title, int id) {
+  QString key = QString::fromStdWString(title);
+  return this->m_blackList.contains(key) && this->m_blackList.value(key) == id;
 }

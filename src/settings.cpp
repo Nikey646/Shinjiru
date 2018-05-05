@@ -43,6 +43,8 @@ QVariant Settings::getDefault(const Setting &s) {
       return "HorribleSubs";
     case Setting::DefaultQuality:
       return "720p";
+    case Setting::BlackListedTitles:
+      return QMap<QString, QVariant>();
   }
 
   return QVariant();

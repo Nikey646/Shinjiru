@@ -6,6 +6,8 @@
 
 #include <Robot.h>
 
+#include <string>
+
 #include "../models/media.h"
 #include "../utilities/singleton.h"
 
@@ -13,6 +15,8 @@ class MediaStore : public Singleton<MediaStore> {
   Q_OBJECT
 
  public:
+  MediaStore();
+
   QList<Robot::Process> mediaPlayers() const;
   QList<Robot::Process> processes() const;
   Media *mediaPlaying() const;
@@ -25,8 +29,11 @@ class MediaStore : public Singleton<MediaStore> {
   void addProcess(const Robot::Process &process);
 
   void setMediaPlaying(Media *media, int episode);
+  void setCurrentTitle(const std::wstring &title);
 
   void removeInvalid();
+  void blackListCurrent();
+  bool isBlackListed(std::wstring title, int id);
 
  signals:
   void mediaPlayersChanged();
@@ -38,6 +45,8 @@ class MediaStore : public Singleton<MediaStore> {
   QHash<int, Robot::Process> m_processes;
   Media *m_mediaPlaying;
   int m_episode;
+  std::wstring m_currentTitle;
+  QMap<QString, QVariant> m_blackList;
 };
 
 #endif  // SRC_DETECTION_MEDIA_STORE_H__

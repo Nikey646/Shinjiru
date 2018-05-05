@@ -24,7 +24,8 @@ BETTER_ENUM(
   NotifyDetected,
   NotifyUpdated,
   DefaultSubgroup,
-  DefaultQuality
+  DefaultQuality,
+  BlackListedTitles
 )
 // clang-format on
 

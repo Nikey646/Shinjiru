@@ -57,7 +57,7 @@ QSet<Media *> Masato::readReply(QNetworkReply *reply) {
     const auto media = mediaList.getMediaById(id);
 
     if (media != nullptr) {
-      qDebug() << "Masato found \"" << media->title() << "\"";
+      qDebug() << "Masato found" << media->title();
       results.insert(media);
     }
   }

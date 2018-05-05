@@ -46,6 +46,38 @@ Recognition::Recognition(QWidget *parent) : CommittableWidget(parent), ui(new Ui
 
   connect(ui->notifyUpdated, &QCheckBox::clicked, this,
           [this](bool checked) { this->changed_settings[Setting::NotifyUpdated] = checked; });
+
+  model = new QStringListModel(this);
+  this->blackListedTitles = s.get(Setting::BlackListedTitles).toMap();
+  model->setStringList(this->blackListedTitles.keys());
+  ui->falsePositives->setModel(model);
+
+  auto selectionModel = ui->falsePositives->selectionModel();
+
+  connect(selectionModel, &QItemSelectionModel::selectionChanged, this, [this](QItemSelection cur) {
+    if (cur.indexes().empty()) {
+      this->currentText = "";
+      ui->aniListId->setText("");
+    } else {
+      this->currentText = model->data(cur.indexes().first()).toString();
+      ui->aniListId->setText(QString::number(this->blackListedTitles[this->currentText].toInt()));
+    }
+
+    ui->filename->setText(this->currentText);
+    ui->deleteFalsePositive->setEnabled(!cur.indexes().empty());
+  });
+
+  connect(ui->deleteFalsePositive, &QPushButton::clicked, this, [this, selectionModel]() {
+    this->blackListedTitles.remove(this->currentText);
+
+    this->changed_settings[Setting::BlackListedTitles] = this->blackListedTitles;
+    model->setStringList(this->blackListedTitles.keys());
+
+    if (selectionModel->hasSelection()) {
+      auto selection = selectionModel->selection().indexes().first();
+      selectionModel->select(selection, QItemSelectionModel::Deselect);
+    }
+  });
 }
 
 Recognition::~Recognition() {

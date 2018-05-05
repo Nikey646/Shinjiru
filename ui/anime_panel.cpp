@@ -53,6 +53,7 @@ AnimePanel::AnimePanel(Media *media, QWidget *parent)
   ui->rewatched->setValue(media->repeat());
   ui->priority->setValue(media->priority());
   ui->isPrivate->setChecked(media->isPrivate());
+  ui->notes->setText(media->notes());
 
   connect(ui->listStatus, &QComboBox::currentTextChanged, this, [this](auto v) {
     if (v == tr("CURRENT")) {

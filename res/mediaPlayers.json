@@ -30,5 +30,15 @@
     ],
     "method": "TITLE",
     "titleRegex": "(.*) - VLC media player.*"
+  },
+  "PotPlayer": {
+    "exeNames": [
+      "potplayer.exe",
+      "potplayer64.exe",
+      "potplayermini.exe",
+      "potplayermini64.exe",
+    ],
+    "method": "TITLE",
+    "titleRegex": "(.+) - PotPlayer"
   }
 }

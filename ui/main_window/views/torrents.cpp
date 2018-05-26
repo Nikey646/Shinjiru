@@ -30,6 +30,10 @@ Torrents::Torrents(QWidget *parent)
   ui->torrentTable->setSelectionBehavior(QAbstractItemView::SelectRows);
   ui->torrentTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
+  connect(ui->torrentFilter, &QLineEdit::textChanged, this, [this]() {
+    // proxy_model
+  });
+
   connect(ui->refreshButton, &QPushButton::clicked, this, [this]() { this->fetchTorrents(); });
 
   connect(ui->torrentTable, &QTableView::doubleClicked, this,

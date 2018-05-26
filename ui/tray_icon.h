@@ -5,6 +5,7 @@
 
 #include <functional>
 
+#include "../src/models/media.h"
 #include "../src/settings.h"
 
 class TrayIcon : public QSystemTrayIcon {
@@ -20,10 +21,14 @@ class TrayIcon : public QSystemTrayIcon {
 
  private:
   void buildMenu();
+  void updateMediaProgress(Media *media, int episodePlaying);
 
  private:
   std::function<void()> show_fn;
   Settings s;
+  Media *currentMedia;
+  int currentEpisode;
+  bool updatePending{false};
 };
 
 #endif  // TRAY_ICON_H

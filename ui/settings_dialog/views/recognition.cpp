@@ -17,6 +17,7 @@ Recognition::Recognition(QWidget *parent) : CommittableWidget(parent), ui(new Ui
   auto enableAnimeRecognition = s.get(Setting::UseAnimeRecognition).toBool();
   auto enableMasato = s.get(Setting::UseMasato).toBool();
   auto enableDiscord = s.get(Setting::UseDiscord).toBool();
+  auto updateOnClose = s.get(Setting::UpdateOnClose).toBool();
   auto updateDelay = s.get(Setting::UpdateDelay).toInt();
   auto notifyDetected = s.get(Setting::NotifyDetected).toBool();
   auto notifyUpdated = s.get(Setting::NotifyUpdated).toBool();
@@ -24,6 +25,7 @@ Recognition::Recognition(QWidget *parent) : CommittableWidget(parent), ui(new Ui
   ui->enableAnimeRecognition->setChecked(enableAnimeRecognition);
   ui->enableMasato->setChecked(enableMasato);
   ui->enableDiscord->setChecked(enableDiscord);
+  ui->waitforMediaPlayer->setChecked(updateOnClose);
   ui->updateDelay->setCurrentIndex(ui->updateDelay->findData(updateDelay));
   ui->notifyDetected->setChecked(notifyDetected);
   ui->notifyUpdated->setChecked(notifyUpdated);
@@ -36,6 +38,9 @@ Recognition::Recognition(QWidget *parent) : CommittableWidget(parent), ui(new Ui
 
   connect(ui->enableDiscord, &QCheckBox::clicked, this,
           [this](bool checked) { this->changed_settings[Setting::UseDiscord] = checked; });
+
+  connect(ui->waitforMediaPlayer, &QCheckBox::clicked, this,
+          [this](bool checked) { this->changed_settings[Setting::UpdateOnClose] = checked; });
 
   connect(ui->updateDelay, &QComboBox::currentTextChanged, this, [this]() {
     this->changed_settings[Setting::UpdateDelay] = ui->updateDelay->currentData();
@@ -90,6 +95,7 @@ void Recognition::resetToDefault() {
   auto enableAnimeRecognition = s.getDefault(Setting::UseAnimeRecognition).toBool();
   auto enableMasato = s.getDefault(Setting::UseMasato).toBool();
   auto enableDiscord = s.getDefault(Setting::UseDiscord).toBool();
+  auto updateOnClose = s.getDefault(Setting::UpdateOnClose).toBool();
   auto updateDelay = s.getDefault(Setting::UpdateDelay).toInt();
   auto notifyDetected = s.getDefault(Setting::NotifyDetected).toBool();
   auto notifyUpdated = s.getDefault(Setting::NotifyUpdated).toBool();
@@ -97,6 +103,7 @@ void Recognition::resetToDefault() {
   ui->enableAnimeRecognition->setChecked(enableAnimeRecognition);
   ui->enableMasato->setChecked(enableMasato);
   ui->enableDiscord->setChecked(enableDiscord);
+  ui->waitforMediaPlayer->setChecked(updateOnClose);
   ui->updateDelay->setCurrentIndex(ui->updateDelay->findData(updateDelay));
   ui->notifyDetected->setChecked(notifyDetected);
   ui->notifyUpdated->setChecked(notifyUpdated);

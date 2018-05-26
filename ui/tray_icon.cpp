@@ -44,6 +44,9 @@ TrayIcon::TrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
     if (media != nullptr) {
       auto episodePlaying = store.episodePlaying();
 
+      currentEpisode = episodePlaying;
+      currentMedia = media;
+
       if (episodePlaying > media->progress()) {
         QTimer *updateTimer = new QTimer;
         mediaList.resetCancel();
@@ -51,27 +54,14 @@ TrayIcon::TrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
           auto &store = MediaStore::instance();
           auto &mediaList = MediaList::instance();
 
-          if (!mediaList.updateCancelled() && episodePlaying == store.episodePlaying() &&
-              media == store.mediaPlaying()) {
-            QJsonObject data;
-            data["progress"] = episodePlaying;
-            data["status"] = "CURRENT";
+          auto correctEpisode = episodePlaying == store.episodePlaying();
+          auto correctMedia = media == store.mediaPlaying();
 
-            if (episodePlaying == media->episodes()) {
-              data["status"] = "COMPLETED";
-            }
-
-            mediaList.updateMedia(media, data);
-
-            if (s.get(Setting::NotifyUpdated).toBool()) {
-              QString message;
-
-              if (data["status"] == "COMPLETED") {
-                message = tr("%1 marked as completed").arg(media->title());
-              } else {
-                message = tr("%1 updated to episode %2").arg(media->title()).arg(episodePlaying);
-              }
-              this->showMessage("Shinjiru", message);
+          if (!mediaList.updateCancelled() && correctEpisode && correctMedia) {
+            if (s.get(Setting::UpdateOnClose).toBool()) {
+              updatePending = true;
+            } else {
+              updateMediaProgress(media, episodePlaying);
             }
           }
           updateTimer->deleteLater();
@@ -96,7 +86,15 @@ TrayIcon::TrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
           this->showMessage("Shinjiru", message);
         }
       }
+    } else {
+      if (updatePending) {
+        updateMediaProgress(currentMedia, currentEpisode);
+        updatePending = false;
+      }
+
+      currentMedia = media;
     }
+
   });
 
   this->show();
@@ -133,4 +131,29 @@ void TrayIcon::buildMenu() {
   connect(actionExit, &QAction::triggered, this, []() { qApp->exit(); });
 
   this->setContextMenu(menu);
+}
+
+void TrayIcon::updateMediaProgress(Media *media, int episodePlaying) {
+  auto &mediaList = MediaList::instance();
+
+  QJsonObject data;
+  data["progress"] = episodePlaying;
+  data["status"] = "CURRENT";
+
+  if (episodePlaying == media->episodes()) {
+    data["status"] = "COMPLETED";
+  }
+
+  mediaList.updateMedia(media, data);
+
+  if (s.get(Setting::NotifyUpdated).toBool()) {
+    QString message;
+
+    if (data["status"] == "COMPLETED") {
+      message = tr("%1 marked as completed").arg(media->title());
+    } else {
+      message = tr("%1 updated to episode %2").arg(media->title()).arg(episodePlaying);
+    }
+    this->showMessage("Shinjiru", message);
+  }
 }

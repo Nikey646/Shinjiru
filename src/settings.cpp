@@ -45,6 +45,8 @@ QVariant Settings::getDefault(const Setting &s) {
       return "720p";
     case Setting::BlackListedTitles:
       return QMap<QString, QVariant>();
+    case Setting::UpdateOnClose:
+      return false;
   }
 
   return QVariant();

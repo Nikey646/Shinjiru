@@ -20,7 +20,7 @@ QVariant Settings::getDefault(const Setting &s) {
     case Setting::StartOnBoot:
       return false;
     case Setting::CheckForUpdates:
-      return false;
+      return true;
     case Setting::StartMinimized:
       return false;
     case Setting::MinimizeToTray:

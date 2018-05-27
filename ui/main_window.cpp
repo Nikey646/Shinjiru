@@ -100,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
   const auto version = QString("%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH);
 
   updater->setModuleVersion(update_url, version);
-  updater->setNotifyOnFinish(update_url, true);
+  updater->setNotifyOnFinish(update_url, false);
   updater->setNotifyOnUpdate(update_url, true);
   updater->setDownloaderEnabled(update_url, true);
 
@@ -108,8 +108,10 @@ MainWindow::MainWindow(QWidget *parent)
     updater->checkForUpdates(update_url);
   }
 
-  connect(ui->actionCheckForUpdates, &QAction::triggered, this,
-          [update_url, this]() { updater->checkForUpdates(update_url); });
+  connect(ui->actionCheckForUpdates, &QAction::triggered, this, [update_url, this]() {
+    updater->setNotifyOnFinish(update_url, true);
+    updater->checkForUpdates(update_url);
+  });
 }
 
 MainWindow::~MainWindow() {

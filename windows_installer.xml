@@ -78,7 +78,7 @@
                     <name>Shinjiru</name>
                     <runAsAdmin>0</runAsAdmin>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}\Shinjiru.exe</windowsExec>
+                    <windowsExec>${installdir}\Shinjiru\Shinjiru.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
                     <windowsIcon>C:/shinjiru-dev/Shinjiru/res/icon.ico</windowsIcon>
                     <windowsPath>${installdir}</windowsPath>

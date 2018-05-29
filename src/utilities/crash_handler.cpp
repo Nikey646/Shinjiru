@@ -1,8 +1,11 @@
 #include "crash_handler.h"
+
 #include <QString>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QProcess>
+
+#ifdef Q_OS_WIN
 
 #include <breakpad/src/client/windows/handler/exception_handler.h>
 
@@ -92,3 +95,5 @@ void CrashHandler::Init(const QString& reportPath) {
   d->InitCrashHandler(reportPath);
 }
 }  // namespace Breakpad
+
+#endif

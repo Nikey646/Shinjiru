@@ -3,6 +3,8 @@
 
 #include <QtCore/QString>
 
+#ifdef Q_OS_WIN
+
 namespace Breakpad {
 class CrashHandlerPrivate;
 class CrashHandler {
@@ -20,4 +22,6 @@ class CrashHandler {
   CrashHandlerPrivate* d;
 };
 }  // namespace Breakpad
+#endif
+
 #endif

@@ -4,9 +4,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QProcess>
 
-#ifdef Q_OS_WIN32
 #include <breakpad/src/client/windows/handler/exception_handler.h>
-#endif
 
 namespace Breakpad {
 /************************************************************************/
@@ -33,7 +31,6 @@ bool CrashHandlerPrivate::bReportCrashesToSystem = false;
 /************************************************************************/
 /* DumpCallback                                                         */
 /************************************************************************/
-#ifdef Q_OS_WIN32
 bool DumpCallback(const wchar_t* _dump_dir, const wchar_t* _minidump_id, void* context,
                   EXCEPTION_POINTERS* exinfo, MDRawAssertionInfo* assertion, bool success) {
   Q_UNUSED(context);
@@ -50,18 +47,15 @@ bool DumpCallback(const wchar_t* _dump_dir, const wchar_t* _minidump_id, void* c
   */
   return CrashHandlerPrivate::bReportCrashesToSystem ? success : true;
 }
-#endif
 
 void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath) {
   if (pHandler != NULL) return;
 
-#ifdef Q_OS_WIN32
   std::wstring pathAsStr = (const wchar_t*)dumpPath.utf16();
   pHandler = new google_breakpad::ExceptionHandler(pathAsStr,
                                                    /*FilterCallback*/ 0, DumpCallback,
                                                    /*context*/
                                                    0, true);
-#endif
 }
 
 /************************************************************************/

@@ -11,7 +11,10 @@
 #include "./models/user.h"
 #include "./paths.h"
 #include "./settings.h"
+
+#ifdef Q_OS_WIN
 #include "./utilities/crash_handler.h"
+#endif
 
 #include <iostream>
 
@@ -106,7 +109,9 @@ int main(int argc, char *argv[]) {
 #endif
 
 #ifndef QT_DEBUG
+#ifdef Q_OS_WIN
   Breakpad::CrashHandler::instance()->Init(qApp->applicationDirPath());
+#endif
 #endif
 
   {

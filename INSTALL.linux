@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+function dep_fail {
+    printf "Missing executable '%b'. " "$1"
+    printf "Please install '%b' package first.\n" "$2"
+    exit 1
+}
+
+function build_fail {
+    printf "Build error: $1\n"
+    printf "Aborting.\n"
+    exit 1
+}
+
+# Verify the user has all the required packages
+# Package names are from Debian so their names may differ in your distribution.
+command -v gcc > /dev/null 2>&1 || dep_fail "gcc" "build-essential"
+command -v g++ > /dev/null 2>&1 || dep_fail "g++" "build-essential"
+command -v git > /dev/null 2>&1 || dep_fail "git" "git"
+command -v lrelease > /dev/null 2>&1 || dep_fail "lrelease" "qtchooser"
+command -v make > /dev/null 2>&1 || dep_fail "make" "build-essential"
+command -v qmake > /dev/null 2>&1 || dep_fail "qmake" "qtchooser"
+
+# Set system specific variables
+CPU_COUNT=1
+command -v nproc > /dev/null 2>&1 && CPU_COUNT=`nproc`
+
+# check if user provided  their own install prefix
+if [ ! -n "$INSTALL_PREFIX" ]; then
+  INSTALL_PREFIX="${HOME}/.local"
+fi
+
+# Fetch Shinjiru from github and cd into the app dir
+git clone git://github.com/ShinjiruApp/Shinjiru.git --branch "master"
+cd Shinjiru
+
+# Discard local changes if the clean option was given
+if [ $# -gt 0 ]; then
+    if [ $1 = "clean" ]; then
+        echo "Discarding local changes"
+        git checkout .
+    fi
+fi
+
+# Update git repo
+git pull
+git submodule update --init
+
+# Make
+qmake PREFIX="$INSTALL_PREFIX" -config release Shinjiru.pro || build_fail "qmake failed"
+make -j "${CPU_COUNT}" || build_fail "Compilation failed."
+
+# Make translations
+lupdate Shinjiru.pro || build_fail "lupdate failed"
+lrelease Shinjiru.pro || build_fail "lrelease failed"
+
+# Install
+make install
+command -v xdg-desktop-menu > /dev/null 2>&1 || xdg-desktop-menu install --novendor "${INSTALL_PREFIX}/share/applications/Shinjiru.desktop"
+
+# Print some post install info
+printf "\n------------------------------------\n"
+printf "Shinjiru was successfully installed!\n\n"
+printf "You should now be able to see Shinjiru in the 'Internet' category of your application launcher.\n"
+printf "The binary file is located at '%b/bin/Shinjiru'.\n" "${INSTALL_PREFIX}"

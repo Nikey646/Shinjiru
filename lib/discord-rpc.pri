@@ -5,3 +5,5 @@ DEPENDPATH += $$PWD/discord-rpc/include
 
 discord.path = ../discord-rpc/$$TARGET
 INSTALLS += discord
+
+linux:QMAKE_LFLAGS += -no-pie

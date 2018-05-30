@@ -142,3 +142,27 @@ RESOURCES += \
 
 TRANSLATIONS = \
   lang/shinjiru_en.ts
+
+linux {
+    isEmpty(PREFIX) {
+      PREFIX = $$PWD
+    }
+
+    bin.path = $${PREFIX}/bin
+    bin.files = Shinjiru
+
+    icon.path = $${PREFIX}/share/icons/hicolor/256x256/apps
+    icon.extra = $(INSTALL_FILE) res/icon.svg $(INSTALL_ROOT)$${PREFIX}/share/icons/hicolor/scalable/apps/Shinjiru.svg
+    icon.uninstall = $(DEL_FILE) $(INSTALL_ROOT)$${PREFIX}/share/icons/hicolor/scalable/apps/Shinjiru.svg
+
+    app.path = $${PREFIX}/share/applications/
+    app.extra = cp -f $${PWD}/Shinjiru.desktop.in $${PWD}/Shinjiru.desktop; \
+                echo \"Exec=$${PREFIX}/bin/Shinjiru\" >> $${PWD}/Shinjiru.desktop; \
+                ${INSTALL_FILE} $${PWD}/Shinjiru.desktop $(INSTALL_ROOT)$${PREFIX}/share/applications/Shinjiru.desktop
+    app.uninstall = $(DEL_FILE) $(INSTALL_ROOT)$${PREFIX}/share/applications/Shinjiru.desktop
+
+    license.path = $${PREFIX}/share/licenses/Shinjiru
+    license.files = LICENSE
+
+    INSTALLS += bin icon app license
+}

@@ -41,4 +41,4 @@ HEADERS += \
   "$$PWD/robot/Source/Window.h"
 
 win32:LIBS += -lUser32 -lKernel32 -lGdi32 -lAdvapi32 -lDwmapi
-linux:LIBS += -lXtst -lXinerama
+linux:LIBS += -lX11 -lXtst -lXinerama

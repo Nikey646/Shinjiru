@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QCoreApplication>
+#include <QString>
 
 #include <regex>
 
@@ -14,10 +16,18 @@
 using namespace Robot;
 
 WindowEnumerator::WindowEnumerator() : Singleton() {
-  QFile mediaPlayerJson(":/res/mediaPlayers.json");
-  mediaPlayerJson.open(QFile::ReadOnly);
+  QFile interalMediaPlayerJson(":/res/mediaPlayers.json");
+  interalMediaPlayerJson.open(QFile::ReadOnly);
+  readMediaPlayersJson(interalMediaPlayerJson);
 
-  m_mediaPlayers = QJsonDocument().fromJson(mediaPlayerJson.readAll()).object();
+  QString externalPath = QCoreApplication::applicationDirPath();
+  externalPath.append("/customMediaPlayers.json");
+  QFile externalMediaPlayerJson(externalPath);
+  
+  if (externalMediaPlayerJson.exists()) {
+    externalMediaPlayerJson.open(QFile::ReadOnly);
+    readMediaPlayersJson(externalMediaPlayerJson);
+  }
 
   for (auto &&playerName : m_mediaPlayers.keys()) {
     auto playerData = m_mediaPlayers.value(playerName).toObject();
@@ -136,5 +146,13 @@ void WindowEnumerator::processTitle(const std::string &title) {
   if (!media.empty() && !store.isBlackListed(mediaTitle, (*media.begin())->id())) {
     store.setMediaPlaying(*media.begin(), episode);
     store.setCurrentTitle(mediaTitle);
+  }
+}
+
+void WindowEnumerator::readMediaPlayersJson(const QFile &mediaPlayersJson) {
+  auto mediaPlayers = QJsonDocument().fromJson(mediaPlayersJson.readAll()).object();
+
+  for(auto &&playerName : mediaPlayers.keys()) {
+    m_mediaPlayers[playerName] = mediaPlayers[playerName];
   }
 }

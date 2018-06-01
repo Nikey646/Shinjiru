@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QCoreApplication>
 #include <QString>
+#include <QDebug>
 
 #include <regex>
 
@@ -16,18 +17,11 @@
 using namespace Robot;
 
 WindowEnumerator::WindowEnumerator() : Singleton() {
-  QFile interalMediaPlayerJson(":/res/mediaPlayers.json");
-  interalMediaPlayerJson.open(QFile::ReadOnly);
-  readMediaPlayersJson(interalMediaPlayerJson);
+  readMediaPlayersJson(":/res/mediaPlayers.json");
 
   QString externalPath = QCoreApplication::applicationDirPath();
   externalPath.append("/customMediaPlayers.json");
-  QFile externalMediaPlayerJson(externalPath);
-  
-  if (externalMediaPlayerJson.exists()) {
-    externalMediaPlayerJson.open(QFile::ReadOnly);
-    readMediaPlayersJson(externalMediaPlayerJson);
-  }
+  readMediaPlayersJson(externalPath);
 
   for (auto &&playerName : m_mediaPlayers.keys()) {
     auto playerData = m_mediaPlayers.value(playerName).toObject();
@@ -149,10 +143,22 @@ void WindowEnumerator::processTitle(const std::string &title) {
   }
 }
 
-void WindowEnumerator::readMediaPlayersJson(const QFile &mediaPlayersJson) {
+void WindowEnumerator::readMediaPlayersJson(const QString &mediaPlayersJsonPath) {
+  QFile mediaPlayerJson(mediaPlayersJsonPath);
+
+  if (!mediaPlayerJson.exists()) {
+    qDebug() << "File not found" << mediaPlayersJsonPath;
+    return;
+  }
+
+  mediaPlayerJson.open(QFile::ReadOnly);
+
   auto mediaPlayers = QJsonDocument().fromJson(mediaPlayersJson.readAll()).object();
 
   for(auto &&playerName : mediaPlayers.keys()) {
+    if (m_mediaPlayers.contains(playerName)) {
+      qInfo() << "Media Player already existed," << playerName;
+    }
     m_mediaPlayers[playerName] = mediaPlayers[playerName];
   }
 }

@@ -7,7 +7,7 @@
 #include <QMap>
 #include <QString>
 #include <QTimer>
-#include <QFile>
+#include <QString>
 
 #include <Robot.h>
 #include <anitomy/anitomy.h>
@@ -28,7 +28,7 @@ class WindowEnumerator : public Singleton<WindowEnumerator> {
   bool isMediaPlayer(const Robot::Process &process);
   bool detectMedia(const Robot::Process &process);
   void processTitle(const std::string &title);
-  void readMediaPlayersJson(const QFile &mediaPlayersJson);
+  void readMediaPlayersJson(const QString &mediaPlayersJson);
 
  private:
   QJsonObject m_mediaPlayers;
